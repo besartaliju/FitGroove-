@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import OnboardingScreen from '../screens/OnboardingScreen';
 import LoginScreen from '../screens/LoginScreen';
-import { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator();
@@ -24,7 +23,7 @@ const AuthStack = () => {
   }, []);
 
   if(isFirstLaunch === null) {
-    // console.log("NULL")
+   // console.log("NULL")
     return null
   } else if (isFirstLaunch === true) {
     routeName = 'Onboarding';
