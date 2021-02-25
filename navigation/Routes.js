@@ -1,11 +1,11 @@
-import React, { useEffect, useContext, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import AuthStack from './AuthStack';
 
 const Routes = () => {
     return (
         <NavigationContainer>
-            <AuthStack />
+            <AuthStack/>
         </NavigationContainer>
     );
 }

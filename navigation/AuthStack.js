@@ -1,29 +1,30 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import OnboardingScreen from './screens/OnboardingScreen';
-import LoginScreen from './screens/LoginScreen';
+import OnboardingScreen from '../screens/OnboardingScreen';
+import LoginScreen from '../screens/LoginScreen';
 import { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator();
 
-const App = () => {
-  const [isFirstLaunch, setIsFirstLaunch] = React.useState(null);
+const AuthStack = () => {
+  const [isFirstLaunch, setIsFirstLaunch] = useState(null);
   let routeName;
 
   useEffect(() => {
-    AsyncStorage.getItem('alreadyLaunched').then(value => {
-      if(value === null) {
-        AsyncStorage.setItem('alreadyLaunched', 'true');
-        setIsFirstLaunch(true);
+    AsyncStorage.getItem('alreadyLaunched').then((res) => {
+      if (res === null) {
+          AsyncStorage.setItem('alreadyLaunched', 'true');
+          setIsFirstLaunch(true);
       } else {
-        setIsFirstLaunch(false);
+          setIsFirstLaunch(false);
       }
-    })
+    });
+  
   }, []);
 
   if(isFirstLaunch === null) {
+    // console.log("NULL")
     return null
   } else if (isFirstLaunch === true) {
     routeName = 'Onboarding';
