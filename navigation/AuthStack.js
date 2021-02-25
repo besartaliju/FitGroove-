@@ -91,39 +91,46 @@ import LoginScreen from './screens/LoginScreen';
 import { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const AppStack = createStackNavigator();
+const Stack = createStackNavigator();
 
 const App = () => {
-  const [isFirstLaunch, setIsFirstLaunch] = React.useState(null);
+  const [isFirstLaunch, setisFirstLaunch] = React.useState(null);
+  let routeName;
 
   useEffect(() => {
-    AsyncStorage.getItem('alreadyLaunched').then(value => {
+    AsyncStorage.getItem('AlreadyLaunched').then(value => {
       if(value == null) {
-        AsyncStorage.setItem('alreadyLaunched', 'true');
-        setIsFirstLaunch(true);
+        AsyncStorage.setItem('AlreadyLaunched', 'true');
+        setisFirstLaunch(true);
       } else {
-        setIsFirstLaunch(false);
+        setisFirstLaunch(false);
       }
     })
   }, []);
 
   if(isFirstLaunch === null) {
-    console.log("nullski")
     return null
   } else if (isFirstLaunch === true) {
-    return (
-      <NavigationContainer>
-        <AppStack.Navigator
-          headerMode="none"
-        >
-          <AppStack.Screen name="Onboarding" component={OnboardingScreen} />
-          <AppStack.Screen name="Login" component={LoginScreen} />
-        </AppStack.Navigator>
-      </NavigationContainer>
-    );
+    routeName = 'Onboarding';
   } else {
-    return <LoginScreen />
+    routeName = 'Login';
   }
+
+  return (
+    <Stack.Navigator initialRouteName={routeName}>
+        <Stack.Screen 
+            name="Onboarding" 
+            component={OnboardingScreen} 
+            options={{header: () => null}}  
+        />
+        <Stack.Screen 
+            name="Login" 
+            component={LoginScreen}
+            options={{header: () => null}}
+        />
+    </Stack.Navigator>
+  );
+
 }
 
-export default App;
+export default AuthStack;
