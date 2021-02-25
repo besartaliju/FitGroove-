@@ -94,16 +94,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Stack = createStackNavigator();
 
 const App = () => {
-  const [isFirstLaunch, setisFirstLaunch] = React.useState(null);
+  const [isFirstLaunch, setIsFirstLaunch] = React.useState(null);
   let routeName;
 
   useEffect(() => {
-    AsyncStorage.getItem('AlreadyLaunched').then(value => {
-      if(value == null) {
-        AsyncStorage.setItem('AlreadyLaunched', 'true');
-        setisFirstLaunch(true);
+    AsyncStorage.getItem('alreadyLaunched').then(value => {
+      if(value === null) {
+        AsyncStorage.setItem('alreadyLaunched', 'true');
+        setIsFirstLaunch(true);
       } else {
-        setisFirstLaunch(false);
+        setIsFirstLaunch(false);
       }
     })
   }, []);
