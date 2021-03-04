@@ -1,24 +1,36 @@
-import React from 'react';
-import {View, Text, Button, StyleSheet, TouchableOpacity} from 'react-native';
+import { auth } from 'firebase';
+import React, { useLayoutEffect } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const HomeScreen = ({navigation}) => {
+
+    const signOutUser = () => {
+        auth()
+            .signOut()
+            .then(() => {
+                navigation.replace("Login");
+            });
+    };
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (
+                <TouchableOpacity onPress={signOutUser}>
+                    <Text>Log Out</Text>
+                </TouchableOpacity>
+                
+            )
+        })
+    })
+
     return (
-        <View style={styles.container}>
-            <Text>HomeScreen Screen</Text>
-            <Button
-                title="Log Out"
-                onPress={() => console.log('Pressed')}
-            />
-        </View>
+        <SafeAreaView>
+            <Text>Homie Screen</Text>
+        </SafeAreaView>
     )
 }
 
-export default HomeScreen;
+export default HomeScreen
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
-})
+const styles = StyleSheet.create({})
