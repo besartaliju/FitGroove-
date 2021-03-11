@@ -7,6 +7,7 @@ import { StatusBar } from "expo-status-bar";
 import LoginScreen from './screens/LoginScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import HomeScreen from './screens/HomeScreen';
+//import NewUserInfoScreen from './screens/NewUserInfoScreen';
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,8 @@ export default function App() {
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
+        {/* <Stack.Screen name="NewUserInfoScreen" component={NewUserInfoScreen} /> */}
+        {/* doesn't work with reis?? */}
       </Stack.Navigator>
     </NavigationContainer>
     );
