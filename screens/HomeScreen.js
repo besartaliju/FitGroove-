@@ -1,6 +1,6 @@
 import { auth } from '../firebase';
 import React, { useLayoutEffect } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const HomeScreen = ({navigation}) => {
@@ -27,6 +27,7 @@ const HomeScreen = ({navigation}) => {
     return (
         <SafeAreaView>
             <Text>Homie Screen</Text>
+            <Button onPress={signOutUser} title="SignOut" />
         </SafeAreaView>
     )
 }
