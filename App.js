@@ -31,7 +31,12 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator keyboardHandlingEnabled='true' >
+      <Stack.Navigator 
+        screenOptions={{
+          keyboardHandlingEnabled: true
+        }}
+         
+      >
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen options={{headerShown: false}} name="App" component={Home} />
