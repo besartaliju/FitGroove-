@@ -161,3 +161,4 @@ const styles = StyleSheet.create({
         color: "#6d6f70"
     }
 })
+

@@ -52,7 +52,7 @@ const LoginScreen = ({ navigation }) => {
                     onSubmitEditing={signIn}
                 />
             </View>
-            <Button type="solid" color="white" containerStyle={styles.button1} onPress={signIn} title="Sign In"  color="#ec9c3f"/>
+            <Button type="clear" color="white" containerStyle={styles.button1} onPress={signIn} title="Sign In"  color="#ec9c3f"/>
             <Text>Don't have an account?
                 <TouchableWithoutFeedback>
                     <Text containerStyle={styles.button2} onPress={() => navigation.navigate('SignUp')} color="#faf1e3" type="bold"> Sign up here</Text>
@@ -107,3 +107,4 @@ const styles = StyleSheet.create({
         marginLeft: 20,
       },
 })
+
