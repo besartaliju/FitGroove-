@@ -1,4 +1,4 @@
-import { auth } from 'firebase';
+import { auth } from '../firebase';
 import React, { useLayoutEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const HomeScreen = ({navigation}) => {
 
     const signOutUser = () => {
-        auth()
+        auth
             .signOut()
             .then(() => {
                 navigation.replace("Login");
