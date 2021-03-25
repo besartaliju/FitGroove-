@@ -54,13 +54,11 @@ const FoodScreen = () => {
                 />
             </View>
             <Button onPress={getFoodInfo} title="Get Info" />
-            <br></br>
             <Text>{foodName}</Text>
             <Text>Calories: {calories}</Text>
             <Text>Protein: {protein}</Text>
             <Text>Carbs: {carbs}</Text>
             <Text>Fat: {fat}</Text>
-            <br></br>
             <Image
                source={{ uri: imageURI }}
                style={{ width: 200, height: 200 }}
