@@ -13,7 +13,7 @@ const LoginScreen = ({ navigation }) => {
         const unsubscribe = auth.onAuthStateChanged((authUser) => {
             console.log(authUser);
             if(authUser) {
-                navigation.replace("Home");
+                navigation.replace("App");
             }
         })
 
