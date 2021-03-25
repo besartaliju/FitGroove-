@@ -12,7 +12,7 @@ const FoodScreen = () => {
     const [carbs, setCarbs] = useState('');
     const [fat, setFat] = useState('');
     const [imageURI, setImageURI] = useState('');
-    const [foodList, setFoodList] = useState('');
+    const [foodList, setFoodList] = useState([[]]);
 
     function getFoodInfo() {
         const uri = "https://edamam-food-and-grocery-database.p.rapidapi.com/parser?ingr=" + encodeURIComponent(name)
