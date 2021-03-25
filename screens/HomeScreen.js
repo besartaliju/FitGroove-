@@ -1,11 +1,9 @@
 import { auth } from '../firebase';
 import React, { useLayoutEffect } from 'react';
-import { StyleSheet, Text, TouchableOpacity, ScrollView, SafeAreaView, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, ScrollView, SafeAreaView, View, Button } from 'react-native';
 import CalendarHeatmap from 'react-native-calendar-heatmap';
-import { Card, Button, Tile, Avatar } from 'react-native-elements'
+import { Card, Tile, Avatar } from 'react-native-elements'
 import Divider from 'react-native-divider';
-import { StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const HomeScreen = ({navigation}) => {
 

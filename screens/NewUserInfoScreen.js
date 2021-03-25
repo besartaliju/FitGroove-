@@ -2,7 +2,6 @@ import React, { useLayoutEffect, useState } from 'react';
 import { Button, Input, Image } from "react-native-elements";
 import { KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
 import { auth, db } from "../firebase";
-import DropDownPicker from 'react-native-dropdown-picker';
 
 
 const NewUserInfoScreen = ({ navigation }) => {
