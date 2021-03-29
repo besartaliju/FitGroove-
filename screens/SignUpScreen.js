@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useState } from 'react';
 import { Button, Input, Image } from "react-native-elements";
 import { KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
 import { auth, db } from "../firebase";
+import { color } from 'react-native-reanimated';
 
 const SignUpScreen = ({ navigation }) => {
     const [name, setName] = useState('');
@@ -64,30 +65,44 @@ const SignUpScreen = ({ navigation }) => {
 
     return (
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
-            <Text>SignUp</Text>
+            <Text style={styles.title}>J O I N  F I T G R O O V E</Text>
+            <Text style={styles.subtitle}>Lets start your fitness journey together</Text>
             <View style={styles.inputContainer}>
-                <Input 
-                    placeholder="Name" 
-                    autofocus 
+                <Text style={styles.fillText}>Name</Text>
+                <Input containerStyle={styles.fill}
+                    autofocus
+                    underlineColorAndroid="transparent"
                     type="text" 
+                    underlineColorAndroid="transparent"
                     value={name} 
                     onChangeText={(text) => setName(text)}
                 />
-                <Input 
-                    placeholder="Email" 
+                <Text style={styles.fillText}>Email</Text>
+                <Input containerStyle={styles.fill}
+                    underlineColorAndroid="transparent"
                     type="email" 
+                    underlineColorAndroid="transparent"
                     value={email} 
                     onChangeText={(text) => setEmail(text)}
                 />
-                <Input 
-                    placeholder="Password"  
+                <Text style={styles.fillText}>Password</Text>
+                <Input containerStyle={styles.fill}
+                    underlineColorAndroid="transparent"
                     type="password" 
+                    underlineColorAndroid="transparent"
                     secureTextEntry
                     value={password} 
                     onChangeText={(text) => setPassword(text)}
                 />
-                <Input 
-                    placeholder="Avatar (URL)" 
+                <Text style={styles.fillText}>Date of Birth</Text>
+                <Input containerStyle={styles.fill}
+                    underlineColorAndroid="transparent"
+                    type="text" 
+                    underlineColorAndroid="transparent"
+                />
+                <Text style={styles.fillText}>Avatar (URL)</Text>
+                <Input containerStyle={styles.fill}
+                    underlineColorAndroid="transparent"
                     type="text" 
                     value={avatar} 
                     onChangeText={(text) => setAvatar(text)}
@@ -95,7 +110,7 @@ const SignUpScreen = ({ navigation }) => {
                 />
             </View>
 
-            <Button containerStyle={styles.button} raised onPress={signUp} title="SignUp" />
+            <Button type="clear" containerStyle={styles.button} raised onPress={signUp} title="Sign Up" />
         </KeyboardAvoidingView>
     )
 }
@@ -106,13 +121,44 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        paddingTop: 50,
+        backgroundColor: '#fff',
     },
     button: {
-        width: 200,
-        marginTop: 10
+        width: 350,
+        borderRadius: 13,
+        marginTop: 380,
+        backgroundColor: "#ffa200",
+        borderRadius: 13,
     },
     inputContainer: {
-        width: 300
+        borderRadius: 10,
+        width: 350,
+        height: 45,
+        marginTop: 40,
+
+    },
+
+    fill: {
+        backgroundColor: "#f6f6f6",
+        borderRadius: 13,
+        height: 40
+    },
+
+    subtitle: {
+        paddingTop: 15,
+        color: "#afb9bd"
+    },
+    title: {
+        marginTop: 10,
+        fontSize: 24,
+        color: "#ffa200",
+        fontWeight : 'bold' 
+    },
+    fillText: {
+        marginBottom: 10,
+        marginTop: 10,
+        color: "#6d6f70"
     }
 })
+
