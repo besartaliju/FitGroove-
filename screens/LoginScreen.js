@@ -222,12 +222,12 @@ const AuthField = styled.TextInput`
     padding: 10px
 `;
 
-const SignInButton = styled.Button`
-    flex: 1;
-    flexDirection: row;
-    align-items: center;
-    justify-content: center;
-`
+// const SignInButton = styled.Button`
+//     flex: 1;
+//     flexDirection: row;
+//     align-items: center;
+//     justify-content: center;
+// `;
 
 const SignInContainer = styled.TouchableOpacity`
     margin: 0 32px;
@@ -246,7 +246,6 @@ const SignInWrapper = styled.View`
     align-items: center;
     justify-content: center;
 `;
-
 
 
 const Loading = styled.ActivityIndicator.attrs((props) => ({
