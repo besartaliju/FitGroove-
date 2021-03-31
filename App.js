@@ -8,43 +8,80 @@ import { StatusBar } from "expo-status-bar";
 import LoginScreen from './screens/LoginScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import HomeScreen from './screens/HomeScreen';
-import NewUserInfoScreen from './screens/NewUserInfoScreen';
-import ProfileScreen from './screens/Profile'
 import FoodScreen from './screens/FoodScreen';
 import WorkoutScreen from './screens/WorkoutScreen';
 import HistoryScreen from './screens/HistoryScreen';
 import SocialScreen from './screens/SocialScreen';
+import ProfileScreen from './screens/ProfileScreen';
 
 const Stack = createStackNavigator();
+// const HomeStack = createStackNavigator();
+const HistoryStack = createStackNavigator();
+const WorkoutStack = createStackNavigator();
+const FoodStack = createStackNavigator();
+const SocialStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  function Home() {
+  function Root() {
     return (
       <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="History" component={HistoryScreen} />
-        <Tab.Screen name="Workout" component={WorkoutScreen} />
-        <Tab.Screen name="Food" component={FoodScreen} />
-        <Tab.Screen name="Social" component={SocialScreen} />
-        <Tab.Screen name="ProfileScreen" component={ProfileScreen} />
+        <Tab.Screen name="Home" component={HomeStack} />
+        <Tab.Screen name="History" component={HistoryStack} />
+        <Tab.Screen name="Workout" component={WorkoutStack} />
+        <Tab.Screen name="Food" component={FoodStack} />
+        <Tab.Screen name="Social" component={SocialStack} />
       </Tab.Navigator>
     );
   }
 
+  function HomeStack() {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen}/>
+        <Stack.Screen name="Profile" component={ProfileScreen}/>
+      </Stack.Navigator>
+    )
+  }
+
+  function HistoryStack() {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="History" component={HistoryScreen}/>
+      </Stack.Navigator>
+    )
+  }
+
+  function WorkoutStack() {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="Workout" component={WorkoutScreen}/>
+      </Stack.Navigator>
+    )
+  }
+
+  function FoodStack() {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="Food" component={FoodScreen}/>
+      </Stack.Navigator>
+    )
+  }
+
+  function SocialStack() {
+    return (
+      <Stack.Navigator headerMode='none'>
+        <Stack.Screen name="Social" component={SocialScreen}/>
+      </Stack.Navigator>
+    )
+  }
+
   return (
     <NavigationContainer>
-      <Stack.Navigator 
-        screenOptions={{
-          keyboardHandlingEnabled: true
-        }}
-         
-      >
+      <Stack.Navigator keyboardHandlingEnabled='true' >
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
-        <Stack.Screen name="NewUserInfoScreen" component={NewUserInfoScreen} />
-
-        <Stack.Screen options={{headerShown: false}} name="App" component={Home} />
+        <Stack.Screen options={{headerShown: false}} name="App" component={Root} />
       </Stack.Navigator>
     </NavigationContainer>
     );
