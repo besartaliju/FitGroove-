@@ -82,7 +82,7 @@ const LoginScreen = ({ navigation }) => {
                 {loading ? (
                     <Loading />
                 ) : (
-                    <SignInWrapper>
+                    <SignInWrapper onPress={signIn()}> 
                         <Text medium bold center color="#ffffff" padding={"6px"}>Sign In</Text>
                         <Icon
                             name={"arrow-right"}
