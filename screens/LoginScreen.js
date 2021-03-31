@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Input, Image } from "react-native-elements";
-import { KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
+import { KeyboardAvoidingView as Kav, StyleSheet, Text, View, Platform } from 'react-native';
 import { auth } from "../firebase";
 import {Feather as Icon} from "@expo/vector-icons";
-import styled from "styled-components";
+import styled from "styled-components/native";
 
 
 const LoginScreen = ({ navigation }) => {
@@ -31,6 +31,7 @@ const LoginScreen = ({ navigation }) => {
 
 
     return(
+
         <Container>
             <Main>
                 <Heading>Welcome!</Heading>
@@ -103,6 +104,7 @@ const LoginScreen = ({ navigation }) => {
             </SignUpContainer>
             
         </Container>
+        
     );    
     
 
@@ -156,10 +158,12 @@ const styles = StyleSheet.create({
 
 
 
-const Container = styled.View`
+const Container = styled(Platform.OS === 'ios' ? Kav : View).attrs({
+    behavior: Platform.OS === 'ios' && 'padding',
+  })`
     flex: 1;
     background: #060507;
-`;
+  `;
 
 const Main = styled.View`
     margin: 139px 32px 48px;
