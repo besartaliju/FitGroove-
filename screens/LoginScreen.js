@@ -27,6 +27,7 @@ const LoginScreen = ({ navigation }) => {
         auth
             .signInWithEmailAndPassword(email, password)
             .catch((err) => alert(err))
+        // setLoading(true)
     };
 
 
@@ -51,11 +52,12 @@ const LoginScreen = ({ navigation }) => {
                         autoCapitalize="none"
                         autoCompleteType="email"
                         autoCorrect={false}
-                        autoFocus={true}
+                        autoFocus={false}
                         keyboardType="email-address"
                         clearButtonMode="while-editing"
-                        onChangeText={email => setEmail(email.trim())}
                         value={email}
+                        onChangeText={email => setEmail(email.trim())}
+                        
                     />
                 </AuthContainer>
 
@@ -73,17 +75,18 @@ const LoginScreen = ({ navigation }) => {
                         autoCorrect={false}
                         secureTextEntry={true}
                         clearButtonMode="while-editing"
-                        onChangeText={password => setPassword(password.trim())}
                         value={password}
+                        onChangeText={password => setPassword(password.trim())}
+                        onSubmitEditing={signIn}
                     />
                 </AuthContainer>
             </Auth>
 
-            <SignInContainer disabled={loading}>
+            <SignInContainer disabled={loading} onPress={signIn}>
                 {loading ? (
                     <Loading />
                 ) : (
-                    <SignInWrapper onPress={signIn()}> 
+                    <SignInWrapper> 
                         <Text medium bold center color="#ffffff" padding={"6px"}>Sign In</Text>
                         <Icon
                             name={"arrow-right"}
@@ -159,7 +162,7 @@ const styles = StyleSheet.create({
 
 
 const Container = styled(Platform.OS === 'ios' ? Kav : View).attrs({
-    behavior: Platform.OS === 'ios' && 'padding',
+    behavior: Platform.OS === 'ios' && 'position',
   })`
     flex: 1;
     background: #060507;
@@ -218,6 +221,13 @@ const AuthField = styled.TextInput`
     font-weight: 500
     padding: 10px
 `;
+
+const SignInButton = styled.Button`
+    flex: 1;
+    flexDirection: row;
+    align-items: center;
+    justify-content: center;
+`
 
 const SignInContainer = styled.TouchableOpacity`
     margin: 0 32px;
