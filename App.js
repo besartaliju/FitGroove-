@@ -37,7 +37,7 @@ export default function App() {
 
   function HomeStack() {
     return (
-      <Stack.Navigator headerMode='none'>
+      <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen}/>
         <Stack.Screen name="Profile" component={ProfileScreen}/>
       </Stack.Navigator>
@@ -45,27 +45,35 @@ export default function App() {
   }
 
   function HistoryStack() {
-    <Stack.Navigator headerMode='none'>
+    return (
+      <Stack.Navigator>
         <Stack.Screen name="History" component={HistoryScreen}/>
-    </Stack.Navigator>
+      </Stack.Navigator>
+    )
   }
 
   function WorkoutStack() {
-    <Stack.Navigator headerMode='none'>
+    return (
+      <Stack.Navigator>
         <Stack.Screen name="Workout" component={WorkoutScreen}/>
-    </Stack.Navigator>
+      </Stack.Navigator>
+    )
   }
 
   function FoodStack() {
-    <Stack.Navigator headerMode='none'>
+    return (
+      <Stack.Navigator>
         <Stack.Screen name="Food" component={FoodScreen}/>
-    </Stack.Navigator>
+      </Stack.Navigator>
+    )
   }
 
   function SocialStack() {
-    <Stack.Navigator headerMode='none'>
+    return (
+      <Stack.Navigator headerMode='none'>
         <Stack.Screen name="Social" component={SocialScreen}/>
-    </Stack.Navigator>
+      </Stack.Navigator>
+    )
   }
 
   return (
