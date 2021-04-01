@@ -18,7 +18,7 @@ const HomeScreen = ({navigation}) => {
         auth
             .signOut()
             .then(() => {
-                navigation.replace("Login");
+                navigation.navigate("Auth", {screen: 'Login'});
             });
     };
 

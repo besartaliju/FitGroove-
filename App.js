@@ -15,11 +15,6 @@ import SocialScreen from './screens/SocialScreen';
 import ProfileScreen from './screens/ProfileScreen';
 
 const Stack = createStackNavigator();
-// const HomeStack = createStackNavigator();
-const HistoryStack = createStackNavigator();
-const WorkoutStack = createStackNavigator();
-const FoodStack = createStackNavigator();
-const SocialStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function App() {
@@ -33,6 +28,15 @@ export default function App() {
         <Tab.Screen name="Social" component={SocialStack} />
       </Tab.Navigator>
     );
+  }
+
+  function AuthStack() {
+    return (
+      <Stack.Navigator headerMode='none'>
+        <Stack.Screen name="Login" component={LoginScreen}/>
+        <Stack.Screen name="SignUp" component={SignUpScreen}/>
+      </Stack.Navigator>
+    )
   }
 
   function HomeStack() {
@@ -70,7 +74,7 @@ export default function App() {
 
   function SocialStack() {
     return (
-      <Stack.Navigator headerMode='none'>
+      <Stack.Navigator>
         <Stack.Screen name="Social" component={SocialScreen}/>
       </Stack.Navigator>
     )
@@ -78,9 +82,8 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator keyboardHandlingEnabled='true' >
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="SignUp" component={SignUpScreen} />
+      <Stack.Navigator keyboardHandlingEnabled='true'>
+        <Stack.Screen options={{headerShown: false}} name="Auth" component={AuthStack} />
         <Stack.Screen options={{headerShown: false}} name="App" component={Root} />
       </Stack.Navigator>
     </NavigationContainer>
