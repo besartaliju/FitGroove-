@@ -1,300 +1,272 @@
-import { auth } from '../firebase';
-import React, { useLayoutEffect } from 'react';
-import { StyleSheet, Text, TouchableOpacity, ScrollView, SafeAreaView, View, Button } from 'react-native';
-import CalendarHeatmap from 'react-native-calendar-heatmap';
-import { Card, Tile, Avatar } from 'react-native-elements'
-import Divider from 'react-native-divider';
+import React, { useState, useEffect } from 'react'
+import { Button, Input, Image } from "react-native-elements";
+import { KeyboardAvoidingView as Kav, StyleSheet, Text, View, Platform } from 'react-native';
+import { auth } from "../firebase";
+import {Feather as Icon} from "@expo/vector-icons";
+import styled from "styled-components/native";
+
+
+const LoginScreen = ({ navigation }) => {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((authUser) => {
+            console.log(authUser);
+            if(authUser) {
+                navigation.replace("App");
+            }
+        })
 
 const HomeScreen = ({navigation}) => {
 
     const signOutUser = () => {
         auth
-            .signOut()
-            .then(() => {
-                navigation.replace("Login");
-            });
+            .signInWithEmailAndPassword(email, password)
+            .catch((err) => alert(err))
+        // setLoading(true)
     };
 
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            headerRight: () => (
-                <TouchableOpacity onPress={signOutUser}>
-                    <Text>Log Out</Text>
-                    {/* make symbol, whatever chai downloaded */}
-                </TouchableOpacity>
-                
-            )
-        })
-    })
+
+    return(
+
+        <Container>
+            <Main>
+                <Heading>Welcome!</Heading>
+                <Subheading>Sign In to continue</Subheading>
+            </Main>
+
+            <Auth>
+                <AuthContainer>
+                    <Icon
+                        name={"mail"}
+                        color={"#F52416"}
+                        size={32}
+                    />
+                    <AuthField
+                        placeholder="Email"
+                        placeholderTextColor="#96A7AF"
+                        autoCapitalize="none"
+                        autoCompleteType="email"
+                        autoCorrect={false}
+                        autoFocus={false}
+                        keyboardType="email-address"
+                        clearButtonMode="while-editing"
+                        value={email}
+                        onChangeText={email => setEmail(email.trim())}
+                        
+                    />
+                </AuthContainer>
+
+                <AuthContainer>
+                    <Icon
+                        name={"lock"}
+                        color={"#F52416"}
+                        size={32}
+                    />
+                    <AuthField
+                        placeholder="Password"
+                        placeholderTextColor="#96A7AF"
+                        autoCapitalize="none"
+                        autoCompleteType="password"
+                        autoCorrect={false}
+                        secureTextEntry={true}
+                        clearButtonMode="while-editing"
+                        value={password}
+                        onChangeText={password => setPassword(password.trim())}
+                        onSubmitEditing={signIn}
+                    />
+                </AuthContainer>
+            </Auth>
+
+            <SignInContainer disabled={loading} onPress={signIn}>
+                {loading ? (
+                    <Loading />
+                ) : (
+                    <SignInWrapper> 
+                        <Text medium bold center color="#ffffff" padding={"6px"}>Sign In</Text>
+                        <Icon
+                            name={"arrow-right"}
+                            color={"white"}
+                            size={18}
+                        />
+                    </SignInWrapper>
+                    
+                )}
+            </SignInContainer>
+            
+            <ForgetPassword>
+                <Text small center color="#FFFFFF" margin="15px">Forgot password?</Text>
+            </ForgetPassword>
+           
+            <SignUpContainer onPress={() => navigation.navigate("SignUp")}>
+                <Text medium bold center color="#3DD598">Create an account</Text>
+            </SignUpContainer>
+            
+        </Container>
+        
+    );    
+    
+
+/*
     return (
-        <SafeAreaView style={styles.container}>
-            <ScrollView>
-                <View style={{
-                    flexDirection: "row",
-                    height: 75,
-                    fontWeight: 'bold',
-                    width: 350
-                }}>
-                    <Avatar
-                    size="small"
-                    rounded
-                    containerStyle={{ marginRight: 20, marginTop: 20}}
-                    source={{
-                        uri:
-                        'https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png',
-                    }}
-                    />
-                    <Text h1 style={styles.title}>W E L C O M E ,  J O H N !</Text>
-                </View>
-            <View>
-                <Text style={styles.subtitle1}>Y O U R  D A I L Y  P R O G R E S S</Text>
-                <View style={{marginBottom: 30}}>
-                    <CalendarHeatmap 
-                        endDate={new Date("2021-03-25")}
-                        numDays={113}
-                        colorArray={["#eee", "#D44B79", "#6B1928", "#9F3251", "#360000"]}
-                    values={[
-                        { date: '2021-03-01', count: 1 },
-                        { date: '2021-03-23', count: 2 },
-                        { date: '2021-03-03', count: 7000 },
-                        { date: '2021-03-13', count: 4 },
-                        { date: '2021-01-28', count: 0 },
-                        { date: '2021-02-28', count: 3 },
-                    ]}
-                    // classForValue={(value) => {
-                    //     if (!value) {
-                    //     return 'color-empty';
-                    //     }
-                    //     return `color-scale-${value.count}`;
-                    // }}
-                    />
-                </View>
+        <KeyboardAvoidingView behavior="padding" style={styles.container}>
+            <View style={styles.inputContainer}>
+                <Input 
+                    placeholder="Email" 
+                    autofocus 
+                    type="email" 
+                    value={email} 
+                    onChangeText={(text) => setEmail(text)}
+                />
+                <Input 
+                    placeholder="Password" 
+                    secureTextEntry 
+                    type="password" 
+                    value={password} 
+                    onChangeText={(text) => setPassword(text)}
+                    onSubmitEditing={signIn}
+                />
             </View>
-            <View style={{backgroundColor: '#EBEBEB'}}>
-                <Text style={styles.subtitle2}>Y O U R  B E S T  W O R K O U T S</Text>
-                <View style={{marginBottom: 20, borderRadius: 13}}>
-                    <ScrollView horizontal={true}>
-                        <Card style={{flex: 1, width: 100}}>
-                            <Card.Title>Lunges</Card.Title>
-                            <Card.Image style={styles.workoutimages} source={require('../assets/manlunge.png')}>
-                                <Button type="clear"/>
-                            </Card.Image>
-                        </Card>
-                        <Card style={{flex: 1, width: 100}}>
-                            <Card.Title>Warm Up</Card.Title>
-                            <Card.Image style={styles.workoutimages} source={require('../assets/manwarmup.png')}>
-                                <Button type="clear"/>
-                            </Card.Image>
-                        </Card>
-                    </ScrollView>
-                </View>
-            </View>
-            <View>
-                <Text style={styles.subtitle2}>F O C U S</Text>
-                <View style={{marginBottom: 20, borderRadius: 13}}>
-                    <ScrollView horizontal={true}>
-                        <Card style={{flex: 1, width: 100}}>
-                            <Card.Title>Jump Rope</Card.Title>
-                            <Card.Image style={styles.workoutimages} source={require('../assets/womanjumprope.png')}>
-                                <Button type="clear"/>
-                            </Card.Image>
-                        </Card>
-                        <Card style={{flex: 1, width: 100}}>
-                            <Card.Title>Wide Squat</Card.Title>
-                            <Card.Image style={styles.workoutimages}  source={require('../assets/womanlift.png')}>
-                                <Button type="clear"/>
-                            </Card.Image>
-                        </Card>
-                    </ScrollView>
-                </View>
-            </View>
-            <View style={{backgroundColor: '#EBEBEB'}}>
-                <Text style={styles.subtitle2}>Y O U R  T O P  M E A L S</Text>
-                <View style={{marginBottom: 20, borderRadius: 13}}>
-                    <ScrollView horizontal={true}>
-                        <Card style={{flex: 1, width: 100}}>
-                            <Card.Title>food1</Card.Title>
-                            <Card.Image style={styles.workoutimages} source={require('../assets/fillerbox.png')}>
-                                <Button type="clear"/>
-                            </Card.Image>
-                        </Card>
-                        <Card style={{flex: 1, width: 100}}>
-                            <Card.Title>food2</Card.Title>
-                            <Card.Image style={styles.workoutimages} source={require('../assets/fillerbox.png')}>
-                                <Button type="clear"/>
-                            </Card.Image>
-                        </Card>
-                    </ScrollView>
-                </View>
-            </View>
-            <View>
-                <Text style={styles.subtitle2}>T H E  L A T E S T</Text>
-                <Text>social media start</Text>
-            </View>
-        </ScrollView>
-        </SafeAreaView>
-        );
-    }
+            <Button containerStyle={styles.button} onPress={signIn} title="Login" />
+            <Button containerStyle={styles.button} onPress={() => navigation.navigate('SignUp')} type="outline" title="Register" />
+        </KeyboardAvoidingView>
+        
+    );
+*/
+}
 
 
 export default HomeScreen
 
+/*
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ffffff',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
-
-    title: {
-        fontSize: 24,
-        color: "#ffa200",
-        paddingTop: 23,
-        paddingBottom: 15,
-        textAlign: 'center'
+    inputContainer: {
+        width: 300,
     },
-    subtitle1: {
-        fontSize: 14,
-        textAlign: 'left',
-        paddingLeft: 10,
-        paddingBottom: 15,
-        paddingTop: 20
-    },
-    subtitle2: {
-        fontSize: 12,
-        fontWeight: 'bold',
-        textAlign: 'left',
-        paddingLeft: 10,
-        paddingTop: 20
-    },
-    workoutimages: {
-        width: 100, 
-        height: 100
+    button: {
+        width: 200,
+        marginTop: 10,
     }
 })
+*/
 
-           {/* <Plotly style={styles.chart}
-        data={[
-            {
-            //   x: [1, 2, 3],
-            //   y: [2, 6, 3],
-            //   type: 'scatter',
-            //   mode: 'lines+markers',
-            //   marker: {color: 'red'},
-            z: [[1, 20, 30], [20, 1, 60], [30, 60, 1]],
-            },
-            {type: 'heatmap'},
-          ]}
-          layout={ {width: 500, height: 400, title: 'Your Progress for the Week'} }
-                    /> */}
 
-// import React, { useState, useEffect } from 'react'
-// import { StatusBar } from 'expo-status-bar';
-// import { Button, Input } from "react-native-elements";
-// import { KeyboardAvoidingView, StyleSheet, Text, View, Image, TouchableWithoutFeedback } from 'react-native';
-// import { auth } from "../firebase";
 
-// const LoginScreen = ({ navigation }) => {
 
-//     const [email, setEmail] = useState('');
-//     const [password, setPassword] = useState('');
+const Container = styled(Platform.OS === 'ios' ? Kav : View).attrs({
+    behavior: Platform.OS === 'ios' && 'position',
+  })`
+    flex: 1;
+    background: #060507;
+  `;
 
-//     useEffect(() => {
-//         const unsubscribe = auth.onAuthStateChanged((authUser) => {
-//             console.log(authUser);
-//             if(authUser) {
-//                 navigation.replace("Home");
-//             }
-//         })
+const Main = styled.View`
+    margin: 139px 32px 48px;
+`;
 
-//         return unsubscribe;
-//     }, []);
+const Box = styled.View`
+    width: 45px;
+    height: 43px;
+    background: #F52416;
+    box-shadow: 0px 2px 4px rgba(15, 218, 137, 0.3);
+    border-radius: 12px;
+`;
 
-//     const signIn = () => {
-//         auth
-//             .signInWithEmailAndPassword(email, password)
-//             .catch((err) => alert(err))
-//     };
+const Heading = styled.Text`
+    width: 209px;
+    height: 53px;
+    margin-top: 28px;
+    font-size: 42px;
+    line-height: 49px;
+    font-weight: bold;
 
-//     return (
-//         <KeyboardAvoidingView behavior="padding" style={styles.container}>
-//             <Image source = {require("../assets/logo.png")}/>
-//             <View style={styles.inputContainer}>
-//                 <Input 
-//                     placeholder="Email" 
-//                     placeholderTextColor="#afb9bd"
-//                     underlineColorAndroid="transparent"
-//                     autofocus 
-//                     type="email" 
-//                     value={email} 
-//                     onChangeText={(text) => setEmail(text)}
-//                 />
-//             </View>
-//             <View style={styles.inputContainer}>
-//                 <Input 
-//                     placeholder="Password" 
-//                     placeholderTextColor="#afb9bd"
-//                     underlineColorAndroid="transparent"
-//                     secureTextEntry={true}
-//                     type="password" 
-//                     value={password} 
-//                     onChangeText={(text) => setPassword(text)}
-//                     onSubmitEditing={signIn}
-//                 />
-//             </View>
-//             <Button type="clear" color="white" containerStyle={styles.button1} onPress={signIn} title="Sign In"  color="#ec9c3f"/>
-//             <Text>Don't have an account?
-//                 <TouchableWithoutFeedback>
-//                     <Text containerStyle={styles.button2} onPress={() => navigation.navigate('SignUp')} color="#faf1e3" type="bold"> Sign up here</Text>
-//                 </TouchableWithoutFeedback>
-//             </Text>
-//         </KeyboardAvoidingView>
-        
-//     );
-// }
+    color: #FFFFFF;
+`;
 
-// export default LoginScreen
+const Subheading = styled.Text`
+    margin-top: 8px;
+    width: 190px;
+    height: 29px;
+    font-size: 22px;
+    line-height: 28px;
+    color: #96A7AF;
+`;
 
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         alignItems: 'center',
-//         justifyContent: 'center',
-//         backgroundColor: '#fff',
-//     },
-//     inputContainer: {
-//         borderRadius: 15,
-//         width: 350,
-//         height: 45,
-//         marginBottom: 20,
-//         backgroundColor: "#f6f6f6"
-//     },
-//     button1: {
-//         width: 350,
-//         marginTop: 15,
-//         borderRadius: 15,
-//         marginBottom: 20,
-//         backgroundColor: "#ec9c3f",
-//         color: "white"
-//         },
+const Auth = styled.View`
+    margin: 0px 32px 32px;
+`;
 
-//     text: {
-//         width: 199,
-//         height: 15,
-//         left: 118,
-//         top: 682,
-//     },
+const AuthContainer = styled.View`
+    border-bottom-color: black;
+    border-bottom-width: 0px;
+    margin-bottom: 16px;
+    flexDirection: row;
+    alignItems: center
+`;
 
-//     button2: {
-//         marginTop: 600,
-//         color: "#afb9bd",
-//         fontWeight: 'bold'
-//     },
-//     Input: {
-//         height: 50,
-//         flex: 1,
-//         padding: 10,
-//         marginLeft: 20,
-//       },
-// })
 
+const AuthField = styled.TextInput`
+    height: 48px;
+    flex: 1;
+    color: white
+    font-size: 16px
+    font-weight: 500
+    padding: 10px
+`;
+
+// const SignInButton = styled.Button`
+//     flex: 1;
+//     flexDirection: row;
+//     align-items: center;
+//     justify-content: center;
+// `;
+
+const SignInContainer = styled.TouchableOpacity`
+    margin: 0 32px;
+    height: 48px;
+    flexDirection: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #A9A5D5; 
+    box-shadow: 0px 2px 4px rgba(15, 218, 137, 0.3);
+    border-radius: 12px;
+`;
+
+const SignInWrapper = styled.View`
+    flex: 1;
+    flexDirection: row;
+    align-items: center;
+    justify-content: center;
+`;
+
+
+const Loading = styled.ActivityIndicator.attrs((props) => ({
+    color: "white",
+    size: "small",
+}))``;
+
+const SignUpContainer = styled.TouchableOpacity`
+    margin: 30px 32px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    background-color: #A9A5D5;
+    border-radius: 12px;
+`;
+
+const ForgetPassword = styled.View`
+    margin-top: 10px
+    align-items: center;
+    justify-content: center;
+    background-color: #96A7AF;
+    margin: 15px 120px 5px 120px;
+    border-radius: 5px;
+`;

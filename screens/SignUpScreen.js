@@ -2,13 +2,16 @@ import React, { useLayoutEffect, useState } from 'react';
 import { Button, Input, Image } from "react-native-elements";
 import { KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
 import { auth, db } from "../firebase";
-import { color } from 'react-native-reanimated';
+import styled from "styled-components";
+import {Feather as Icon} from "@expo/vector-icons";
+//import Text from "../components/Text"; 
 
 const SignUpScreen = ({ navigation }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [avatar, setAvatar] = useState('');
+    const [loading, setLoading] = useState(false);
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -64,45 +67,33 @@ const SignUpScreen = ({ navigation }) => {
 
 
     return (
+
+        
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
-            <Text style={styles.title}>J O I N  F I T G R O O V E</Text>
-            <Text style={styles.subtitle}>Lets start your fitness journey together</Text>
+            <Text>SignUp</Text>
             <View style={styles.inputContainer}>
-                <Text style={styles.fillText}>Name</Text>
-                <Input containerStyle={styles.fill}
-                    autofocus
-                    underlineColorAndroid="transparent"
+                <Input 
+                    placeholder="Name" 
+                    autofocus 
                     type="text" 
-                    underlineColorAndroid="transparent"
                     value={name} 
                     onChangeText={(text) => setName(text)}
                 />
-                <Text style={styles.fillText}>Email</Text>
-                <Input containerStyle={styles.fill}
-                    underlineColorAndroid="transparent"
+                <Input 
+                    placeholder="Email" 
                     type="email" 
-                    underlineColorAndroid="transparent"
                     value={email} 
                     onChangeText={(text) => setEmail(text)}
                 />
-                <Text style={styles.fillText}>Password</Text>
-                <Input containerStyle={styles.fill}
-                    underlineColorAndroid="transparent"
+                <Input 
+                    placeholder="Password"  
                     type="password" 
-                    underlineColorAndroid="transparent"
                     secureTextEntry
                     value={password} 
                     onChangeText={(text) => setPassword(text)}
                 />
-                <Text style={styles.fillText}>Date of Birth</Text>
-                <Input containerStyle={styles.fill}
-                    underlineColorAndroid="transparent"
-                    type="text" 
-                    underlineColorAndroid="transparent"
-                />
-                <Text style={styles.fillText}>Avatar (URL)</Text>
-                <Input containerStyle={styles.fill}
-                    underlineColorAndroid="transparent"
+                <Input 
+                    placeholder="Avatar (URL)" 
                     type="text" 
                     value={avatar} 
                     onChangeText={(text) => setAvatar(text)}
@@ -110,55 +101,228 @@ const SignUpScreen = ({ navigation }) => {
                 />
             </View>
 
-            <Button type="clear" containerStyle={styles.button} raised onPress={signUp} title="Sign Up" />
+            <Button containerStyle={styles.button} raised onPress={signUp} title="SignUp" />
         </KeyboardAvoidingView>
+
+        
+
+
+        /*
+       <Container>
+       <Main>
+           <Box></Box>
+           <Heading>Create Account,</Heading>
+           <Subheading>Sign Up to get started!</Subheading>
+       </Main>
+       <Auth>
+           <AuthContainer>
+               <Icon
+                   name={"user"}
+                   color={"#40DF9F"}
+                   size={32}
+               />
+               <AuthField
+                   placeholder="Name" //changed from 'Username' to "Name"
+                   placeholderTextColor="#96A7AF"
+                   autoCapitalize="none"
+                   autoCompleteType="name" // changed from 'username' to 'name'
+                   autoCorrect={false}
+                   autoFocus={true}
+                   keyboardType="email-address"
+                   clearButtonMode="while-editing"
+                   onChangeText={name => setName(name.trim())} //changed 'username' to 'name' and changed 'setUsername' to 'setName'
+                   value={name} //changed from username to name
+               />
+           </AuthContainer>
+           
+           <AuthContainer>
+               <Icon
+                   name={"mail"}
+                   color={"#FFC542"}
+                   size={32}
+               />
+               <AuthField
+                   placeholder="Email"
+                   placeholderTextColor="#96A7AF"
+                   autoCapitalize="none"
+                   autoCompleteType="email"
+                   autoCorrect={false}
+                   keyboardType="email-address"
+                   clearButtonMode="while-editing"
+                   onChangeText={email => setEmail(email.trim())}
+                   value={email}
+               />
+           </AuthContainer>
+
+           <AuthContainer>
+               <Icon
+                   name={"lock"}
+                   color={"#FF575F"}
+                   size={32}
+               />
+               <AuthField
+                   placeholder="Password"
+                   placeholderTextColor="#96A7AF"
+                   autoCapitalize="none"
+                   autoCompleteType="password"
+                   autoCorrect={false}
+                   secureTextEntry={true}
+                   clearButtonMode="while-editing"
+                   onChangeText={password => setPassword(password.trim())}
+                   value={password}
+               />
+           </AuthContainer>
+       </Auth>
+
+       <ButtonWrap>
+           <SignIn onPress={() => navigation.navigate("SignIn")}>
+               <Icon
+                   name={"arrow-left"}
+                   color={"#3DD598"}
+                   size={18}
+               />
+           </SignIn>
+
+           <SignUpContainer disabled={loading} onPress={() => navigation.navigate("AvatarSetup")}>
+               {loading ? (
+                   <Loading />
+               ) : (
+                   <SignUpWrapper>
+                       <Text medium bold center color="#ffffff" padding={"6px"}>Next</Text>
+                       <Icon
+                           name={"arrow-right"}
+                           color={"white"}
+                           size={18}
+                       />
+                   </SignUpWrapper>
+                   
+               )}
+           </SignUpContainer>
+
+       </ButtonWrap>
+   
+   </Container>
+   */
     )
 }
 
+
+
 export default SignUpScreen
+
+
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        paddingTop: 50,
-        backgroundColor: '#fff',
+        justifyContent: 'center'
     },
     button: {
-        width: 350,
-        borderRadius: 13,
-        marginTop: 380,
-        backgroundColor: "#ffa200",
-        borderRadius: 13,
+        width: 200,
+        marginTop: 10
     },
     inputContainer: {
-        borderRadius: 10,
-        width: 350,
-        height: 45,
-        marginTop: 40,
-
-    },
-
-    fill: {
-        backgroundColor: "#f6f6f6",
-        borderRadius: 13,
-        height: 40
-    },
-
-    subtitle: {
-        paddingTop: 15,
-        color: "#afb9bd"
-    },
-    title: {
-        marginTop: 10,
-        fontSize: 24,
-        color: "#ffa200",
-        fontWeight : 'bold' 
-    },
-    fillText: {
-        marginBottom: 10,
-        marginTop: 10,
-        color: "#6d6f70"
+        width: 300
     }
 })
 
+
+
+
+/*
+const Container = styled.View`
+    flex: 1;
+    background: #22343C;
+`;
+
+const Main = styled.View`
+    margin: 139px 32px 48px;
+`;
+
+const Box = styled.View`
+    width: 45px;
+    height: 43px;
+    background: #3ED598;
+    box-shadow: 0px 2px 4px rgba(15, 218, 137, 0.3);
+    border-radius: 12px;
+`;
+
+const Heading = styled.Text`
+    height: 53px;
+    margin-top: 28px;
+    font-size: 28px;
+    line-height: 49px;
+    font-weight: bold;
+
+    color: #FFFFFF;
+`;
+
+const Subheading = styled.Text`
+    margin-top: 8px;
+    height: 29px;
+    font-size: 22px;
+    line-height: 28px;
+    color: #96A7AF;
+`;
+
+const Auth = styled.View`
+    margin: 0px 32px 32px;
+`;
+
+const AuthContainer = styled.View`
+    border-bottom-color: black;
+    border-bottom-width: 0px;
+    margin-bottom: 16px;
+    flexDirection: row;
+    alignItems: center
+`;
+
+const AuthField = styled.TextInput`
+    height: 48px;
+    flex: 1;
+    color: white
+    font-size: 16px
+    font-weight: 500
+    padding: 10px
+`;
+
+const ButtonWrap = styled.View`
+    height: 49px;
+    margin: 0px 32px;
+    flexDirection: row;
+`;
+
+const SignUpContainer = styled.TouchableOpacity`
+    flex: 1;
+    height: 48px;
+    flexDirection: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #40DF9F;
+    box-shadow: 0px 2px 4px rgba(15, 218, 137, 0.3);
+    border-radius: 12px;
+    margin-left: 10px;
+`;
+
+const SignUpWrapper = styled.View`
+    flexDirection: row;
+    align-items: center;
+    justify-content: center;
+`;
+
+const SignIn = styled.TouchableOpacity`
+    width: 48px;
+    height: 49px;
+    align-items: center;
+    justify-content: center;
+    background-color: #286053;
+    border-radius: 12px;
+`;
+
+const Loading = styled.ActivityIndicator.attrs((props) => ({
+    color: "white",
+    size: "small",
+
+}))``;
+*/

@@ -6,6 +6,16 @@ import { auth } from "../firebase";
 import { SafeAreaView } from 'react-native';
 
 const ProfileScreen = ({ navigation }) => {
+    const [name, setName] = useState('');
+    const user = auth.currentUser;
+
+    useEffect(() => {
+        if (user) {
+            console.log(auth.currentUser.displayName)
+            setName(auth.currentUser.displayName)
+        }
+        
+    }, []);
 
     return (
         
@@ -19,6 +29,7 @@ const ProfileScreen = ({ navigation }) => {
                 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
             }}
             />
+        <Text>{name}</Text>
         <View
         style={{
             flexDirection: "row",
