@@ -1,3 +1,5 @@
+
+
 import { auth } from '../firebase';
 import React, { useLayoutEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, ScrollView, SafeAreaView, View, Button } from 'react-native';
