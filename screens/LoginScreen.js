@@ -20,15 +20,15 @@ const LoginScreen = ({ navigation }) => {
             }
         })
 
-const HomeScreen = ({navigation}) => {
+        return unsubscribe;
+    }, []);
 
-    const signOutUser = () => {
+    const signIn = () => {
         auth
             .signInWithEmailAndPassword(email, password)
             .catch((err) => alert(err))
         // setLoading(true)
     };
-
 
     return(
 
@@ -109,37 +109,9 @@ const HomeScreen = ({navigation}) => {
         
     );    
     
-
-/*
-    return (
-        <KeyboardAvoidingView behavior="padding" style={styles.container}>
-            <View style={styles.inputContainer}>
-                <Input 
-                    placeholder="Email" 
-                    autofocus 
-                    type="email" 
-                    value={email} 
-                    onChangeText={(text) => setEmail(text)}
-                />
-                <Input 
-                    placeholder="Password" 
-                    secureTextEntry 
-                    type="password" 
-                    value={password} 
-                    onChangeText={(text) => setPassword(text)}
-                    onSubmitEditing={signIn}
-                />
-            </View>
-            <Button containerStyle={styles.button} onPress={signIn} title="Login" />
-            <Button containerStyle={styles.button} onPress={() => navigation.navigate('SignUp')} type="outline" title="Register" />
-        </KeyboardAvoidingView>
-        
-    );
-*/
 }
 
-
-export default HomeScreen
+export default LoginScreen
 
 /*
 const styles = StyleSheet.create({

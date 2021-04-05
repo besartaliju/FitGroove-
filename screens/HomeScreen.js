@@ -1,16 +1,18 @@
 import { auth } from '../firebase';
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, ScrollView, SafeAreaView, View } from 'react-native';
 import { Card, Tile, Avatar, Button } from 'react-native-elements';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 const HomeScreen = ({navigation}) => {
+    const [name, setName] = useState('');
+    const user = auth.currentUser;
 
     const signOutUser = () => {
         auth
             .signOut()
             .then(() => {
-                navigation.replace("Login");
+                navigation.navigate('Auth', {screen: 'Login'});
             });
     };
 
@@ -23,7 +25,13 @@ const HomeScreen = ({navigation}) => {
                 </TouchableOpacity>
                 
             )
+            
         })
+        if (user) {
+            console.log(auth.currentUser.displayName)
+            setName(auth.currentUser.displayName)
+        }
+
     })
     return (
         <SafeAreaView style={styles.container}>
@@ -37,7 +45,7 @@ const HomeScreen = ({navigation}) => {
                 }}>
                     <View>
                         <Text h1 style={styles.date}>04/01/2021</Text>
-                        <Text h1 style={styles.title}>Hi, John!</Text>
+                        <Text h1 style={styles.title}>Hi, {name}!</Text>
                     </View>
                     <Avatar
                     size="medium"
@@ -196,8 +204,7 @@ const HomeScreen = ({navigation}) => {
             </ScrollView>
         </SafeAreaView>
         );
-    }
-
+}
 
 export default HomeScreen
 

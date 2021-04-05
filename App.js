@@ -32,7 +32,8 @@ export default function App() {
 
   function AuthStack() {
     return (
-      <Stack.Navigator headerMode='none'>
+      <Stack.Navigator >
+        <Stack.Screen name="Login" component={LoginScreen}/>
         <Stack.Screen name="SignUp" component={SignUpScreen}/>
       </Stack.Navigator>
     )

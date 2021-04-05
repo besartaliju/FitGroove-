@@ -111,13 +111,13 @@ const FoodScreen = () => {
                                 <Text style={styles.macros}>Carbs: {carbs}</Text>
                                 <Text style={styles.macros}>Fat: {fat}</Text>
                             </View>
-                            <View>
+                            {/* <View>
                                 <Image
                                 source={{ uri: imageURI }}
                                 style={{ width: 100, height: 100 }}
                                 PlaceholderContent={<ActivityIndicator />}
                                 />
-                            </View>
+                            </View> */}
                         </View>
                         <View style={styles.inputContainer}>
                             <Input 
@@ -144,13 +144,13 @@ const FoodScreen = () => {
                                 <Text style={styles.macros}>Carbs: {carbs}</Text>
                                 <Text style={styles.macros}>Fat: {fat}</Text>
                             </View>
-                            <View>
+                            {/* <View>
                                 <Image
                                 source={{ uri: imageURI }}
                                 style={{ width: 100, height: 100 }}
                                 PlaceholderContent={<ActivityIndicator />}
                                 />
-                            </View>
+                            </View> */}
                         </View>
                         <View style={styles.inputContainer}>
                             <Input 
@@ -177,13 +177,13 @@ const FoodScreen = () => {
                                 <Text style={styles.macros}>Carbs: {carbs}</Text>
                                 <Text style={styles.macros}>Fat: {fat}</Text>
                             </View>
-                            <View>
+                            {/* <View>
                                 <Image
                                 source={{ uri: imageURI }}
                                 style={{ width: 100, height: 100 }}
                                 PlaceholderContent={<ActivityIndicator />}
                                 />
-                            </View>
+                            </View> */}
                         </View>
                         <View style={styles.inputContainer}>
                             <Input 
@@ -209,13 +209,13 @@ const FoodScreen = () => {
                                 <Text style={styles.macros}>Carbs: {carbs}</Text>
                                 <Text style={styles.macros}>Fat: {fat}</Text>
                             </View>
-                            <View>
+                            {/* <View>
                                 <Image
                                 source={{ uri: imageURI }}
                                 style={{ width: 100, height: 100 }}
                                 PlaceholderContent={<ActivityIndicator />}
                                 />
-                            </View>
+                            </View> */}
                         </View>
                         <View style={styles.inputContainer}>
                             <Input 
@@ -242,13 +242,13 @@ const FoodScreen = () => {
                                 <Text style={styles.macros}>Carbs: {carbs}</Text>
                                 <Text style={styles.macros}>Fat: {fat}</Text>
                             </View>
-                            <View>
+                            {/* <View>
                                 <Image
                                 source={{ uri: imageURI }}
                                 style={{ width: 100, height: 100 }}
                                 PlaceholderContent={<ActivityIndicator />}
                                 />
-                            </View>
+                            </View> */}
                         </View>
                         <View style={styles.inputContainer}>
                             <Input 
