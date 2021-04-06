@@ -1,12 +1,13 @@
 import { auth } from '../firebase';
-import React, { useLayoutEffect, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, ScrollView, SafeAreaView, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, ScrollView, SafeAreaView, View, ActivityIndicator } from 'react-native';
 import { Card, Tile, Avatar, Button } from 'react-native-elements';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 const HomeScreen = ({navigation}) => {
     const [name, setName] = useState('');
-    const user = auth.currentUser;
+    const [isLoading, setIsLoading] = useState(false);
+    var user = auth.currentUser;
 
     const signOutUser = () => {
         auth
@@ -16,7 +17,7 @@ const HomeScreen = ({navigation}) => {
             });
     };
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         navigation.setOptions({
             headerRight: () => (
                 <TouchableOpacity onPress={signOutUser}>
@@ -24,14 +25,28 @@ const HomeScreen = ({navigation}) => {
                     {/* make symbol, whatever chai downloaded */}
                 </TouchableOpacity>
                 
+            ),
+            headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+                    <Text>Profile</Text>
+                    {/* make symbol, whatever chai downloaded */}
+                </TouchableOpacity>
             )
             
         })
-        if (user) {
-            console.log(auth.currentUser.displayName)
-            setName(auth.currentUser.displayName)
-        }
-
+        // const unsubscribe = auth.onAuthStateChanged(function(user) {
+        //     if (user) {
+        //         console.log(user.displayName)
+        //         setName(user.displayName)
+        //         setIsLoading(false)
+        //     }
+        //   });
+    //    console.log(name)
+        // if (user) {
+        //     // console.log(user.displayName)
+        //     setName(user.displayName)
+        // }
+        //   return () => unsubscribe();
     })
     return (
         <SafeAreaView style={styles.container}>
@@ -43,10 +58,14 @@ const HomeScreen = ({navigation}) => {
                     width: 350,
                     marginBottom: 25
                 }}>
+                    {isLoading ? (
+                        <ActivityIndicator />
+                    ) : (
                     <View>
                         <Text h1 style={styles.date}>04/01/2021</Text>
-                        <Text h1 style={styles.title}>Hi, {name}!</Text>
+                        <Text h1 style={styles.title}>Hi, {user.displayName}!</Text>
                     </View>
+                    )}
                     <Avatar
                     size="medium"
                     rounded
