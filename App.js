@@ -13,6 +13,9 @@ import WorkoutScreen from './screens/WorkoutScreen';
 import HistoryScreen from './screens/HistoryScreen';
 import SocialScreen from './screens/SocialScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import  MyExercise  from './screens/MyExercise';
+import NewExercise from './screens/NewExercise';
+import FindExercise from './screens/FindExercise';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -85,6 +88,9 @@ export default function App() {
       <Stack.Navigator keyboardHandlingEnabled='true'>
         <Stack.Screen options={{headerShown: false}} name="Auth" component={AuthStack} />
         <Stack.Screen options={{headerShown: false}} name="App" component={Root} />
+        <Stack.Screen name="MyExercise" component={MyExercise}/>
+        <Stack.Screen name="NewExercise" component={NewExercise}/>
+        <Stack.Screen name="FindExercise" component={FindExercise}/>
       </Stack.Navigator>
     </NavigationContainer>
     );
