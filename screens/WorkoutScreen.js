@@ -1,27 +1,33 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native'
+import { StyleSheet, Text, View} from 'react-native'
 import RNPickerSelect from 'react-native-picker-select';
+import { Button, Input, Image } from "react-native-elements";
+import { set } from 'react-native-reanimated';
 
 const WorkoutScreen = () => {
     const [exercises, setExercises] = useState([]);
+    const [exercise, setExercise] = useState('');
     const [equipment, setEquipment] = useState('');
-    const [muscle, setMuscle] = useState('');
+    const [category, setCategory] = useState('');
+
+    const [exName, setExName] = useState('');
+    const [exCategory, setExCategory] = useState('');
+    const [exDescription, setExDescription] = useState('');
+
 
     function getExercise() {
-        const uri = `https://wger.de/api/v2/exercise/?limit=100&language=2${muscle}${equipment}`
+        const uri = `https://wger.de/api/v2/exercise/?limit=100&language=2${category}${equipment}`
+        const uri2 = `https://wger.de/api/v2/exercise/?limit=500&language=2`
         console.log(uri)
         fetch(uri, {
         "method": "GET",
         "headers": {
             "Authorization": "664964002b4dd882f68eeca9bf8426e6082b14f5"
-        },
-        // "body": {
-        //     "language": "2"
-        // }
+        }
         })
         .then(response => response.json())
         .then(data => {
-            setExercises(data.results)
+            setExercises(data.results);
             console.log(data.results);
         })
         .catch(err => {
@@ -29,8 +35,19 @@ const WorkoutScreen = () => {
         });
     }
 
+
+
     function see() {
-        console.log(exercises)
+        console.log(exercises[9])
+    }
+
+    function findExercise() {
+        const idx = exercises.findIndex((obj => obj.name === exercise))
+        setExName(exercises[idx].name)
+        setExCategory(exercises[idx].category)
+        setExDescription(exercises[idx].description)
+        console.log(idx)
+
     }
 
     return (
@@ -61,9 +78,9 @@ const WorkoutScreen = () => {
             <RNPickerSelect
             onValueChange={(value) => {
                 if(value==0){
-                    setMuscle('')
+                    setCategory('')
                 } else {
-                    setMuscle(`&muscles=${value}`)
+                    setCategory(`&category=${value}`)
                 }
             }}
             items={[
@@ -78,8 +95,17 @@ const WorkoutScreen = () => {
             ]}
         />
             <Button onPress={getExercise} title="Get Exercise" />
+            <Input 
+                placeholder="Find Exercise" 
+                type="text" 
+                value={exercise} 
+                onChangeText={(text) => setExercise(text)}
+            />
+            <Button onPress={findExercise} title="Find"/>
             <Button onPress={see} title="See" />
-
+            <Text>Name: {exName}</Text>
+            <Text>Category: {exCategory}</Text>
+            <Text>Description: {exDescription}</Text>
         </View>
     )
 }
