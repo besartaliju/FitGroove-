@@ -1,53 +1,95 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, View} from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { ActivityIndicator, StyleSheet, Text, View} from 'react-native'
 import RNPickerSelect from 'react-native-picker-select';
 import { Button, Input, Image } from "react-native-elements";
-import { set } from 'react-native-reanimated';
 
 const WorkoutScreen = () => {
-    const [exercises, setExercises] = useState([]);
+    // const [filteredExercises, setFilteredExercises] = useState([]);
     const [exercise, setExercise] = useState('');
+    const [exerciseList, setExerciseList] = useState([]);
     const [equipment, setEquipment] = useState('');
     const [category, setCategory] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
+    const [isFetched, setIsFetched] = useState(false)
 
+    // Exercise Search
     const [exName, setExName] = useState('');
     const [exCategory, setExCategory] = useState('');
     const [exDescription, setExDescription] = useState('');
+    const [exerciseID, setExerciseID] = useState('');
+    const [exDetails, setExDetails] = useState({});
 
+    useEffect(() => {
+        getExerciseList();
+        
+    }, [])
 
-    function getExercise() {
-        const uri = `https://wger.de/api/v2/exercise/?limit=100&language=2${category}${equipment}`
-        const uri2 = `https://wger.de/api/v2/exercise/?limit=500&language=2`
-        console.log(uri)
-        fetch(uri, {
-        "method": "GET",
-        "headers": {
-            "Authorization": "664964002b4dd882f68eeca9bf8426e6082b14f5"
-        }
-        })
-        .then(response => response.json())
-        .then(data => {
-            setExercises(data.results);
-            console.log(data.results);
-        })
-        .catch(err => {
+    const getExerciseList = async () => {
+
+        try{
+            const uri = `https://wger.de/api/v2/exercise/?limit=100&language=2${category}${equipment}`
+            // const uri2 = `https://wger.de/api/v2/exercise/?limit=500&language=2`
+            console.log(uri)
+            
+            fetch(uri, {
+            "method": "GET",
+            "headers": {
+                "Authorization": "664964002b4dd882f68eeca9bf8426e6082b14f5"
+            }
+            })
+            .then(response => response.json())
+            .then(data => {
+                setExerciseList(data.results);
+                setIsLoading(false)
+                console.log(data.results);
+            })
+            .catch(err => {
+                console.error(err);
+            });
+        } catch (err) {
             console.error(err);
-        });
+        }
+        
     }
 
-
-
-    function see() {
-        console.log(exercises[9])
+    const getExerciseInfo = async (id) => {
+        try {
+            const uri = `https://wger.de/api/v2/exerciseinfo/${id}`
+            console.log(uri)
+            
+            fetch(uri, {
+            "method": "GET",
+            "headers": {
+                "Authorization": "664964002b4dd882f68eeca9bf8426e6082b14f5"
+            }
+            })
+            .then(response => response.json())
+            .then(data => {
+                setExDetails(data);
+                console.log(data);
+            })
+            .then(() => setIsFetched(true))
+            .catch(err => {
+                console.error(err);
+            });
+        } catch (err) {
+            console.error(err)
+        }
     }
 
     function findExercise() {
-        const idx = exercises.findIndex((obj => obj.name === exercise))
-        setExName(exercises[idx].name)
-        setExCategory(exercises[idx].category)
-        setExDescription(exercises[idx].description)
-        console.log(idx)
+        const idx = exerciseList.findIndex((obj => obj.name === exercise));
+        const foundExercise = exerciseList[idx];
+        if (foundExercise){
+            // setExerciseID(foundExercise.id)
+            getExerciseInfo(foundExercise.id)
+        } else {
+            alert('No exercises found with these parameters.')
+            }
+    }
 
+    function details() {
+        console.log(exDetails.name)
     }
 
     return (
@@ -94,18 +136,29 @@ const WorkoutScreen = () => {
                 { label: 'Shoulders', value: '13' }
             ]}
         />
-            <Button onPress={getExercise} title="Get Exercise" />
+            <Button onPress={getExerciseList} title="Get Exercise" />
             <Input 
                 placeholder="Find Exercise" 
                 type="text" 
                 value={exercise} 
                 onChangeText={(text) => setExercise(text)}
             />
-            <Button onPress={findExercise} title="Find"/>
-            <Button onPress={see} title="See" />
-            <Text>Name: {exName}</Text>
-            <Text>Category: {exCategory}</Text>
-            <Text>Description: {exDescription}</Text>
+            <Button onPress={findExercise} title="Find" disabled={isLoading? true : false}/>
+            <Button onPress={details} title="Details" />
+            <View>
+                <Text>Name: {isFetched ? exDetails.name : ""}</Text>
+                <Text>Category: {isFetched ? exDetails.category.name : ""}</Text>
+                <Text>Description: {isFetched ? exDetails.description : ""}</Text>
+                <View>
+                    <Image 
+                        style={styles.tinyLogo}
+                        source={isFetched ? (exDetails.images.length ? exDetails.images[0].image : "https://kubalubra.is/wp-content/uploads/2017/11/default-thumbnail.jpg") : ""}
+                    />
+                </View>
+                
+            </View>
+            
+            
         </View>
     )
 }
