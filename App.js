@@ -88,9 +88,9 @@ export default function App() {
       <Stack.Navigator keyboardHandlingEnabled='true'>
         <Stack.Screen options={{headerShown: false}} name="Auth" component={AuthStack} />
         <Stack.Screen options={{headerShown: false}} name="App" component={Root} />
-        <Stack.Screen name="MyExercise" component={MyExercise}/>
-        <Stack.Screen name="NewExercise" component={NewExercise}/>
-        <Stack.Screen name="FindExercise" component={FindExercise}/>
+        <Stack.Screen options={{headerShown: false}} name="MyExercise" component={MyExercise}/>
+        <Stack.Screen options={{headerShown: false}} name="NewExercise" component={NewExercise}/>
+        <Stack.Screen options={{headerShown: false}} name="FindExercise" component={FindExercise}/>
       </Stack.Navigator>
     </NavigationContainer>
     );

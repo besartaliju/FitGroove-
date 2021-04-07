@@ -57,7 +57,91 @@ const FindExercise = () => {
      const renderItem = ({ item }) => (
         <Item title={item.title} sets={item.sets}/>
       );
+     const [exercise, setExercise] = useState('');
+     const [exerciseList, setExerciseList] = useState([]);
+     const [equipment, setEquipment] = useState('');
+     const [category, setCategory] = useState('');
+     const [isLoading, setIsLoading] = useState(true);
+     const [isFetched, setIsFetched] = useState(false);
 
+     const [exName, setExName] = useState('');
+     const [exCategory, setExCategory] = useState('');
+     const [exDescription, setExDescription] = useState('');
+     const [exerciseID, setExerciseID] = useState('');
+     const [exDetails, setExDetails] = useState({});
+
+     useEffect(() => {
+             getExerciseList();
+
+     }, [])
+
+     const getExerciseList = async () => {
+
+            try{
+                const uri = `https://wger.de/api/v2/exercise/?limit=100&language=2${category}${equipment}`
+                // const uri2 = `https://wger.de/api/v2/exercise/?limit=500&language=2`
+                console.log(uri)
+
+                fetch(uri, {
+                "method": "GET",
+                "headers": {
+                    "Authorization": "664964002b4dd882f68eeca9bf8426e6082b14f5"
+                }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    setExerciseList(data.results);
+                    setIsLoading(false)
+                    console.log(data.results);
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+            } catch (err) {
+                console.error(err);
+            }
+
+        }
+
+        const getExerciseInfo = async (id) => {
+            try {
+                const uri = `https://wger.de/api/v2/exerciseinfo/${id}`
+                console.log(uri)
+
+                fetch(uri, {
+                "method": "GET",
+                "headers": {
+                    "Authorization": "664964002b4dd882f68eeca9bf8426e6082b14f5"
+                }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    setExDetails(data);
+                    console.log(data);
+                })
+                .then(() => setIsFetched(true))
+                .catch(err => {
+                    console.error(err);
+                });
+            } catch (err) {
+                console.error(err)
+            }
+        }
+
+        function findExercise() {
+            const idx = exerciseList.findIndex((obj => obj.name === exercise));
+            const foundExercise = exerciseList[idx];
+            if (foundExercise){
+                // setExerciseID(foundExercise.id)
+                getExerciseInfo(foundExercise.id)
+            } else {
+                alert('No exercises found with these parameters.')
+                }
+        }
+
+        function details() {
+            console.log(exDetails.name)
+      }
     return(
         <View style={styles.container}>
             <ScrollView>
@@ -68,7 +152,7 @@ const FindExercise = () => {
                     <TextInput
                           style={styles.input}
                           type="text"
-                          onChangeText={(text) => setName(text)}
+                          onChangeText={(text) => setExercise(text)}
                           placeholder="Search Cardio, Boxing, Weight and etc..."
                           placeholderTextColor="#d7e1ec"
                           color='white'

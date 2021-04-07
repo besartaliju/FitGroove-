@@ -111,6 +111,7 @@ const WorkoutScreen = () => {
 
             </ScrollView>
     </View>
+ )
 }
 
 export default WorkoutScreen
