@@ -13,6 +13,8 @@ import WorkoutScreen from './screens/WorkoutScreen';
 import HistoryScreen from './screens/HistoryScreen';
 import SocialScreen from './screens/SocialScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import SearchFoodScreen from './screens/SearchFoodScreen';
+import FoodInfoScreen from './screens/FoodInfoScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -32,7 +34,7 @@ export default function App() {
 
   function AuthStack() {
     return (
-      <Stack.Navigator >
+      <Stack.Navigator>
         <Stack.Screen name="Login" component={LoginScreen}/>
         <Stack.Screen name="SignUp" component={SignUpScreen}/>
       </Stack.Navigator>
@@ -68,6 +70,8 @@ export default function App() {
     return (
       <Stack.Navigator>
         <Stack.Screen name="Food" component={FoodScreen}/>
+        <Stack.Screen name="SearchFood" component={SearchFoodScreen}/>
+        <Stack.Screen name="FoodInfoScreen" component={FoodInfoScreen}/>
       </Stack.Navigator>
     )
   }
