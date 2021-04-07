@@ -157,12 +157,12 @@ const FindExercise = () => {
                           placeholder="Search Cardio, Boxing, Weight and etc..."
                           placeholderTextColor="#d7e1ec"
                           color='white'
+                          onSubmitEditing={findExercise}
                     />
 
                 </View>
-                   <View style={{padding:10}}>
-                    <Button onPress={findExercise} title="Search" disabled={isLoading? true : false}/>
-                    <View style={{paddingTop:10}}>
+
+                    <View style={{padding:10}}>
                         <Button onPress={details} title="Details" />
                     </View>
                     <View>
