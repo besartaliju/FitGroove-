@@ -1,6 +1,7 @@
 import  React, {useState} from 'react';
 import {Text, View,SafeAreaView, StatusBar, StyleSheet,FlatList,TouchableHighlight,Image, TextInput,ScrollView} from 'react-native';
 import CategoryCard from './CategoryCard'
+import RNPickerSelect from 'react-native-picker-select'
 const DATA=[
         {
             id: 1,
@@ -157,6 +158,7 @@ const FindExercise = () => {
                           placeholderTextColor="#d7e1ec"
                           color='white'
                     />
+                    <Button onPress={findExercise} title="Search" disabled={isLoading? true : false}/>
                 </View>
                 <ScrollView
                     horizontal={true}
@@ -174,20 +176,7 @@ const FindExercise = () => {
                     <Text style={{color:'white', fontSize:25}}> Trending </Text>
 
                 </View>
-<View>
-                        <ScrollView
-                            horizontal={true}
-                            showsHorizontalScrollIndicator={false}
-                        >
-                                            <View style={{flexDirection:"row", paddingTop:10}}>
-                                                <CategoryCard imgSource={require("../assets/dumbell.png")} name="Weight Training"/>
-                                                <CategoryCard imgSource={require("../assets/lotus.png")} name="Yoga"/>
-                                                <CategoryCard imgSource={require("../assets/exercise.png")} name="Cardio"/>
-                                                <CategoryCard imgSource={require("../assets/boxing.png")} name="Boxing"/>
-                                                <CategoryCard imgSource={require("../assets/cycling.png")} name="Cycling"/>
-                                            </View>
-                        </ScrollView>
-                    </View>
+
             </ScrollView>
         </View>
 
@@ -214,7 +203,6 @@ const styles= StyleSheet.create({
         borderTopLeftRadius:25,
         borderBottomRightRadius:25,
         borderBottomLeftRadius:25,
-
       },
 
 
