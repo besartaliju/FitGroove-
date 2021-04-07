@@ -4,6 +4,8 @@ import { KeyboardAvoidingView as Kav, StyleSheet, Text, View, Platform } from 'r
 import { auth } from "../firebase";
 import {Feather as Icon} from "@expo/vector-icons";
 import styled from "styled-components/native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 const LoginScreen = ({ navigation }) => {
@@ -12,11 +14,24 @@ const LoginScreen = ({ navigation }) => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
 
+    const [showRealApp, setShowRealApp] = useState(false)
+
     useEffect(() => {
+        AsyncStorage.getItem('first_time').then((value) => {
+            if(!!value) {
+                setShowRealApp(true);
+            }
+        });
+
         const unsubscribe = auth.onAuthStateChanged((authUser) => {
             console.log(authUser);
             if(authUser) {
-                navigation.replace("App");
+                if(showRealApp) {
+                    navigation.replace("App");
+                } else {
+                    navigation.navigate("Onboarding")
+                }
+                
             }
         })
 

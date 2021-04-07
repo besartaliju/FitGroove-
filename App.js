@@ -15,6 +15,7 @@ import SocialScreen from './screens/SocialScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import SearchFoodScreen from './screens/SearchFoodScreen';
 import FoodInfoScreen from './screens/FoodInfoScreen';
+import OnboardingScreen from './screens/OnboardingScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -37,6 +38,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="Login" component={LoginScreen}/>
         <Stack.Screen name="SignUp" component={SignUpScreen}/>
+        <Stack.Screen name="Onboarding" component={OnboardingScreen}/>
       </Stack.Navigator>
     )
   }
