@@ -1,13 +1,13 @@
 import React, {useState} from 'react'
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, FlatList, Alert, TouchableOpacity, TextInput } from 'react-native';
 import { KeyboardAvoidingView, StyleSheet, Text, View, ActivityIndicator } from 'react-native'
-import { Button, Input, Image } from "react-native-elements";
+import { Button, Input, Image, withTheme } from "react-native-elements";
 const fetch = require('node-fetch');
 import { Divider } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 
 
-const FoodScreen = () => {
+const FoodScreen = ({navigation}) => {
 
     const [totalcalories, setTotalCalories] = useState('');
     const [totalfat, setTotalFat] = useState('');
@@ -51,17 +51,19 @@ const FoodScreen = () => {
             console.error(err);
         });
     }
-    
+
+ 
     return (
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
             <SafeAreaView>
                 <ScrollView>
+                    <Text style={{color: 'white', paddingLeft: 15, fontSize: 20, paddingTop: 25, fontSize: 28, fontWeight:'100'}}>Your Daily Meal</Text>
                     <View
                     style={{
                         flexDirection: "row",
                         height: 75,
                         backgroundColor: '#3b3b3b',
-                        marginTop: 75,
+                        marginTop: 25,
                         marginBottom: 2,
                         borderRadius: 10
                     }}
@@ -99,25 +101,32 @@ const FoodScreen = () => {
                             </Text>
                         </View>
                     </View>
+                    <Button 
+                        title="Log a meal"
+                        style={{alignItems: 'center', justifyContent: 'center', marginleft: 50, width: 400, height: 75}}
+                        onPress={() => navigation.navigate("SearchFood")}
+                        />
                     <View style={styles.dailyMeals}>
                         <Text style={styles.mealTitle}>Breakfast</Text>
-                        <Text style={styles.foodName} >{foodName}</Text>
-                        <View style={{
-                        flexDirection: "row",
-                        }} >
-                            <View style={{marginRight: 150}}>
-                                <Text style={styles.macros}>Calories: {calories}</Text>
-                                <Text style={styles.macros}>Protein: {protein}</Text>
-                                <Text style={styles.macros}>Carbs: {carbs}</Text>
-                                <Text style={styles.macros}>Fat: {fat}</Text>
+                            <View>
+                                <Text style={styles.foodName} >{foodName}</Text>
+                                <View style={{
+                                flexDirection: "row",
+                                }} >
+                                <View style={{marginRight: 150}}>
+                                    <Text style={styles.macros}>Calories: {calories}</Text>
+                                    <Text style={styles.macros}>Protein: {protein}</Text>
+                                    <Text style={styles.macros}>Carbs: {carbs}</Text>
+                                    <Text style={styles.macros}>Fat: {fat}</Text>
+                                </View>
+                                <View>
+                                    <Image
+                                    source={{ uri: imageURI }}
+                                    style={{ width: 100, height: 100 }}
+                                    PlaceholderContent={<ActivityIndicator />}
+                                    />
+                                </View>
                             </View>
-                            {/* <View>
-                                <Image
-                                source={{ uri: imageURI }}
-                                style={{ width: 100, height: 100 }}
-                                PlaceholderContent={<ActivityIndicator />}
-                                />
-                            </View> */}
                         </View>
                         <View style={styles.inputContainer}>
                             <Input 
@@ -144,13 +153,13 @@ const FoodScreen = () => {
                                 <Text style={styles.macros}>Carbs: {carbs}</Text>
                                 <Text style={styles.macros}>Fat: {fat}</Text>
                             </View>
-                            {/* <View>
+                            <View>
                                 <Image
                                 source={{ uri: imageURI }}
                                 style={{ width: 100, height: 100 }}
                                 PlaceholderContent={<ActivityIndicator />}
                                 />
-                            </View> */}
+                            </View>
                         </View>
                         <View style={styles.inputContainer}>
                             <Input 
@@ -165,103 +174,6 @@ const FoodScreen = () => {
                         </View>
                     </View>
                     <Divider style={{ backgroundColor: 'grey'}} />
-                    <View style={styles.dailyMeals}>
-                        <Text style={styles.mealTitle}>Dinner</Text>
-                        <Text style={styles.foodName} >{foodName}</Text>
-                        <View style={{
-                        flexDirection: "row",
-                        }} >
-                            <View style={{marginRight: 150}}>
-                                <Text style={styles.macros}>Calories: {calories}</Text>
-                                <Text style={styles.macros}>Protein: {protein}</Text>
-                                <Text style={styles.macros}>Carbs: {carbs}</Text>
-                                <Text style={styles.macros}>Fat: {fat}</Text>
-                            </View>
-                            {/* <View>
-                                <Image
-                                source={{ uri: imageURI }}
-                                style={{ width: 100, height: 100 }}
-                                PlaceholderContent={<ActivityIndicator />}
-                                />
-                            </View> */}
-                        </View>
-                        <View style={styles.inputContainer}>
-                            <Input 
-                                placeholder="Add Food" 
-                                type="text" 
-                                color="white"
-                                // value={name} 
-                                onChangeText={(text) => setName(text)}
-                                style={styles.Input}
-                            />
-                            <Button type="clear" style={styles.addButton} onPress={getFoodInfo} title="+" />
-                        </View>
-                    </View>
-                    <View style={styles.dailyMeals}>
-                        <Text style={styles.mealTitle}>Lunch</Text>
-                        <Text style={styles.foodName} >{foodName}</Text>
-                        <View style={{
-                        flexDirection: "row",
-                        }} >
-                            <View style={{marginRight: 150}}>
-                                <Text style={styles.macros}>Calories: {calories}</Text>
-                                <Text style={styles.macros}>Protein: {protein}</Text>
-                                <Text style={styles.macros}>Carbs: {carbs}</Text>
-                                <Text style={styles.macros}>Fat: {fat}</Text>
-                            </View>
-                            {/* <View>
-                                <Image
-                                source={{ uri: imageURI }}
-                                style={{ width: 100, height: 100 }}
-                                PlaceholderContent={<ActivityIndicator />}
-                                />
-                            </View> */}
-                        </View>
-                        <View style={styles.inputContainer}>
-                            <Input 
-                                placeholder="Add Food" 
-                                type="text" 
-                                color="white"
-                                // value={name} 
-                                onChangeText={(text) => setName(text)}
-                                style={styles.Input}
-                            />
-                            <Button type="clear" style={styles.addButton} onPress={getFoodInfo} title="+" />
-                        </View>
-                    </View>
-                    <Divider style={{ backgroundColor: 'grey'}} />
-                    <View style={styles.dailyMeals}>
-                        <Text style={styles.mealTitle}>Snacks</Text>
-                        <Text style={styles.foodName} >{foodName}</Text>
-                        <View style={{
-                        flexDirection: "row",
-                        }} >
-                            <View style={{marginRight: 150}}>
-                                <Text style={styles.macros}>Calories: {calories}</Text>
-                                <Text style={styles.macros}>Protein: {protein}</Text>
-                                <Text style={styles.macros}>Carbs: {carbs}</Text>
-                                <Text style={styles.macros}>Fat: {fat}</Text>
-                            </View>
-                            {/* <View>
-                                <Image
-                                source={{ uri: imageURI }}
-                                style={{ width: 100, height: 100 }}
-                                PlaceholderContent={<ActivityIndicator />}
-                                />
-                            </View> */}
-                        </View>
-                        <View style={styles.inputContainer}>
-                            <Input 
-                                placeholder="Add Food" 
-                                type="text" 
-                                color="white"
-                                // value={name} 
-                                onChangeText={(text) => setName(text)}
-                                style={styles.Input}
-                            />
-                            <Button type="clear" style={styles.addButton} onPress={getFoodInfo} title="+" />
-                        </View>
-                    </View>
                 </ScrollView>
             </SafeAreaView>
         </KeyboardAvoidingView>
