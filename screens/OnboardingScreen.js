@@ -4,7 +4,8 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { db, auth } from '../firebase';
 //import DatePicker from 'react-native-date-picker'
 
-import {View, Text, Button, Image, StyleSheet, TextInput, Input} from 'react-native';
+import {View, Text, Image, StyleSheet, TextInput, Input} from 'react-native';
+import {Button} from 'react-native-elements';
 import styled from "styled-components/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -198,7 +199,7 @@ const Heading = styled.Text`
 const Subheading = styled.Text`
     margin: 10px 50px 5px 50px;
     width: 220px;
-    height: px;
+    height: 1px;
     font-size: 18px;
     line-height: 28px;
     textAlign: center;
