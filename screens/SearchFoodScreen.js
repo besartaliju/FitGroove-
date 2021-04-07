@@ -8,10 +8,7 @@ import { FlatList, ScrollView, TouchableOpacity } from 'react-native-gesture-han
 
 const SearchFoodScreen = ({navigation}) => {
 
-    const [totalcalories, setTotalCalories] = useState('');
-    const [totalfat, setTotalFat] = useState('');
-    const [totalcarbs, setTotalCarbs] = useState('');
-    const [totalprotein, setTotalProtein] = useState('');
+    const [measurement, setMeasurement] = useState('');
 
     const [name, setName] = useState('');
     const [calories, setCalories] = useState('');
@@ -36,7 +33,7 @@ const SearchFoodScreen = ({navigation}) => {
             // console.log(data)
             const foodSearched = data.parsed[0].food.nutrients
             setFoodList(data.hints)
-
+            //setMeasurement(data.parsed[0].measures[4])
             // console.log(data.hints)
             setFoodName(data.parsed[0].food.label)
             setCalories(foodSearched.ENERC_KCAL)
@@ -53,16 +50,6 @@ const SearchFoodScreen = ({navigation}) => {
         });
 
     }
-
-
-
-//     const renderItem = ({item}) => {
-
-//         <View style={styles.foodInfo}>
-//             <Text style={styles.foodName} >{item[0].food.label}</Text>
-//             {/* <Text style={styles.macros}>Calories: {item.calories}</Text> */}
-//         </View>
-// }
 
 const [isSearched, setIsSearched] = useState(false);
     
@@ -84,10 +71,16 @@ const [isSearched, setIsSearched] = useState(false);
                         {isSearched ? (
                                 foodList.map((item) => {
                                     return (
-                                        <TouchableOpacity  onPress={() => navigation.navigate('FoodInfoScreen')}>
+                                        <TouchableOpacity  onPress={() => navigation.navigate('FoodInfoScreen', {
+                                            foodName: foodName,
+                                            calories: calories,
+                                            carbs: carbs,
+                                            fat: fat,
+                                            protein: protein
+                                          })}>
                                             <View style={styles.foodBox}>
                                                 <Text style={styles.clickFoodName}>{item.food.label}</Text>
-                                                <Text style={styles.clickFoodInfo}>{calories} cals</Text>
+                                                <Text style={styles.clickFoodInfo}>{item.food.nutrients.ENERC_KCAL} cals</Text>
                                             </View>
                                         </TouchableOpacity>
                                     )

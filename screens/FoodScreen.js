@@ -7,7 +7,7 @@ import { Divider } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 
 
-const FoodScreen = ({navigation}) => {
+const FoodScreen = ({navigation, route}) => {
 
     const [totalcalories, setTotalCalories] = useState('');
     const [totalfat, setTotalFat] = useState('');
@@ -22,6 +22,7 @@ const FoodScreen = ({navigation}) => {
     const [fat, setFat] = useState('');
     const [imageURI, setImageURI] = useState('');
     const [foodList, setFoodList] = useState([[]]);
+
 
     function getFoodInfo() {
         const uri = "https://edamam-food-and-grocery-database.p.rapidapi.com/parser?ingr=" + encodeURIComponent(name)
@@ -51,6 +52,29 @@ const FoodScreen = ({navigation}) => {
             console.error(err);
         });
     }
+
+    const OneMeal = () => (
+        <View style={styles.item}>
+            <Text style={styles.foodName} >{route.params.foodName}</Text>
+            <View style={{
+            flexDirection: "row",
+            }} >
+                <View style={{marginRight: 150}}>
+                    <Text style={styles.macros}>Calories: {route.params.calories}</Text>
+                    <Text style={styles.macros}>Protein: {route.params.protein}</Text>
+                    <Text style={styles.macros}>Carbs: {route.params.carbs}</Text>
+                    <Text style={styles.macros}>Fat: {route.params.fat}</Text>
+                </View>
+                {/* <View>
+                    <Image
+                    source={{ uri: imageURI }}
+                    style={{ width: 100, height: 100 }}
+                    PlaceholderContent={<ActivityIndicator />}
+                    />
+                </View> */}
+            </View>
+        </View>
+      );
 
  
     return (
@@ -108,26 +132,9 @@ const FoodScreen = ({navigation}) => {
                         />
                     <View style={styles.dailyMeals}>
                         <Text style={styles.mealTitle}>Breakfast</Text>
-                            <View>
-                                <Text style={styles.foodName} >{foodName}</Text>
-                                <View style={{
-                                flexDirection: "row",
-                                }} >
-                                <View style={{marginRight: 150}}>
-                                    <Text style={styles.macros}>Calories: {calories}</Text>
-                                    <Text style={styles.macros}>Protein: {protein}</Text>
-                                    <Text style={styles.macros}>Carbs: {carbs}</Text>
-                                    <Text style={styles.macros}>Fat: {fat}</Text>
-                                </View>
-                                <View>
-                                    <Image
-                                    source={{ uri: imageURI }}
-                                    style={{ width: 100, height: 100 }}
-                                    PlaceholderContent={<ActivityIndicator />}
-                                    />
-                                </View>
-                            </View>
-                        </View>
+                            
+                                <OneMeal/>
+                           
                         <View style={styles.inputContainer}>
                             <Input 
                                 placeholder="Add Food" 
@@ -153,13 +160,13 @@ const FoodScreen = ({navigation}) => {
                                 <Text style={styles.macros}>Carbs: {carbs}</Text>
                                 <Text style={styles.macros}>Fat: {fat}</Text>
                             </View>
-                            <View>
+                            {/* <View>
                                 <Image
                                 source={{ uri: imageURI }}
                                 style={{ width: 100, height: 100 }}
                                 PlaceholderContent={<ActivityIndicator />}
                                 />
-                            </View>
+                            </View> */}
                         </View>
                         <View style={styles.inputContainer}>
                             <Input 

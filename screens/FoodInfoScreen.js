@@ -1,13 +1,14 @@
 import React, {useState} from 'react'
 import { SafeAreaView } from 'react-native';
-import { KeyboardAvoidingView, StyleSheet, Text, View, ActivityIndicator } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import { Button, Input, Image } from "react-native-elements";
+import DropDownPicker from 'react-native-dropdown-picker';
 const fetch = require('node-fetch');
 import { Divider } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 
 
-const FoodInfoScreen = () => {
+const FoodInfoScreen = ({navigation, route}) => {
 
     const [totalcalories, setTotalCalories] = useState('');
     const [totalfat, setTotalFat] = useState('');
@@ -56,7 +57,7 @@ const FoodInfoScreen = () => {
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
             <SafeAreaView>
                 <ScrollView>
-                    <Text style={styles.mealTitle} >{foodName}</Text>
+                    <Text style={styles.mealTitle} >{route.params.foodName}</Text>
                     <Text style={{fontWidth: "100", marginLeft: 20, color: 'white', fontSize:18, marginBottom:20}}>4 oz.</Text>
                     <Divider style={{ backgroundColor: 'skyblue', height: 4,}} />
                     <View
@@ -69,34 +70,34 @@ const FoodInfoScreen = () => {
                     }}
                     >
                         <View style={styles.macroCircles}>
-                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "white"}}>
-                                Calories
+                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '600', color: "white"}}>
+                                {route.params.calories}
                             </Text>
-                            <Text style={{fontWeight: '1000', fontSize: 18, color: "#7591af"}}>
+                            <Text style={{fontWeight: '400', fontSize: 18, color: "#7591af"}}>
                                 Cal
                             </Text>
                         </View>
                         <View style={styles.macroCircles}>
-                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "white"}}>
-                                Carbs
+                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '600', color: "white"}}>
+                                {route.params.carbs}
                             </Text>
-                            <Text style={{fontWeight: '1000', fontSize: 18, color: "#7591af"}}>
+                            <Text style={{fontWeight: '400', fontSize: 18, color: "#7591af"}}>
                                 Carbs
                             </Text>
                         </View>
                         <View style={styles.macroCircles}>
-                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "white" }}>
-                                Fats
+                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '600', color: "white" }}>
+                                {route.params.fat}
                             </Text>
-                            <Text style={{fontWeight: '1000', fontSize: 18, color: "#7591af",}}>
+                            <Text style={{fontWeight: '400', fontSize: 18, color: "#7591af",}}>
                                 Fats
                             </Text>
                         </View>
                         <View style={styles.macroCircles}>
-                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "white"}}>
-                                Protein
+                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '600', color: "white"}}>
+                                {route.params.protein}
                             </Text>
-                            <Text style={{fontWeight: '1000', fontSize: 18, color: "#7591af"}}>
+                            <Text style={{fontWeight: '400', fontSize: 18, color: "#7591af"}}>
                                 Protein
                             </Text>
                         </View>
@@ -125,6 +126,17 @@ const FoodInfoScreen = () => {
                         <Text style={styles.customServingOption}>Number of servings:</Text>
                         <Input style={styles.ServingInput} placeholder="1 serving"></Input>
                     </View>
+                    <Button
+                        title="Add to your meals"
+                        onSubmitEditing={getFoodInfo}
+                        onPress={() => navigation.navigate('Food', {
+                            foodname: foodName, 
+                            calories: calories,
+                            carbs: carbs,
+                            fat: fat,
+                            protein: protein
+                          })}
+                        />
                 </ScrollView>
             </SafeAreaView>
         </KeyboardAvoidingView>
@@ -150,10 +162,12 @@ const styles = StyleSheet.create({
     },
     mealTitle: {
         fontSize: 30,
-        color: "#0037de",
-        letterSpacing: 3,
+        color: "#00e0ff",
+        letterSpacing: 2,
         fontWeight: "300",
         marginTop: 20,
+        marginLeft: 15,
+        marginBottom: 10,
 
     },
     macros: {
