@@ -159,6 +159,16 @@ const FindExercise = () => {
                           color='white'
                     />
                     <Button onPress={findExercise} title="Search" disabled={isLoading? true : false}/>
+                     <Button onPress={details} title="Details" />
+                                <View>
+                                    <Text>Name: {isFetched ? exDetails.name : ""}</Text>
+                                    <Text>Category: {isFetched ? exDetails.category.name : ""}</Text>
+                                    <Text>Description: {isFetched ? exDetails.description : ""}</Text>
+                                    <View>
+                                        <Image
+                                            style={styles.tinyLogo}
+                                            source={isFetched ? (exDetails.images.length ? exDetails.images[0].image : "https://kubalubra.is/wp-content/uploads/2017/11/default-thumbnail.jpg") : ""}
+                                        />
                 </View>
                 <ScrollView
                     horizontal={true}
