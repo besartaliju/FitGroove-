@@ -22,6 +22,7 @@ const FoodScreen = () => {
     const [fat, setFat] = useState('');
     const [imageURI, setImageURI] = useState('');
     const [foodList, setFoodList] = useState([[]]);
+    const [isSearched, setIsSearched] = useState(false);
 
     function getFoodInfo() {
         const uri = "https://edamam-food-and-grocery-database.p.rapidapi.com/parser?ingr=" + encodeURIComponent(name)
@@ -37,13 +38,14 @@ const FoodScreen = () => {
             // console.log(data)
             const foodSearched = data.parsed[0].food.nutrients
             setFoodList(data.hints)
-            // console.log(data.hints)
+            console.log(data.hints)
             setFoodName(data.parsed[0].food.label)
             setCalories(foodSearched.ENERC_KCAL)
             setProtein(foodSearched.PROCNT)
             setCarbs(foodSearched.CHOCDF)
             setFat(foodSearched.FAT)
             setImageURI(data.parsed[0].food.image)
+            setIsSearched(true)
             // console.log(data.parsed[0].food.nutrients.PROCNT);
             // setCalories(data.calories)
         })
@@ -176,7 +178,7 @@ const FoodScreen = () => {
                                 <Text style={styles.macros}>Protein: {protein}</Text>
                                 <Text style={styles.macros}>Carbs: {carbs}</Text>
                                 <Text style={styles.macros}>Fat: {fat}</Text>
-                            </View>
+                            </View>                            
                             {/* <View>
                                 <Image
                                 source={{ uri: imageURI }}

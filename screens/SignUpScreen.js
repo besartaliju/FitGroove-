@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { Button, Input, Image } from "react-native-elements";
-import { KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { auth, db } from "../firebase";
 import styled from "styled-components";
 import {Feather as Icon} from "@expo/vector-icons";
@@ -15,7 +15,14 @@ const SignUpScreen = ({ navigation }) => {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerBackTitle: "Login"
+            headerBackTitle: "Login",
+            headerRight: () => (
+                <TouchableOpacity onPress={() => navigation.navigate('Onboarding')}>
+                    <Text> Onboarding </Text>
+                    {/* make symbol, whatever chai downloaded */}
+                </TouchableOpacity>
+                
+            )
         })
     }, [navigation])
 
@@ -55,7 +62,10 @@ const SignUpScreen = ({ navigation }) => {
                     details: {
                         age: 0,
                         height: 0,
-                        weight: 0
+                        weight: 0,
+                        goalWeight: 0,
+                        gender: '',
+                        activityLevel: ''
                     }
                 })
 
@@ -67,8 +77,6 @@ const SignUpScreen = ({ navigation }) => {
 
 
     return (
-
-        
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
             <Text>SignUp</Text>
             <View style={styles.inputContainer}>
