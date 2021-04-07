@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native'
-
+import { StyleSheet, Text, View, Button, StatusBar,ScrollView, TouchableHighlight } from 'react-native'
+import {useNavigation} from '@react-navigation/native';
+import Card from './Card.js'
 const WorkoutScreen = () => {
     const [exercises, setExercises] = useState([]);
 

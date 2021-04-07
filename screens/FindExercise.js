@@ -1,7 +1,7 @@
-import  React, {useState} from 'react';
-import {Text, View,SafeAreaView, StatusBar, StyleSheet,FlatList,TouchableHighlight,Image, TextInput,ScrollView} from 'react-native';
+import  React, {useState, useEffect} from 'react';
+import {Text, View,SafeAreaView, StatusBar, StyleSheet,FlatList,TouchableHighlight,Image, TextInput,ScrollView, Button} from 'react-native';
 import CategoryCard from './CategoryCard'
-import RNPickerSelect from 'react-native-picker-select'
+
 const DATA=[
         {
             id: 1,
@@ -158,18 +158,25 @@ const FindExercise = () => {
                           placeholderTextColor="#d7e1ec"
                           color='white'
                     />
-                    <Button onPress={findExercise} title="Search" disabled={isLoading? true : false}/>
-                     <Button onPress={details} title="Details" />
-                                <View>
-                                    <Text>Name: {isFetched ? exDetails.name : ""}</Text>
-                                    <Text>Category: {isFetched ? exDetails.category.name : ""}</Text>
-                                    <Text>Description: {isFetched ? exDetails.description : ""}</Text>
-                                    <View>
-                                        <Image
-                                            style={styles.tinyLogo}
-                                            source={isFetched ? (exDetails.images.length ? exDetails.images[0].image : "https://kubalubra.is/wp-content/uploads/2017/11/default-thumbnail.jpg") : ""}
-                                        />
+
                 </View>
+                   <View style={{padding:10}}>
+                    <Button onPress={findExercise} title="Search" disabled={isLoading? true : false}/>
+                    <View style={{paddingTop:10}}>
+                        <Button onPress={details} title="Details" />
+                    </View>
+                    <View>
+                        <Text>Name: {isFetched ? exDetails.name : ""}</Text>
+                        <Text>Category: {isFetched ? exDetails.category.name : ""}</Text>
+                        <Text>Description: {isFetched ? exDetails.description : ""}</Text>
+                        <View>
+                              <Image
+                                  style={styles.tinyLogo}
+                                  source={isFetched ? (exDetails.images.length ? exDetails.images[0].image : "https://kubalubra.is/wp-content/uploads/2017/11/default-thumbnail.jpg") : ""}
+                                />
+                        </View>
+                    </View>
+                  </View>
                 <ScrollView
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
@@ -184,7 +191,6 @@ const FindExercise = () => {
                 </ScrollView>
                 <View style={{paddingHorizontal:20, marginTop: 30}}>
                     <Text style={{color:'white', fontSize:25}}> Trending </Text>
-
                 </View>
 
             </ScrollView>
