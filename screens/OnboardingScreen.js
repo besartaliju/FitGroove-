@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react'
-import { KeyboardAvoidingView as Kav} from 'react-native';
+import { KeyboardAvoidingView as Kav, Platform} from 'react-native';
 import { auth } from "../firebase";
 import DateTimePicker from '@react-native-community/datetimepicker';
 //import DatePicker from 'react-native-date-picker'
@@ -160,8 +160,6 @@ const styles = StyleSheet.create({
       backgroundColor: '#FFFFF8',
     },
   });
-
-  
 
   //margin: 5px 25px 50px 25px;
   const Container = styled(Platform.OS === 'ios' ? Kav : View).attrs({
