@@ -6,8 +6,6 @@ import {Feather as Icon} from "@expo/vector-icons";
 import styled from "styled-components/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-
 const LoginScreen = ({ navigation }) => {
 
     const [email, setEmail] = useState('');
@@ -16,12 +14,20 @@ const LoginScreen = ({ navigation }) => {
 
     const [showRealApp, setShowRealApp] = useState(false)
 
+    const storeData = async () => {
+        try {
+            await AsyncStorage.getItem('first_time').then((value) => {
+                if(value !== null) {
+                    setShowRealApp(true);
+                }
+            });
+        } catch (error){
+            console.error(error)
+        }
+    }
+
     useEffect(() => {
-        AsyncStorage.getItem('first_time').then((value) => {
-            if(!!value) {
-                setShowRealApp(true);
-            }
-        });
+        storeData();
 
         const unsubscribe = auth.onAuthStateChanged((authUser) => {
             console.log(authUser);

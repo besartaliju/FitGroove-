@@ -8,6 +8,7 @@ import {View, Text, Image, StyleSheet, TextInput, Input} from 'react-native';
 import {Button} from 'react-native-elements';
 import styled from "styled-components/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import RNPickerSelect from 'react-native-picker-select';
 
 // let userID = auth?.currentUser?.uid
 
@@ -26,6 +27,18 @@ const OnboardingScreen = ({navigation}) => {
                 navigation.replace('Login');
             });
     };
+    
+
+    const changeVisited = async () => {
+        try {
+            await AsyncStorage.setItem('first_time', 'true').then(() => {
+                console.log("User data saved!");
+                navigation.replace("App");
+            })
+        } catch (error){
+            console.error(error)
+        }
+    }
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -43,6 +56,7 @@ const OnboardingScreen = ({navigation}) => {
                 </TouchableOpacity>
                 
             )})
+
         return unsubscribe;
     }, []);
 
@@ -86,15 +100,11 @@ const OnboardingScreen = ({navigation}) => {
                 // gender: '',
                 // activityLevel: ''
             }, { merge: true })
-                
-        console.log("cod")
-        AsyncStorage.setItem('first_time', 'true').then(() => {
-            console.log("User data saved!");
-            navigation.replace("App");
-        })
-
     }
 
+    const helper = async () => {
+        await changeVisited().then(() => saveMeasurements());
+    }
 
     return(
         <Container> 
@@ -156,7 +166,7 @@ const OnboardingScreen = ({navigation}) => {
             {/* <BirthdayText>
                 Birthday     
             </BirthdayText> */}
-            <Button onPress={saveMeasurements}>Finish</Button>
+            <Button onPress={helper}>Finish</Button>
                 
         </Container>
 

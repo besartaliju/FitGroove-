@@ -37,7 +37,7 @@ const SearchFoodScreen = ({navigation}) => {
             const foodSearched = data.parsed[0].food.nutrients
             setFoodList(data.hints)
 
-            // console.log(data.hints)
+            console.log(data.hints)
             setFoodName(data.parsed[0].food.label)
             setCalories(foodSearched.ENERC_KCAL)
             setProtein(foodSearched.PROCNT)
@@ -87,7 +87,7 @@ const [isSearched, setIsSearched] = useState(false);
                                         <TouchableOpacity  onPress={() => navigation.navigate('FoodInfoScreen')}>
                                             <View style={styles.foodBox}>
                                                 <Text style={styles.clickFoodName}>{item.food.label}</Text>
-                                                <Text style={styles.clickFoodInfo}>{calories} cals</Text>
+                                                <Text style={styles.clickFoodInfo}>{item.food.nutrients.ENERC_KCAL} cals</Text>
                                             </View>
                                         </TouchableOpacity>
                                     )
