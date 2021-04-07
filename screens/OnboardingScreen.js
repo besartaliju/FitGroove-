@@ -17,8 +17,6 @@ const OnboardingScreen = ({navigation}) => {
     const [weight, setWeight] = useState();
     const [goalWeight, setGoalWeight] = useState();
 
-    
-    
 
     return(
         <Container> 
@@ -59,8 +57,11 @@ const OnboardingScreen = ({navigation}) => {
 
             <Text> Weight </Text>
             <TextInput 
+                style={styles.input}
                 onChangeText={setWeight}
                 value={weight}
+                placeholder="lbs"
+                keyboardType="numeric"
             >  
             
             </TextInput>
@@ -68,8 +69,11 @@ const OnboardingScreen = ({navigation}) => {
 
             <Text> Goal Weight</Text>
             <TextInput 
+                style={styles.input}
                 onChangeText={setGoalWeight}
                 value={goalWeight}
+                placeholder="lbs"
+                
             >  
             </TextInput>
 
@@ -85,6 +89,14 @@ const OnboardingScreen = ({navigation}) => {
 export default OnboardingScreen;
 
 //const styles = StyleSheet.create({})
+
+const styles = StyleSheet.create({
+    input: {
+      height: 40,
+      margin: 12,
+      borderWidth: 1,
+    },
+  });
 
 const Container = styled.View`
     flex: 1;
