@@ -35,18 +35,9 @@ const DATA=[
          },
 
     ]
-const Item = ({ title,sets }) => (
-      <View style={styles.item}>
-        <View style={{flex:1,paddingHorizontal:5}}>
-           <Text style={styles.title}>{sets}x</Text>
-        </View>
-         <View style={{flex:7}}>
-            <Text style={styles.title}>{title}</Text>
-         </View>
-
-         <View style={{flex:1}}>
-            <Image style={{height:20, width:20}}source={require('../assets/right-arrow.png')}/>
-         </View>
+const Item = ({ title }) => (
+      <View style={{padding:15}}>
+           <Text style={{fontSize:25, color:"white"}}>{title}</Text>
       </View>
 
 );
@@ -56,7 +47,7 @@ const FindExercise = () => {
     const LastExercise = "03/30/21";
     const [searchName, setName] = useState('');
      const renderItem = ({ item }) => (
-        <Item title={item.title} sets={item.sets}/>
+        <Item title={item.title}/>
       );
      const [exercise, setExercise] = useState('');
      const [exerciseList, setExerciseList] = useState([]);
@@ -140,9 +131,10 @@ const FindExercise = () => {
                 }
         }
 
-        function details() {
+      function details() {
             console.log(exDetails.name)
       }
+
     return(
         <View style={styles.container}>
             <ScrollView>
@@ -161,22 +153,6 @@ const FindExercise = () => {
                     />
 
                 </View>
-
-                    <View style={{padding:10}}>
-                        <Button onPress={details} title="Details" />
-                    </View>
-                    <View>
-                        <Text>Name: {isFetched ? exDetails.name : ""}</Text>
-                        <Text>Category: {isFetched ? exDetails.category.name : ""}</Text>
-                        <Text>Description: {isFetched ? exDetails.description : ""}</Text>
-                        <View>
-                              <Image
-                                  style={styles.tinyLogo}
-                                  source={isFetched ? (exDetails.images.length ? exDetails.images[0].image : "https://kubalubra.is/wp-content/uploads/2017/11/default-thumbnail.jpg") : ""}
-                                />
-                        </View>
-                    </View>
-                  </View>
                 <ScrollView
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
@@ -189,9 +165,7 @@ const FindExercise = () => {
                         <CategoryCard imgSource={require("../assets/cycling.png")} name="Cycling"/>
                     </View>
                 </ScrollView>
-                <View style={{paddingHorizontal:20, marginTop: 30}}>
-                    <Text style={{color:'white', fontSize:25}}> Trending </Text>
-                </View>
+               <Text style={{fontSize:25, color:"white"}}> Name: {isFetched ? exDetails.name: ""}</Text>
 
             </ScrollView>
         </View>
