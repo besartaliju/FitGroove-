@@ -14,11 +14,18 @@ import RNPickerSelect from 'react-native-picker-select';
 
 const OnboardingScreen = ({navigation}) => {
 
-    const [date, setDate] = useState(new Date())
+    // const [date, setDate] = useState(new Date())
+    const [age, setAge] = useState('');
     const [height, setHeight] = useState('');
     const [weight, setWeight] = useState('');
     const [goalWeight, setGoalWeight] = useState('');
+    const [activityLevel, setActivityLevel] = useState('');
     const [userID, setUserID] = useState('');
+
+    const [calories, setCalories] = useState('');
+    const [protein, setProtein] = useState('');
+    const [carbs, setCarbs] = useState('');
+    const [fat, setFat] = useState('');
 
     const signOutUser = () => {
         auth
@@ -60,6 +67,15 @@ const OnboardingScreen = ({navigation}) => {
         return unsubscribe;
     }, []);
 
+    function getMacros() {
+        if(weight > 200 && weight < 220) {
+            setCalories('2000');
+            setProtein('165');
+            setCarbs('220');
+            setFat('75');
+        }
+    }
+
     function saveMeasurements() {
         // console.log(userID);
         // try {
@@ -93,9 +109,17 @@ const OnboardingScreen = ({navigation}) => {
             .set({
                 // age: 0,
                 details: {
+                    age: age,
                     height: height,
                     weight: weight,
                     goalWeight: goalWeight,
+                    activityLevel: activityLevel
+                }, 
+                macros: {
+                    calories: '2000',
+                    protein: '165',
+                    carbs: '220',
+                    fat: '75'
                 }
                 // gender: '',
                 // activityLevel: ''
@@ -103,7 +127,10 @@ const OnboardingScreen = ({navigation}) => {
     }
 
     const helper = async () => {
-        await changeVisited().then(() => saveMeasurements());
+        await changeVisited().then(() => {
+            getMacros();
+            saveMeasurements();
+        });
     }
 
     return(
@@ -113,16 +140,22 @@ const OnboardingScreen = ({navigation}) => {
                 <Subheading> Let us know about you to speed up the result, get fit fast with great results! </Subheading>
             </Main>
 
-            <Text> Birthday </Text>
-            <DateTimePicker
+            <Text> Age </Text>
+            {/* <DateTimePicker
                     testID="dateTimePicker"
                     value={date}
                     //mode={mode}
                     is24Hour={true}
                     display="default"
                     onChangeText={(text) => setDate(text)}
-            />
-
+            /> */}
+            <TextInput 
+                style={styles.input}
+                value={age}
+                onChangeText={(text) => setAge(text)}
+            >  
+            
+            </TextInput>
             <Text> Height </Text>
             <TextInput 
                 style={styles.input}
@@ -131,7 +164,7 @@ const OnboardingScreen = ({navigation}) => {
             >  
             
             </TextInput>
-
+            
             {/* <Picker
                     selectedValue={height}
                     onValueChange={(itemValue, itemIndex) =>
@@ -162,7 +195,17 @@ const OnboardingScreen = ({navigation}) => {
                 
             >  
             </TextInput>
-
+            <Text> Activity Level</Text>
+            <RNPickerSelect
+                onValueChange={(value) => setActivityLevel(value)}
+                items={[
+                    { label: 'Sedentary', value: '0' },
+                    { label: 'Light Exercise', value: '1' },
+                    { label: 'Moderate Exercise', value: '8' },
+                    { label: 'Heavy Exercise', value: '3' },
+                    { label: 'Athlete', value: '4' }
+                ]}
+            />
             {/* <BirthdayText>
                 Birthday     
             </BirthdayText> */}

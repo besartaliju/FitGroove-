@@ -35,7 +35,7 @@ export default function App() {
 
   function AuthStack() {
     return (
-      <Stack.Navigator>
+      <Stack.Navigator >
         <Stack.Screen name="Login" component={LoginScreen}/>
         <Stack.Screen name="SignUp" component={SignUpScreen}/>
         <Stack.Screen name="Onboarding" component={OnboardingScreen}/>
@@ -45,7 +45,7 @@ export default function App() {
 
   function HomeStack() {
     return (
-      <Stack.Navigator>
+      <Stack.Navigator >
         <Stack.Screen name="Home" component={HomeScreen}/>
         <Stack.Screen name="Profile" component={ProfileScreen}/>
       </Stack.Navigator>
@@ -80,7 +80,7 @@ export default function App() {
 
   function SocialStack() {
     return (
-      <Stack.Navigator>
+      <Stack.Navigator >
         <Stack.Screen name="Social" component={SocialScreen}/>
       </Stack.Navigator>
     )
