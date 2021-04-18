@@ -1,10 +1,52 @@
 import  React, {useState, useEffect} from 'react';
 import {Text, View,SafeAreaView, StatusBar, StyleSheet,FlatList,TouchableHighlight,Image, TextInput,ScrollView, Button} from 'react-native';
+<<<<<<< HEAD
 import {TouchableOpacity} from 'react-native-gesture-handler'
 import { Divider } from 'react-native-elements';
 import CategoryCard from './CategoryCard';
 import {useNavigation} from '@react-navigation/native';
 import Card from './Card';
+=======
+import CategoryCard from './CategoryCard'
+
+const DATA=[
+        {
+            id: 1,
+            title:'Shoulder Press',
+            sets: 3
+        },
+        {
+            id: 2,
+            title:'Shoulder Fly',
+            sets:3
+        },
+        {
+            id: 3,
+            title:'Side Lateral Raise',
+            sets:4
+        },
+        {
+            id: 4,
+            title:'Low Pulley raise',
+            sets:4
+        },
+        {
+            id: 5,
+            title:'Alternate Front Raise',
+            sets:4
+        },
+        {
+            id: 6,
+            title:'Barbell Front Raise',
+            sets:4
+         },
+
+    ]
+const Item = ({ title }) => (
+      <View style={{padding:15}}>
+           <Text style={{fontSize:25, color:"white"}}>{title}</Text>
+      </View>
+>>>>>>> b98ca0608d4aca286e1c86c54085bc2cd7f239ad
 
 
 const Item = ({title}) => (
@@ -16,7 +58,13 @@ const Item = ({title}) => (
 const FindExercise = () => {
     const LastExercise = "03/30/21";
     const [searchName, setName] = useState('');
+<<<<<<< HEAD
 
+=======
+     const renderItem = ({ item }) => (
+        <Item title={item.title}/>
+      );
+>>>>>>> b98ca0608d4aca286e1c86c54085bc2cd7f239ad
      const [exercise, setExercise] = useState('');
      const [exerciseList, setExerciseList] = useState([]);
      const [equipment, setEquipment] = useState('');
@@ -110,9 +158,10 @@ const FindExercise = () => {
                 }
         }
 
-        function details() {
+      function details() {
             console.log(exDetails.name)
       }
+
     return(
         <View style={styles.container}>
             <ScrollView>
@@ -131,7 +180,10 @@ const FindExercise = () => {
                     />
 
                 </View>
+<<<<<<< HEAD
 
+=======
+>>>>>>> b98ca0608d4aca286e1c86c54085bc2cd7f239ad
                 <ScrollView
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
@@ -144,6 +196,10 @@ const FindExercise = () => {
                         <CategoryCard imgSource={require("../assets/cycling.png")} name="Cycling"/>
                     </View>
                 </ScrollView>
+<<<<<<< HEAD
+=======
+               <Text style={{fontSize:25, color:"white"}}> Name: {isFetched ? exDetails.name: ""}</Text>
+>>>>>>> b98ca0608d4aca286e1c86c54085bc2cd7f239ad
 
               {isSearched ?
                 (<View style={styles.showResult}>
