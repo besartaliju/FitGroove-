@@ -23,7 +23,7 @@ const Card = (props) => {
          borderColor:"#0F2027"
          }}
          >
-              <View style={{flex:1, margin:15}}>
+              <View style={{margin:15}}>
                  <Text style={{fontSize:20, color:"white"}}>{props.name} </Text>
                  <Text style={{fontSize:15, color: "white"}}>{props.duration} mins - {props.level} </Text>
               </View>
