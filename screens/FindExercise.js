@@ -34,13 +34,7 @@ const FindExercise = () => {
      const [exDetails, setExDetails] = useState([[]]);
 
      const [isSearched, setIsSearched] = useState(false);
-     const ItemView = (item, key) => {
-        return(
-            <View key={key}>
-                <Text style={{color:"white"}}> name: {item.name} </Text>
-            </View>
-        );
-     };
+
      useEffect(() => {
              getExerciseList();
 
