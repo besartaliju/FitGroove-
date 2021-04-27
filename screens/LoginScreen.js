@@ -4,8 +4,6 @@ import { KeyboardAvoidingView as Kav, StyleSheet, Text, View, Platform } from 'r
 import { auth } from "../firebase";
 import {Feather as Icon} from "@expo/vector-icons";
 import styled from "styled-components/native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 
 
 const LoginScreen = ({ navigation }) => {
@@ -14,24 +12,11 @@ const LoginScreen = ({ navigation }) => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const [showRealApp, setShowRealApp] = useState(false)
-
     useEffect(() => {
-        AsyncStorage.getItem('first_time').then((value) => {
-            if(!!value) {
-                setShowRealApp(true);
-            }
-        });
-
         const unsubscribe = auth.onAuthStateChanged((authUser) => {
             console.log(authUser);
             if(authUser) {
-                if(showRealApp) {
-                    navigation.replace("App");
-                } else {
-                    navigation.navigate("Onboarding")
-                }
-                
+                navigation.replace("App");
             }
         })
 
@@ -44,6 +29,7 @@ const LoginScreen = ({ navigation }) => {
             .catch((err) => alert(err))
         // setLoading(true)
     };
+
 
     return(
 
@@ -124,6 +110,33 @@ const LoginScreen = ({ navigation }) => {
         
     );    
     
+
+/*
+    return (
+        <KeyboardAvoidingView behavior="padding" style={styles.container}>
+            <View style={styles.inputContainer}>
+                <Input 
+                    placeholder="Email" 
+                    autofocus 
+                    type="email" 
+                    value={email} 
+                    onChangeText={(text) => setEmail(text)}
+                />
+                <Input 
+                    placeholder="Password" 
+                    secureTextEntry 
+                    type="password" 
+                    value={password} 
+                    onChangeText={(text) => setPassword(text)}
+                    onSubmitEditing={signIn}
+                />
+            </View>
+            <Button containerStyle={styles.button} onPress={signIn} title="Login" />
+            <Button containerStyle={styles.button} onPress={() => navigation.navigate('SignUp')} type="outline" title="Register" />
+        </KeyboardAvoidingView>
+        
+    );
+*/
 }
 
 export default LoginScreen
