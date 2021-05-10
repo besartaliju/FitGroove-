@@ -120,7 +120,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor:"#060507",
-        paddingTop:StatusBar.currentHeight
     },
     item: {
         backgroundColor: '#f9c2ff',

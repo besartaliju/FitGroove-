@@ -16,6 +16,8 @@ import ProfileScreen from './screens/ProfileScreen';
 import  MyExercise  from './screens/MyExercise';
 import NewExercise from './screens/NewExercise';
 import FindExercise from './screens/FindExercise';
+import FoodInfoScreen from './screens/FoodInfoScreen';
+import SearchFoodScreen from './screens/SearchFoodScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -44,7 +46,7 @@ export default function App() {
 
   function HomeStack() {
     return (
-      <Stack.Navigator>
+      <Stack.Navigator >
         <Stack.Screen name="Home" component={HomeScreen}/>
         <Stack.Screen name="Profile" component={ProfileScreen}/>
       </Stack.Navigator>
@@ -71,13 +73,15 @@ export default function App() {
     return (
       <Stack.Navigator>
         <Stack.Screen name="Food" component={FoodScreen}/>
+        <Stack.Screen name="SearchFood" component={SearchFoodScreen}/>
+        <Stack.Screen name="FoodInfo" component={FoodInfoScreen}/>
       </Stack.Navigator>
     )
   }
 
   function SocialStack() {
     return (
-      <Stack.Navigator>
+      <Stack.Navigator >
         <Stack.Screen name="Social" component={SocialScreen}/>
       </Stack.Navigator>
     )

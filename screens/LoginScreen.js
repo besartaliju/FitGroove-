@@ -187,7 +187,6 @@ const Heading = styled.Text`
     font-size: 42px;
     line-height: 49px;
     font-weight: bold;
-
     color: #FFFFFF;
 `;
 
