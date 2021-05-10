@@ -55,10 +55,21 @@ const Item = ({ title,sets }) => (
 const NewExercise = () => {
     const LastExercise = "03/30/21";
     const [name, setName] = useState('');
+<<<<<<< HEAD
      const renderItem = ({ item }) => (
         <Item title={item.title} sets={item.sets}/>
       );
 
+=======
+    const [exercise, setExercise] = useState([]);
+    const [numSet, setNumSet] = useState('');
+    const renderItem = ({ item }) => (
+       <Item title={item.title} sets={item.sets}/>
+    );
+    const addNewExercise = () => {
+        setDATA(prevDATA => [...prevDATA])
+    }
+>>>>>>> NewChai
     return(
         <View style={styles.container}>
            <View style={{marginTop: "10%"}}>

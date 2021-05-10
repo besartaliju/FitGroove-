@@ -18,6 +18,7 @@ import NewExercise from './screens/NewExercise';
 import FindExercise from './screens/FindExercise';
 import FoodInfoScreen from './screens/FoodInfoScreen';
 import SearchFoodScreen from './screens/SearchFoodScreen';
+import startWorkout from './screens/startWorkout';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -95,6 +96,7 @@ export default function App() {
         <Stack.Screen options={{headerShown: false}} name="MyExercise" component={MyExercise}/>
         <Stack.Screen options={{headerShown: false}} name="NewExercise" component={NewExercise}/>
         <Stack.Screen options={{headerShown: false}} name="FindExercise" component={FindExercise}/>
+        <Stack.Screen options={{headerShown: false}} name="startWorkout" component={startWorkout}/>
       </Stack.Navigator>
     </NavigationContainer>
     );

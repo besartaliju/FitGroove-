@@ -1,5 +1,6 @@
 import  React from 'react';
 import {Text, View,SafeAreaView, StatusBar, StyleSheet,FlatList,TouchableHighlight,Image} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 const DATA=[
         {
@@ -34,7 +35,7 @@ const DATA=[
 const MyExercise = () => {
     const ExerciseName = "Chest";
     const LastExercise = "03/30/21";
-
+    const navigation = useNavigation();
      const renderItem = ({ item }) => (
         <Item title={item.title} sets={item.sets}/>
       );
@@ -57,7 +58,7 @@ const MyExercise = () => {
            <View style={{flex:2}}>
                 <View style={styles.AddButtonContainer}>
                     <TouchableHighlight
-                    onPress={()=>console.log("Start workout")}
+                    onPress={()=>navigation.navigate("startWorkout")}
                     >
                         <View style={styles.AddButtonStyle}>
                             <Text style={styles.TextButtonStyle}>
