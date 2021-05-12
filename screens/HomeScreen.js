@@ -1,5 +1,5 @@
-import { auth } from '../firebase';
-import React, { useEffect, useState } from 'react';
+import { auth, db } from '../firebase';
+import React, { useEffect, useState, useLayoutEffect} from 'react';
 import { StyleSheet, Text, TouchableOpacity, ScrollView, SafeAreaView, View, ActivityIndicator } from 'react-native';
 import { Card, Tile, Avatar, Button } from 'react-native-elements';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
@@ -8,6 +8,7 @@ const HomeScreen = ({navigation}) => {
     const [name, setName] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [userData, setUserData] = useState({});
+    const [userMacros, setUserMacros] = useState({});
     var user = auth.currentUser;
 
     const signOutUser = () => {
@@ -27,14 +28,16 @@ const HomeScreen = ({navigation}) => {
 
             let data = response.data();
             console.log(data.details)
-            setUserData(data)
+            setUserData(data.details)
+            console.log(data.macros)
+            setUserMacros(data.macros)
             // setIsLoading(false)
         } catch(err) {
             console.error(err);
         }
     }
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (
                 <TouchableOpacity onPress={signOutUser}>
@@ -65,7 +68,8 @@ const HomeScreen = ({navigation}) => {
         //     setName(user.displayName)
         // }
         //   return () => unsubscribe();
-    })
+    }, [])
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
@@ -95,10 +99,10 @@ const HomeScreen = ({navigation}) => {
                     />
                 </View>
                 <View style={styles.weightgoal} activeOpacity={0.7}>
-                    <Text h1 style={styles.subtitle1}>Goal Weight: 185 lbs</Text>
+                    <Text h1 style={styles.subtitle1}>Goal Weight: {userData.goalWeight} lbs</Text>
                 </View>
                 <View style={styles.weightnow} activeOpacity={0.7}>
-                    <Text h1 style={styles.subtitle1}>Current Weight: 208 lbs</Text>
+                    <Text h1 style={styles.subtitle1}>Current Weight: {userData.weight} lbs</Text>
                 </View>
                 <View style={{
                     flexDirection: "row",
@@ -116,7 +120,7 @@ const HomeScreen = ({navigation}) => {
                         tintColor="#00e0ff"
                         style={styles.circularprogress}
                         backgroundColor="#3d5875">
-                            {fill => <Text style={styles.macros}>2000</Text>}
+                            {fill => <Text style={styles.macros}>{userMacros.calories}</Text>}
                         </AnimatedCircularProgress>
                         <Text style={styles.progresstitle}>Calories</Text>
                     </View>
@@ -128,7 +132,7 @@ const HomeScreen = ({navigation}) => {
                         tintColor="#00e0ff"
                         style={styles.circularprogress}
                         backgroundColor="#3d5875">
-                            {fill => <Text style={styles.macros}>165</Text>}
+                            {fill => <Text style={styles.macros}>{userMacros.protein}</Text>}
                         </AnimatedCircularProgress>
                         <Text style={styles.progresstitle}>Protein</Text>
                     </View>
@@ -148,7 +152,7 @@ const HomeScreen = ({navigation}) => {
                         tintColor="#00e0ff"
                         style={styles.circularprogress}
                         backgroundColor="#3d5875">
-                            {fill => <Text style={styles.macros}>75</Text>}
+                            {fill => <Text style={styles.macros}>{userMacros.fat}</Text>}
                         </AnimatedCircularProgress>
                         <Text style={styles.progresstitle}>Fat</Text>
                     </View>
@@ -160,7 +164,7 @@ const HomeScreen = ({navigation}) => {
                         tintColor="#00e0ff"
                         style={styles.circularprogress}
                         backgroundColor="#3d5875">
-                            {fill => <Text style={styles.macros}>220</Text>}
+                            {fill => <Text style={styles.macros}>{userMacros.carbs}</Text>}
                         </AnimatedCircularProgress>
                         <Text style={styles.progresstitle}>Carbs</Text>
                     </View>

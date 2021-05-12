@@ -72,7 +72,7 @@ const FoodScreen = ({navigation}) => {
                             <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "#f2b418"}}>
                                 Calories
                             </Text>
-                            <Text style={{fontWeight: '1000', fontSize: 18, color: "#7591af"}}>
+                            <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af"}}>
                                 2,057
                             </Text>
                         </View>
@@ -80,7 +80,7 @@ const FoodScreen = ({navigation}) => {
                             <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "#f2b418"}}>
                                 Fat
                             </Text>
-                            <Text style={{fontWeight: '1000', fontSize: 18, color: "#7591af"}}>
+                            <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af"}}>
                                 50g
                             </Text>
                         </View>
@@ -88,7 +88,7 @@ const FoodScreen = ({navigation}) => {
                             <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "#f2b418" }}>
                                 Carbs
                             </Text>
-                            <Text style={{fontWeight: '1000', fontSize: 18, color: "#7591af",}}>
+                            <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af",}}>
                                 200g
                             </Text>
                         </View>
@@ -96,7 +96,7 @@ const FoodScreen = ({navigation}) => {
                             <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "#f2b418"}}>
                                 Protein
                             </Text>
-                            <Text style={{fontWeight: '1000', fontSize: 18, color: "#7591af"}}>
+                            <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af"}}>
                                 180g
                             </Text>
                         </View>

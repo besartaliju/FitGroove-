@@ -22,10 +22,10 @@ const OnboardingScreen = ({navigation}) => {
     const [activityLevel, setActivityLevel] = useState('');
     const [userID, setUserID] = useState('');
 
-    const [calories, setCalories] = useState('');
-    const [protein, setProtein] = useState('');
-    const [carbs, setCarbs] = useState('');
-    const [fat, setFat] = useState('');
+    // const [calories, setCalories] = useState(0);
+    // const [protein, setProtein] = useState(0);
+    // const [carbs, setCarbs] = useState(0);
+    // const [fat, setFat] = useState(0);
 
     const signOutUser = () => {
         auth
@@ -67,41 +67,26 @@ const OnboardingScreen = ({navigation}) => {
         return unsubscribe;
     }, []);
 
-    function getMacros() {
-        if(weight > 200 && weight < 220) {
-            setCalories('2000');
-            setProtein('165');
-            setCarbs('220');
-            setFat('75');
-        }
-    }
+    // function getMacros() {
+    //     if(goalWeight > weight) {
+    //         setCalories(weight*12);
+    //     } else {
+    //         setCalories(weight*18)
+    //     }
+    //     setProtein((calories*0.3)/4);
+    //     setCarbs((calories*0.4)/4);
+    //     setFat((calories*0.3)/9);
+    // }
 
     function saveMeasurements() {
-        // console.log(userID);
-        // try {
-        //     db
-        //         .collection("users")
-        //         .doc(userID)
-        //         .add({
-        //             // age: 0,
-        //             details: {
-        //                 height: height,
-        //                 weight: weight,
-        //                 goalWeight: goalWeight,
-        //             }
-        //             // gender: '',
-        //             // activityLevel: ''
-        //         })
-                
-        //         console.log("cod")
-        //         AsyncStorage.setItem('first_time', 'true').then(() => {
-        //             console.log("User data saved!");
-        //             navigation.replace("App");
-        //         })
-
-        // } catch(err) {
-        //     console.error(err);
-        // }
+        if(goalWeight < weight) {
+            calories = parseInt(weight)*12
+        } else {
+            calories = parseInt(weight)*18
+        }
+        protein = (calories*0.3)/4
+        carbs = (calories*0.4)/4
+        fat = (calories*0.3)/9
 
         db
             .collection("users")
@@ -116,10 +101,10 @@ const OnboardingScreen = ({navigation}) => {
                     activityLevel: activityLevel
                 }, 
                 macros: {
-                    calories: '2000',
-                    protein: '165',
-                    carbs: '220',
-                    fat: '75'
+                    calories: calories,
+                    protein: protein,
+                    carbs: carbs,
+                    fat: fat
                 }
                 // gender: '',
                 // activityLevel: ''
@@ -128,7 +113,7 @@ const OnboardingScreen = ({navigation}) => {
 
     const helper = async () => {
         await changeVisited().then(() => {
-            getMacros();
+            // getMacros();
             saveMeasurements();
         });
     }

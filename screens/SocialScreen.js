@@ -18,9 +18,11 @@ const SocialScreen = () => {
 
         db.collection('posts').add({
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            type: "post",
             post: input,
             displayName: auth.currentUser.displayName,
-            photoURL: auth.currentUser.photoURL
+            photoURL: auth.currentUser.photoURL,
+            likes: 0
         })
 
         setInput('')
