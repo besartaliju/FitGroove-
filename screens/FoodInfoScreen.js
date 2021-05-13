@@ -5,7 +5,7 @@ import { Button, Input, Image } from "react-native-elements";
 const fetch = require('node-fetch');
 import { Divider } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
-
+import DropdownMenu from 'react-native-dropdown-menu';
 
 const FoodInfoScreen = ({navigation, route}) => {
 
@@ -60,6 +60,7 @@ const FoodInfoScreen = ({navigation, route}) => {
             console.error(err);
         });
     }
+    var data = [["Breakfast", "Lunch", "Dinner", "Snacks/Extra"]];
     
     return (
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -112,7 +113,7 @@ const FoodInfoScreen = ({navigation, route}) => {
                             </Text>
                         </View>
                     </View>
-                    <Divider style={{ backgroundColor: 'grey', height: 2}} />
+                    <Divider style={{ backgroundColor: 'gray'}} />
                     <View
                     style={{
                         flexDirection: "row",
@@ -124,17 +125,41 @@ const FoodInfoScreen = ({navigation, route}) => {
                         <Text style={styles.customServingOption}>Serving size:</Text>
                         <Text style={styles.ServingDropDown}>4 oz</Text>
                     </View>
-                    <Divider style={{ backgroundColor: 'grey', height: 2}} />
+                    <Divider style={{ backgroundColor: 'gray'}} />
                     <View
                     style={{
                         flexDirection: "row",
-                        marginBottom: 25,
                         marginTop: 20,
                         marginLeft: 7,
                     }}
                     >
                         <Text style={styles.customServingOption}>Number of servings:</Text>
                         <Input style={styles.ServingInput} placeholder="1 serving"></Input>
+                    </View>
+                    <Divider style={{ backgroundColor: 'gray'}} />
+                    <View             
+                        style={{
+                        flexDirection: "row",
+                        marginTop: 20,
+                        marginLeft: 7,
+                    }}>
+                        <Text style={styles.customServingOption}>Select category</Text>
+                    </View>
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            marginLeft: 7,
+                        }}>
+                        <View style={{marginBottom: 216, color:"black"}} />
+                        <DropdownMenu
+                        style={{flex: 1, color:"black"}}
+                        bgColor={'black'}
+                        tintColor={'#666666'}
+                        activityTintColor={'red'}
+                        //handler={(selection, row) => this.setState({text: data[selection][row]})}
+                        data={data}
+                        >
+                        </DropdownMenu>
                     </View>
                     <Button
                         title="Add to your meals"
@@ -153,7 +178,6 @@ const FoodInfoScreen = ({navigation, route}) => {
                                     this.refresh()
                                    }
                                 })
-                            
                         }}
                         />
                 </ScrollView>
@@ -167,7 +191,7 @@ export default FoodInfoScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#232224'
+        backgroundColor: '#000'
     },
     inputContainer: {
         flexDirection: "row",

@@ -39,7 +39,7 @@ const FoodScreen = ({navigation, route}) => {
         } 
     }, [isFocused])
 
-    console.log("chosenFoods", chosenFoods)
+    console.log(chosenFoods)
 
 
     function getFoodInfo() {
@@ -70,16 +70,6 @@ const FoodScreen = ({navigation, route}) => {
             console.error(err);
         });
     }
-
-    const Item = ({ title }) => (
-        <View style={styles.item}>
-          <Text style={styles.title}>{title}</Text>
-        </View>
-      );
-
-    const renderItem = ({ item }) => (
-        <Item title={item.title} />
-        )
 
  
     return (
@@ -131,45 +121,30 @@ const FoodScreen = ({navigation, route}) => {
                         </View>
                     </View>
                     <Button 
-                        title="Add a meal to you"
+                        title="Log a meal for today"
                         style={{alignItems: 'center', justifyContent: 'center', marginleft: 50, width: 400, height: 75}}
                         onPress={() => navigation.navigate("SearchFood", {'chosenFoods': chosenFoods})}
                         />
                     <View style={styles.dailyMeals}>
                         <Text style={styles.mealTitle}>Breakfast</Text>
-{/*                             
-                                <OneMeal/>
-                            */}
+
                         <View style={styles.inputContainer}>
                         <FlatList
                             data={chosenFoods}
-                            renderItem={renderItem}
-                            keyExtractor={item => item.id}
+                            renderItem={({item})=>(
+                                <View style={{justifyContent:'center',marginBottom:10}}>
+                                <Text style={{backgroundColor:'blue',color:'white',padding:10}}>
+                                {/* {item} */}
+                                </Text>
+                                </View>
+                                )}
                         />
                         </View>
                     </View>
                     <Divider style={{ backgroundColor: 'grey'}} />
                     <View style={styles.dailyMeals}>
                         <Text style={styles.mealTitle}>Lunch</Text>
-                        <Text style={styles.foodName} >{foodName}</Text>
-                        <View style={{
-                        flexDirection: "row",
-                        }} >
-                            <View style={{marginRight: 150}}>
-                                <Text style={styles.macros}>Calories: {calories}</Text>
-                                <Text style={styles.macros}>Protein: {protein}</Text>
-                                <Text style={styles.macros}>Carbs: {carbs}</Text>
-                                <Text style={styles.macros}>Fat: {fat}</Text>
-                            </View>
-                            {/* <View>
-                                <Image
-                                source={{ uri: imageURI }}
-                                style={{ width: 100, height: 100 }}
-                                PlaceholderContent={<ActivityIndicator />}
-                                />
-                            </View> */}
-                        </View>
-                        <View style={styles.inputContainer}>
+                        {/* <View style={styles.inputContainer}>
                             <Input 
                                 placeholder="Add Food" 
                                 type="text" 
@@ -179,9 +154,16 @@ const FoodScreen = ({navigation, route}) => {
                                 style={styles.Input}
                             />
                             <Button type="clear" style={styles.addButton} onPress={getFoodInfo} title="+" />
-                        </View>
+                        </View> */}
                     </View>
                     <Divider style={{ backgroundColor: 'grey'}} />
+                    <View style={styles.dailyMeals}>
+                        <Text style={styles.mealTitle}>Dinner</Text>
+                    </View>
+                    <Divider style={{ backgroundColor: 'grey'}} />
+                    <View style={styles.dailyMeals}>
+                        <Text style={styles.mealTitle}>Snacks/Extra</Text>
+                    </View>
                 </ScrollView>
             </SafeAreaView>
         </KeyboardAvoidingView>
