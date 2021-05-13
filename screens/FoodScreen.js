@@ -39,7 +39,7 @@ const FoodScreen = ({navigation}) => {
                 let meals = doc.data().meals;
                 // let mealsList = meals.forEach(e => setUserMeals([...userMeals, e]))
                 // let array = Array.from(meals).map(([name, value]) => ({name, value}));
-                setUserMeals(meals);
+                setUserMeals([meals]);
             })
         
         return unsubscribe;
