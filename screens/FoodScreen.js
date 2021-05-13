@@ -1,7 +1,7 @@
 import React, {useState, useLayoutEffect} from 'react'
 import { SafeAreaView, FlatList, Alert, TouchableOpacity, TextInput, DatePickerIOSBase } from 'react-native';
-import { KeyboardAvoidingView, StyleSheet, Text, View, ActivityIndicator } from 'react-native'
-import { Button, Input, Image, withTheme } from "react-native-elements";
+import { KeyboardAvoidingView, StyleSheet, Text, View, Button, ActivityIndicator } from 'react-native'
+import { Input, Image, withTheme } from "react-native-elements";
 const fetch = require('node-fetch');
 import { Divider } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -24,6 +24,7 @@ const FoodScreen = ({navigation}) => {
     const [imageURI, setImageURI] = useState('');
     const [foodList, setFoodList] = useState([[]]);
     const [userFood, setUserFood] = useState([[]]);
+    const [userMeals, setUserMeals] = useState([{}]);
 
     useLayoutEffect(() => {
         let date = new Date().toISOString().split('T')[0];
@@ -34,7 +35,11 @@ const FoodScreen = ({navigation}) => {
             .collection('food')
             .doc(date)
             .onSnapshot((doc) => {
-                setUserFood(doc.data())
+                setUserFood(doc.data());
+                let meals = doc.data().meals;
+                // let mealsList = meals.forEach(e => setUserMeals([...userMeals, e]))
+                // let array = Array.from(meals).map(([name, value]) => ({name, value}));
+                setUserMeals(meals);
             })
         
         return unsubscribe;
@@ -126,10 +131,15 @@ const FoodScreen = ({navigation}) => {
                         <Button
                         title="View"
                         style={{alignItems: 'center', justifyContent: 'center', marginleft: 50, width: 400, height: 75}}
-                        onPress={() => console.log(userFood)}
+                        onPress={() => console.log(userMeals)}
                         />
                     <Divider style={{ backgroundColor: 'grey'}} />
-
+                    {userMeals.map((data, index) => (
+                        <View key={index}>
+                            {/* <Avatar /> */}
+                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "white"}} >...{data.calories}</Text>
+                        </View>
+                    ))}
                 </ScrollView>
             </SafeAreaView>
         </KeyboardAvoidingView>

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { SafeAreaView } from 'react-native';
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput,  View, ActivityIndicator } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput,  View, ActivityIndicator, Alert } from 'react-native'
 import { Button, Input, Image } from "react-native-elements";
 const fetch = require('node-fetch');
 import { Divider } from 'react-native-elements';
@@ -64,8 +64,17 @@ const FoodInfoScreen = ({navigation, route}) => {
                 }
             })
         
-        console.log("Meal added!")
+        
     }
+
+    function buttonAlert(){
+        Alert.alert(
+          'Meal Added!','Woohooo',
+          [
+            {text: 'OK', onPress: () => navigation.navigate("Food")},
+          ]
+        );
+      }
 
     // function getFoodInfo() {
     //     const uri = "https://edamam-food-and-grocery-database.p.rapidapi.com/parser?ingr=" + encodeURIComponent(name)
@@ -116,7 +125,7 @@ const FoodInfoScreen = ({navigation, route}) => {
                             <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "white"}}>
                                 {calories}
                             </Text>
-                            <Text style={{fontWeight: '1000', fontSize: 18, color: "#7591af"}}>
+                            <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af"}}>
                                 Cal
                             </Text>
                         </View>
@@ -124,7 +133,7 @@ const FoodInfoScreen = ({navigation, route}) => {
                             <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "white"}}>
                                 {carbs} g
                             </Text>
-                            <Text style={{fontWeight: '1000', fontSize: 18, color: "#7591af"}}>
+                            <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af"}}>
                                 Carbs
                             </Text>
                         </View>
@@ -132,7 +141,7 @@ const FoodInfoScreen = ({navigation, route}) => {
                             <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "white" }}>
                                 {fat} g
                             </Text>
-                            <Text style={{fontWeight: '1000', fontSize: 18, color: "#7591af",}}>
+                            <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af",}}>
                                 Fats
                             </Text>
                         </View>
@@ -140,7 +149,7 @@ const FoodInfoScreen = ({navigation, route}) => {
                             <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "white"}}>
                                 {protein} g
                             </Text>
-                            <Text style={{fontWeight: '1000', fontSize: 18, color: "#7591af"}}>
+                            <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af"}}>
                                 Protein
                             </Text>
                         </View>
@@ -167,7 +176,7 @@ const FoodInfoScreen = ({navigation, route}) => {
                     }}
                     >
                         <Text style={styles.customServingOption}>Number of servings:</Text>
-                        <TextInput style={styles.ServingInput} keyboardType="numeric" value={servings} onChangeText={(serv) => {
+                        <TextInput style={styles.ServingInput} keyboardType="numeric" onChangeText={(serv) => {
                             setServings(serv);
                             if(serv > 0) {
                                 updateMacros(serv);
@@ -175,7 +184,10 @@ const FoodInfoScreen = ({navigation, route}) => {
                         }}></TextInput>
                         <Button
                         title="Add Meal"
-                        onPress={() => addToDB()}
+                        onPress={() => {
+                            addToDB();
+                            buttonAlert();
+                        }}
                         ></Button>
                     </View>
                 </ScrollView>

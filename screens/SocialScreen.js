@@ -1,5 +1,5 @@
 import React, {useState, useLayoutEffect} from 'react'
-import { DatePickerIOSBase, Keyboard, StyleSheet, Text, View } from 'react-native'
+import { DatePickerIOSBase, Keyboard, StyleSheet, Text, View, Button } from 'react-native'
 import { Platform} from 'react-native'
 import { KeyboardAvoidingView, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
 import { SafeAreaView } from 'react-native'
@@ -63,6 +63,10 @@ const SocialScreen = () => {
                             <Ionicons name="send" size={24} color="#2B68E6" />
                         </TouchableOpacity>                        
                     </View>
+                    <Button
+                    title="View"
+                    onPress={() => console.log(messages)}
+                    />
                     <ScrollView>
                         {messages.map(({id, data}) => (
                             <View key={id}>
