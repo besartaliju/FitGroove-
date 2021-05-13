@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { SafeAreaView } from 'react-native';
-import { KeyboardAvoidingView, StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, Text, View, ActivityIndicator, FlatList } from 'react-native';
 import { Button, Input, Image } from "react-native-elements";
 const fetch = require('node-fetch');
 import { Divider } from 'react-native-elements';
@@ -16,14 +16,20 @@ const FoodInfoScreen = ({navigation, route}) => {
 
     const [name, setName] = useState('');
     const [calories, setCalories] = useState('');
-    const [foodName, setFoodName] = useState('');
+    
+    const [foodName, setFoodName] = useState(route.params.fromSearch ? route.params.foodName : '');
+    const [chosenFoods, setChosenFoods] = useState(route.params.chosenFoods)
+    console.log("route.params.chosenFoods in food info screen", route.params.chosenFoods)
     const [protein, setProtein] = useState('');
     const [carbs, setCarbs] = useState('');
     const [fat, setFat] = useState('');
     const [imageURI, setImageURI] = useState('');
-    const [foodList, setFoodList] = useState([[]]);
+    //const [foodList, setFoodList] = useState([[]]);
 
+    //console.log("ROUTE.PARAMS.FOODNAME ", route.params.foodName)
+    //console.log(foodName)
     function getFoodInfo() {
+        const fromSearch = true;
         const uri = "https://edamam-food-and-grocery-database.p.rapidapi.com/parser?ingr=" + encodeURIComponent(name)
         fetch(uri, {
         "method": "GET",
@@ -39,6 +45,7 @@ const FoodInfoScreen = ({navigation, route}) => {
             setFoodList(data.hints)
             // console.log(data.hints)
             setFoodName(data.parsed[0].food.label)
+            //console.log("FOOD NAME================== ", foodName)
             setCalories(foodSearched.ENERC_KCAL)
             setProtein(foodSearched.PROCNT)
             setCarbs(foodSearched.CHOCDF)
@@ -46,6 +53,8 @@ const FoodInfoScreen = ({navigation, route}) => {
             setImageURI(data.parsed[0].food.image)
             // console.log(data.parsed[0].food.nutrients.PROCNT);
             // setCalories(data.calories)
+            chosenFoods.push(foodName)
+            console.log(chosenFoods)
         })
         .catch(err => {
             console.error(err);
@@ -57,7 +66,7 @@ const FoodInfoScreen = ({navigation, route}) => {
             <SafeAreaView>
                 <ScrollView>
                     <Text style={styles.mealTitle} >
-                        {route.params.foodname}
+                        {route.params.foodName}
                     </Text> 
                     <Text style={{ marginLeft: 20, color: 'white', fontSize:18, marginBottom:20}}>4 oz.</Text>
                     <Divider style={{ backgroundColor: 'skyblue', height: 4,}} />
@@ -130,16 +139,22 @@ const FoodInfoScreen = ({navigation, route}) => {
                     <Button
                         title="Add to your meals"
                         onSubmitEditing={getFoodInfo}
-                        onPress={() => navigation.navigate('Food', {
-                            'foodname': 'foodName', 
-                            'calories': 'calories',
-                            'carbs': 'carbs',
-                            'fat': 'fat',
-                            'protein': 'protein',
-                            onGoBack: () => {
-                                this.refresh()
-                               }
-                            })}
+                        onPress={() => {
+                            chosenFoods.push(foodName)
+                            navigation.navigate('Food', {
+                                'fromSearch': true,
+                                'foodName': foodName, 
+                                'chosenFoods': chosenFoods,
+                                'calories': 'calories',
+                                'carbs': 'carbs',
+                                'fat': 'fat',
+                                'protein': 'protein',
+                                onGoBack: () => {
+                                    this.refresh()
+                                   }
+                                })
+                            
+                        }}
                         />
                 </ScrollView>
             </SafeAreaView>

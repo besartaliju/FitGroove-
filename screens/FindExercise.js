@@ -45,7 +45,7 @@ const FindExercise = () => {
             try{
                 const uri = `https://wger.de/api/v2/exercise/?limit=100&language=2${category}${equipment}`
                 // const uri2 = `https://wger.de/api/v2/exercise/?limit=500&language=2`
-                console.log(uri)
+                //console.log(uri)
 
                 fetch(uri, {
                 "method": "GET",
@@ -57,7 +57,7 @@ const FindExercise = () => {
                 .then(data => {
                     setExerciseList(data.results);
                     setIsLoading(false)
-                    console.log(data.results);
+                    //console.log(data.results);
                 })
                 .then(()=> setIsSearched(true))
                 .catch(err => {
@@ -74,7 +74,7 @@ const FindExercise = () => {
         const getExerciseInfo = async (id) => {
             try {
                 const uri = `https://wger.de/api/v2/exerciseinfo/${id}`
-                console.log(uri)
+                //console.log(uri)
 
                 fetch(uri, {
                 "method": "GET",
@@ -85,7 +85,7 @@ const FindExercise = () => {
                 .then(response => response.json())
                 .then(data => {
                     setExDetails(data);
-                    console.log(data);
+                    //console.log(data);
                 })
                 .then(() => setIsFetched(true))
                 .catch(err => {
@@ -108,7 +108,7 @@ const FindExercise = () => {
         }
 
       function details() {
-            console.log(exDetails.name)
+            //console.log(exDetails.name)
       }
 
     return(
@@ -203,7 +203,7 @@ const styles= StyleSheet.create({
         paddingHorizontal:10
     },
     inputContainer:{
-        bosrderColor:"#2C5364",
+        borderColor:"#2C5364",
         borderWidth:2,
         margin:10,
         borderTopRightRadius:25,

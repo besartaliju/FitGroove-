@@ -5,8 +5,10 @@ import { Button, Input, Image, SearchBar } from "react-native-elements";
 const fetch = require('node-fetch');
 import { Divider } from 'react-native-elements';
 import { FlatList, ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { useRoute } from '@react-navigation/native';
 
 const SearchFoodScreen = ({navigation}) => {
+    const route = useRoute();
 
     const [totalcalories, setTotalCalories] = useState('');
     const [totalfat, setTotalFat] = useState('');
@@ -20,7 +22,7 @@ const SearchFoodScreen = ({navigation}) => {
     const [carbs, setCarbs] = useState('');
     const [fat, setFat] = useState('');
     const [imageURI, setImageURI] = useState('');
-    const [foodList, setFoodList] = useState([[]]);
+    const [foodList, setFoodList] = useState();
 
     function getFoodInfo() {
         const uri = "https://edamam-food-and-grocery-database.p.rapidapi.com/parser?ingr=" + encodeURIComponent(name)
@@ -37,8 +39,9 @@ const SearchFoodScreen = ({navigation}) => {
             const foodSearched = data.parsed[0].food.nutrients
             setFoodList(data.hints)
 
-            console.log(data.hints)
+            //console.log(data.hints)
             setFoodName(data.parsed[0].food.label)
+            
             setCalories(foodSearched.ENERC_KCAL)
             setProtein(foodSearched.PROCNT)
             setCarbs(foodSearched.CHOCDF)
@@ -54,7 +57,7 @@ const SearchFoodScreen = ({navigation}) => {
 
     }
 
-
+    //console.log("FOODNAME IN SEARCH ", foodName)
 
 //     const renderItem = ({item}) => {
 
@@ -65,6 +68,7 @@ const SearchFoodScreen = ({navigation}) => {
 // }
 
 const [isSearched, setIsSearched] = useState(false);
+console.log("route.params.chosenFoods, search", route.params.chosenFoods)
     
     return (
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -85,7 +89,9 @@ const [isSearched, setIsSearched] = useState(false);
                                 foodList.map((item) => {
                                     return (
                                         <TouchableOpacity  onPress={() => navigation.navigate('FoodInfo', {
-                                            foodname: foodName,
+                                            fromSearch: true,
+                                            chosenFoods: route.params.chosenFoods,
+                                            foodName: foodName,
                                             calories: calories,
                                             carbs: carbs,
                                             fat: fat,

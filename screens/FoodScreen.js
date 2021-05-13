@@ -1,10 +1,11 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { SafeAreaView, FlatList, Alert, TouchableOpacity, TextInput } from 'react-native';
 import { KeyboardAvoidingView, StyleSheet, Text, View, ActivityIndicator } from 'react-native'
 import { Button, Input, Image, withTheme } from "react-native-elements";
 const fetch = require('node-fetch');
 import { Divider } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useIsFocused } from '@react-navigation/native';
 
 
 const FoodScreen = ({navigation, route}) => {
@@ -16,27 +17,29 @@ const FoodScreen = ({navigation, route}) => {
 
     const [name, setName] = useState('');
     const [calories, setCalories] = useState('');
-    const [foodName, setFoodName] = useState('');
+    const [foodName, setFoodName] = useState('')
     const [protein, setProtein] = useState('');
     const [carbs, setCarbs] = useState('');
     const [fat, setFat] = useState('');
     const [imageURI, setImageURI] = useState('');
-    const [foodList, setFoodList] = useState([[]]);
+    const [chosenFoods, setChosenFoods] = useState([]);
 
-    const DATA = [
-        {
-          id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-          title: 'First Item',
-        },
-        {
-          id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-          title: 'Second Item',
-        },
-        {
-          id: '58694a0f-3da1-471f-bd96-145571e29d72',
-          title: 'Third Item',
-        },
-      ];
+    const isFocused = useIsFocused();
+    useEffect(() => {
+        let foodName = ''
+        try {
+            if (route.params.fromSearch) {
+                //console.log("fromSearch in FoodScreen: ", route.params.fromSearch)
+                //console.log("route.params.chosenFoods in FoodScreen", route.params.chosenFoods)
+                setChosenFoods(route.params.chosenFoods)
+                setFoodName(route.params.foodName)
+            } 
+        } catch(e) {
+            setFoodName('')
+        } 
+    }, [isFocused])
+
+    console.log("chosenFoods", chosenFoods)
 
 
     function getFoodInfo() {
@@ -68,30 +71,16 @@ const FoodScreen = ({navigation, route}) => {
         });
     }
 
-    const OneMeal = () => (
+    const Item = ({ title }) => (
         <View style={styles.item}>
-            <Text style={styles.foodName} >{route.params.foodName}</Text>
-            <View style={{
-            flexDirection: "row",
-            }} >
-                <View style={{marginRight: 150}}>
-                    <Text style={styles.macros}>Calories: {route.params.calories}</Text>
-                    <Text style={styles.macros}>Protein: {route.params.protein}</Text>
-                    <Text style={styles.macros}>Carbs: {route.params.carbs}</Text>
-                    <Text style={styles.macros}>Fat: {route.params.fat}</Text>
-                </View>
-                {/* <View>
-                    <Image
-                    source={{ uri: imageURI }}
-                    style={{ width: 100, height: 100 }}
-                    PlaceholderContent={<ActivityIndicator />}
-                    />
-                </View> */}
-            </View>
+          <Text style={styles.title}>{title}</Text>
         </View>
       );
 
-      
+    const renderItem = ({ item }) => (
+        <Item title={item.title} />
+        )
+
  
     return (
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -112,7 +101,7 @@ const FoodScreen = ({navigation, route}) => {
                             <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "#f2b418"}}>
                                 Calories
                             </Text>
-                            <Text style={{fontWeight: '1000', fontSize: 18, color: "#7591af"}}>
+                            <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af"}}>
                                 2,057
                             </Text>
                         </View>
@@ -120,7 +109,7 @@ const FoodScreen = ({navigation, route}) => {
                             <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "#f2b418"}}>
                                 Fat
                             </Text>
-                            <Text style={{fontWeight: '1000', fontSize: 18, color: "#7591af"}}>
+                            <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af"}}>
                                 50g
                             </Text>
                         </View>
@@ -128,7 +117,7 @@ const FoodScreen = ({navigation, route}) => {
                             <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "#f2b418" }}>
                                 Carbs
                             </Text>
-                            <Text style={{fontWeight: '1000', fontSize: 18, color: "#7591af",}}>
+                            <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af",}}>
                                 200g
                             </Text>
                         </View>
@@ -136,7 +125,7 @@ const FoodScreen = ({navigation, route}) => {
                             <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "#f2b418"}}>
                                 Protein
                             </Text>
-                            <Text style={{fontWeight: '1000', fontSize: 18, color: "#7591af"}}>
+                            <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af"}}>
                                 180g
                             </Text>
                         </View>
@@ -144,7 +133,7 @@ const FoodScreen = ({navigation, route}) => {
                     <Button 
                         title="Add a meal to you"
                         style={{alignItems: 'center', justifyContent: 'center', marginleft: 50, width: 400, height: 75}}
-                        onPress={() => navigation.navigate("SearchFood")}
+                        onPress={() => navigation.navigate("SearchFood", {'chosenFoods': chosenFoods})}
                         />
                     <View style={styles.dailyMeals}>
                         <Text style={styles.mealTitle}>Breakfast</Text>
@@ -152,15 +141,11 @@ const FoodScreen = ({navigation, route}) => {
                                 <OneMeal/>
                             */}
                         <View style={styles.inputContainer}>
-                            <Input 
-                                placeholder="Add Food" 
-                                type="text" 
-                                color="white"
-                                // value={name} 
-                                onChangeText={(text) => setName(text)}
-                                style={styles.Input}
-                            />
-                            <Button type="clear" style={styles.addButton} onPress={getFoodInfo} title="+" />
+                        <FlatList
+                            data={chosenFoods}
+                            renderItem={renderItem}
+                            keyExtractor={item => item.id}
+                        />
                         </View>
                     </View>
                     <Divider style={{ backgroundColor: 'grey'}} />
@@ -201,14 +186,14 @@ const FoodScreen = ({navigation, route}) => {
             </SafeAreaView>
         </KeyboardAvoidingView>
     )
-}
+    }
 
 export default FoodScreen
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#232224'
+        backgroundColor: '#000'
     },
     inputContainer: {
         flexDirection: "row",
