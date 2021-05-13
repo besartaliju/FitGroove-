@@ -9,6 +9,7 @@ const HomeScreen = ({navigation}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [userData, setUserData] = useState({});
     const [userMacros, setUserMacros] = useState({});
+    const [dailyData, setDailyData] = useState({});
     var user = auth.currentUser;
 
     const signOutUser = () => {
@@ -37,6 +38,25 @@ const HomeScreen = ({navigation}) => {
         }
     }
 
+    const fetchDailyData = async () => {
+        let date = new Date().toISOString().split('T')[0];
+        try {
+            const unsubscribe = await db
+                .collection("users")
+                .doc(user.uid)
+                .collection('food')
+                .doc(date)
+                .onSnapshot((doc) => {
+                    // console.log(doc.data())
+                    setDailyData(doc.data());
+                })
+
+            return unsubscribe
+        } catch(err) {
+            console.error(err);
+        }
+    }
+
     useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (
@@ -55,6 +75,7 @@ const HomeScreen = ({navigation}) => {
             
         })
         fetchUserData();
+        fetchDailyData();
         // const unsubscribe = auth.onAuthStateChanged(function(user) {
         //     if (user) {
         //         console.log(user.displayName)
@@ -116,7 +137,7 @@ const HomeScreen = ({navigation}) => {
                         <AnimatedCircularProgress
                         size={140}
                         width={15}
-                        fill={100}
+                        fill={(dailyData.calConsumed / userMacros.calories) * 100}
                         tintColor="#00e0ff"
                         style={styles.circularprogress}
                         backgroundColor="#3d5875">
@@ -128,7 +149,7 @@ const HomeScreen = ({navigation}) => {
                         <AnimatedCircularProgress
                         size={140}
                         width={15}
-                        fill={100}
+                        fill={(dailyData.protein / userMacros.protein) * 100}
                         tintColor="#00e0ff"
                         style={styles.circularprogress}
                         backgroundColor="#3d5875">
@@ -148,7 +169,7 @@ const HomeScreen = ({navigation}) => {
                         <AnimatedCircularProgress
                         size={140}
                         width={15}
-                        fill={100}
+                        fill={(dailyData.fat / userMacros.fat) * 100}
                         tintColor="#00e0ff"
                         style={styles.circularprogress}
                         backgroundColor="#3d5875">
@@ -160,11 +181,11 @@ const HomeScreen = ({navigation}) => {
                         <AnimatedCircularProgress
                         size={140}
                         width={15}
-                        fill={100}
+                        fill={(dailyData.carbs / userMacros.carbs) * 100}
                         tintColor="#00e0ff"
                         style={styles.circularprogress}
                         backgroundColor="#3d5875">
-                            {fill => <Text style={styles.macros}>{userMacros.carbs}</Text>}
+                            {(fill) => <Text style={styles.macros}>{userMacros.carbs}</Text>}
                         </AnimatedCircularProgress>
                         <Text style={styles.progresstitle}>Carbs</Text>
                     </View>
