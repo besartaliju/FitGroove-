@@ -1,13 +1,15 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { SafeAreaView } from 'react-native';
-import { KeyboardAvoidingView, StyleSheet, Text, View, ActivityIndicator } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput,  View, ActivityIndicator } from 'react-native'
 import { Button, Input, Image } from "react-native-elements";
 const fetch = require('node-fetch');
 import { Divider } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
+import { auth, db } from '../firebase'
+import firebase from 'firebase'
 
 
-const FoodInfoScreen = () => {
+const FoodInfoScreen = ({navigation, route}) => {
 
     const [totalcalories, setTotalCalories] = useState('');
     const [totalfat, setTotalFat] = useState('');
@@ -16,49 +18,91 @@ const FoodInfoScreen = () => {
 
     const [name, setName] = useState('');
     const [calories, setCalories] = useState('');
-    const [foodName, setFoodName] = useState('');
     const [protein, setProtein] = useState('');
     const [carbs, setCarbs] = useState('');
     const [fat, setFat] = useState('');
     const [imageURI, setImageURI] = useState('');
     const [foodList, setFoodList] = useState([[]]);
 
-    function getFoodInfo() {
-        const uri = "https://edamam-food-and-grocery-database.p.rapidapi.com/parser?ingr=" + encodeURIComponent(name)
-        fetch(uri, {
-        "method": "GET",
-        "headers": {
-            "x-rapidapi-key": "85939bd673mshe3b6eabee1426dep1aacf5jsna6416fda0cb1",
-            "x-rapidapi-host": "edamam-food-and-grocery-database.p.rapidapi.com"
-        }
-        })
-        .then(response => response.json())
-        .then(data => {
-            // console.log(data)
-            const foodSearched = data.parsed[0].food.nutrients
-            setFoodList(data.hints)
-            // console.log(data.hints)
-            setFoodName(data.parsed[0].food.label)
-            setCalories(foodSearched.ENERC_KCAL)
-            setProtein(foodSearched.PROCNT)
-            setCarbs(foodSearched.CHOCDF)
-            setFat(foodSearched.FAT)
-            setImageURI(data.parsed[0].food.image)
-            // console.log(data.parsed[0].food.nutrients.PROCNT);
-            // setCalories(data.calories)
-        })
-        .catch(err => {
-            console.error(err);
-        });
+    const [servings, setServings] = useState(1);
+
+    useEffect(() => {
+        setName(route.params.foodName);
+        setCalories(route.params.calories * servings);
+        setCarbs(route.params.carbs * servings);
+        setFat(route.params.fat * servings)
+        setProtein(route.params.protein * servings)
+    }, [])
+    
+    function updateMacros(serv) {
+        setCalories(route.params.calories * serv);
+        setCarbs(route.params.carbs * serv);
+        setFat(route.params.fat * serv)
+        setProtein(route.params.protein * serv)
     }
+
+    function addToDB() {
+        let date = new Date().toISOString().split('T')[0];
+        let currValue = firebase.firestore.FieldValue
+
+        db
+            .collection('users')
+            .doc(auth.currentUser.uid)
+            .collection('food')
+            .doc(date)
+            .update({
+                calConsumed: currValue.increment(calories),
+                carbs: currValue.increment(carbs),
+                fat: currValue.increment(fat),
+                protein: currValue.increment(protein),
+                [`meals.${name}`]: {
+                        calories: currValue.increment(calories),
+                        carbs: currValue.increment(carbs),
+                        fat: currValue.increment(fat),
+                        protein: currValue.increment(protein),
+                        servings: currValue.increment(servings)
+                }
+            })
+        
+        console.log("Meal added!")
+    }
+
+    // function getFoodInfo() {
+    //     const uri = "https://edamam-food-and-grocery-database.p.rapidapi.com/parser?ingr=" + encodeURIComponent(name)
+    //     fetch(uri, {
+    //     "method": "GET",
+    //     "headers": {
+    //         "x-rapidapi-key": "85939bd673mshe3b6eabee1426dep1aacf5jsna6416fda0cb1",
+    //         "x-rapidapi-host": "edamam-food-and-grocery-database.p.rapidapi.com"
+    //     }
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         // console.log(data)
+    //         const foodSearched = data.parsed[0].food.nutrients
+    //         setFoodList(data.hints)
+    //         // console.log(data.hints)
+    //         setFoodName(data.parsed[0].food.label)
+    //         setCalories(foodSearched.ENERC_KCAL)
+    //         setProtein(foodSearched.PROCNT)
+    //         setCarbs(foodSearched.CHOCDF)
+    //         setFat(foodSearched.FAT)
+    //         setImageURI(data.parsed[0].food.image)
+    //         // console.log(data.parsed[0].food.nutrients.PROCNT);
+    //         // setCalories(data.calories)
+    //     })
+    //     .catch(err => {
+    //         console.error(err);
+    //     });
+    // }
     
     return (
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
             <SafeAreaView>
                 <ScrollView>
-                    <Text style={styles.mealTitle} >{foodName}</Text>
-                    <Text style={{fontWidth: "100", marginLeft: 20, color: 'white', fontSize:18, marginBottom:20}}>4 oz.</Text>
-                    <Divider style={{ backgroundColor: 'skyblue', height: 4,}} />
+                    <Text style={styles.mealTitle} >{name}</Text>
+                    {/* <Text style={{fontWidth: "100", marginLeft: 20, color: 'white', fontSize:18, marginBottom:20}}>4 oz.</Text> */}
+                    <Divider style={{ backgroundColor: 'skyblue', height: 4}} />
                     <View
                     style={{
                         flexDirection: "row",
@@ -70,7 +114,7 @@ const FoodInfoScreen = () => {
                     >
                         <View style={styles.macroCircles}>
                             <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "white"}}>
-                                Calories
+                                {calories}
                             </Text>
                             <Text style={{fontWeight: '1000', fontSize: 18, color: "#7591af"}}>
                                 Cal
@@ -78,7 +122,7 @@ const FoodInfoScreen = () => {
                         </View>
                         <View style={styles.macroCircles}>
                             <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "white"}}>
-                                Carbs
+                                {carbs} g
                             </Text>
                             <Text style={{fontWeight: '1000', fontSize: 18, color: "#7591af"}}>
                                 Carbs
@@ -86,7 +130,7 @@ const FoodInfoScreen = () => {
                         </View>
                         <View style={styles.macroCircles}>
                             <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "white" }}>
-                                Fats
+                                {fat} g
                             </Text>
                             <Text style={{fontWeight: '1000', fontSize: 18, color: "#7591af",}}>
                                 Fats
@@ -94,7 +138,7 @@ const FoodInfoScreen = () => {
                         </View>
                         <View style={styles.macroCircles}>
                             <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "white"}}>
-                                Protein
+                                {protein} g
                             </Text>
                             <Text style={{fontWeight: '1000', fontSize: 18, color: "#7591af"}}>
                                 Protein
@@ -111,7 +155,7 @@ const FoodInfoScreen = () => {
                     }}
                     >
                         <Text style={styles.customServingOption}>Serving size:</Text>
-                        <Text style={styles.ServingDropDown}>4 oz</Text>
+                        <Text style={styles.ServingDropDown}>100 g</Text>
                     </View>
                     <Divider style={{ backgroundColor: 'grey', height: 2}} />
                     <View
@@ -123,7 +167,16 @@ const FoodInfoScreen = () => {
                     }}
                     >
                         <Text style={styles.customServingOption}>Number of servings:</Text>
-                        <Input style={styles.ServingInput} placeholder="1 serving"></Input>
+                        <TextInput style={styles.ServingInput} keyboardType="numeric" value={servings} onChangeText={(serv) => {
+                            setServings(serv);
+                            if(serv > 0) {
+                                updateMacros(serv);
+                            }
+                        }}></TextInput>
+                        <Button
+                        title="Add Meal"
+                        onPress={() => addToDB()}
+                        ></Button>
                     </View>
                 </ScrollView>
             </SafeAreaView>
@@ -211,6 +264,7 @@ elevation: 7,
         fontSize: 16
     },
     ServingInput: {
-        width:20
+        width:20,
+        color: 'white'
     }
 })

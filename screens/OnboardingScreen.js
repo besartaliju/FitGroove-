@@ -80,13 +80,14 @@ const OnboardingScreen = ({navigation}) => {
 
     function saveMeasurements() {
         if(goalWeight < weight) {
-            calories = parseInt(weight)*12
+            var calories = parseInt(weight)*12
         } else {
-            calories = parseInt(weight)*18
+            var calories = parseInt(weight)*18
         }
-        protein = (calories*0.3)/4
-        carbs = (calories*0.4)/4
-        fat = (calories*0.3)/9
+
+        const protein = (calories*0.3)/4
+        const carbs = (calories*0.4)/4
+        const fat = (calories*0.3)/9
 
         db
             .collection("users")
@@ -109,12 +110,31 @@ const OnboardingScreen = ({navigation}) => {
                 // gender: '',
                 // activityLevel: ''
             }, { merge: true })
+
+    }
+
+    function setFood() {
+        let date = new Date().toISOString().split('T')[0];
+
+        db
+            .collection('users')
+            .doc(userID)
+            .collection('food')
+            .doc(date)
+            .set({
+                calConsumed: 0,
+                protein: 0,
+                fat: 0,
+                carbs: 0,
+                meals: {}
+            })
     }
 
     const helper = async () => {
         await changeVisited().then(() => {
             // getMacros();
             saveMeasurements();
+            setFood();
         });
     }
 

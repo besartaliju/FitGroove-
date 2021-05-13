@@ -27,9 +27,9 @@ const HomeScreen = ({navigation}) => {
                 .get();
 
             let data = response.data();
-            console.log(data.details)
+            // console.log(data.details)
             setUserData(data.details)
-            console.log(data.macros)
+            // console.log(data.macros)
             setUserMacros(data.macros)
             // setIsLoading(false)
         } catch(err) {

@@ -84,10 +84,16 @@ const [isSearched, setIsSearched] = useState(false);
                         {isSearched ? (
                                 foodList.map((item) => {
                                     return (
-                                        <TouchableOpacity  onPress={() => navigation.navigate('FoodInfoScreen')}>
+                                        <TouchableOpacity  onPress={() => navigation.navigate('FoodInfoScreen', {
+                                            foodName: item.food.label,
+                                            calories: Math.round(item.food.nutrients.ENERC_KCAL),
+                                            carbs: Math.round(item.food.nutrients.CHOCDF),
+                                            fat: Math.round(item.food.nutrients.FAT),
+                                            protein: Math.round(item.food.nutrients.PROCNT)
+                                            })}>
                                             <View style={styles.foodBox}>
                                                 <Text style={styles.clickFoodName}>{item.food.label}</Text>
-                                                <Text style={styles.clickFoodInfo}>{item.food.nutrients.ENERC_KCAL} cals</Text>
+                                                <Text style={styles.clickFoodInfo}>{Math.round(item.food.nutrients.ENERC_KCAL)} cals</Text>
                                             </View>
                                         </TouchableOpacity>
                                     )

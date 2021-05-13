@@ -1,10 +1,11 @@
-import React, {useState} from 'react'
-import { SafeAreaView, FlatList, Alert, TouchableOpacity, TextInput } from 'react-native';
+import React, {useState, useLayoutEffect} from 'react'
+import { SafeAreaView, FlatList, Alert, TouchableOpacity, TextInput, DatePickerIOSBase } from 'react-native';
 import { KeyboardAvoidingView, StyleSheet, Text, View, ActivityIndicator } from 'react-native'
 import { Button, Input, Image, withTheme } from "react-native-elements";
 const fetch = require('node-fetch');
 import { Divider } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
+import { db, auth } from '../firebase';
 
 
 const FoodScreen = ({navigation}) => {
@@ -22,6 +23,22 @@ const FoodScreen = ({navigation}) => {
     const [fat, setFat] = useState('');
     const [imageURI, setImageURI] = useState('');
     const [foodList, setFoodList] = useState([[]]);
+    const [userFood, setUserFood] = useState([[]]);
+
+    useLayoutEffect(() => {
+        let date = new Date().toISOString().split('T')[0];
+
+        const unsubscribe = db
+            .collection('users')
+            .doc(auth.currentUser.uid)
+            .collection('food')
+            .doc(date)
+            .onSnapshot((doc) => {
+                setUserFood(doc.data())
+            })
+        
+        return unsubscribe;
+    }, [])
 
     function getFoodInfo() {
         const uri = "https://edamam-food-and-grocery-database.p.rapidapi.com/parser?ingr=" + encodeURIComponent(name)
@@ -73,7 +90,7 @@ const FoodScreen = ({navigation}) => {
                                 Calories
                             </Text>
                             <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af"}}>
-                                2,057
+                                {userFood.calConsumed}
                             </Text>
                         </View>
                         <View style={{flex: 1, alignItems: 'center', marginTop: 7}}>
@@ -81,7 +98,7 @@ const FoodScreen = ({navigation}) => {
                                 Fat
                             </Text>
                             <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af"}}>
-                                50g
+                                {userFood.fat} g
                             </Text>
                         </View>
                         <View style={{flex: 1, alignItems: 'center', marginTop: 7}}>
@@ -89,7 +106,7 @@ const FoodScreen = ({navigation}) => {
                                 Carbs
                             </Text>
                             <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af",}}>
-                                200g
+                                {userFood.carbs} g
                             </Text>
                         </View>
                         <View style={{flex: 1, alignItems: 'center', marginTop: 7}}>
@@ -97,7 +114,7 @@ const FoodScreen = ({navigation}) => {
                                 Protein
                             </Text>
                             <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af"}}>
-                                180g
+                                {userFood.protein} g
                             </Text>
                         </View>
                     </View>
@@ -106,74 +123,13 @@ const FoodScreen = ({navigation}) => {
                         style={{alignItems: 'center', justifyContent: 'center', marginleft: 50, width: 400, height: 75}}
                         onPress={() => navigation.navigate("SearchFood")}
                         />
-                    <View style={styles.dailyMeals}>
-                        <Text style={styles.mealTitle}>Breakfast</Text>
-                            <View>
-                                <Text style={styles.foodName} >{foodName}</Text>
-                                <View style={{
-                                flexDirection: "row",
-                                }} >
-                                <View style={{marginRight: 150}}>
-                                    <Text style={styles.macros}>Calories: {calories}</Text>
-                                    <Text style={styles.macros}>Protein: {protein}</Text>
-                                    <Text style={styles.macros}>Carbs: {carbs}</Text>
-                                    <Text style={styles.macros}>Fat: {fat}</Text>
-                                </View>
-                                <View>
-                                    <Image
-                                    source={{ uri: imageURI }}
-                                    style={{ width: 100, height: 100 }}
-                                    PlaceholderContent={<ActivityIndicator />}
-                                    />
-                                </View>
-                            </View>
-                        </View>
-                        <View style={styles.inputContainer}>
-                            <Input 
-                                placeholder="Add Food" 
-                                type="text" 
-                                color="white"
-                                // value={name} 
-                                onChangeText={(text) => setName(text)}
-                                style={styles.Input}
-                            />
-                            <Button type="clear" style={styles.addButton} onPress={getFoodInfo} title="+" />
-                        </View>
-                    </View>
+                        <Button
+                        title="View"
+                        style={{alignItems: 'center', justifyContent: 'center', marginleft: 50, width: 400, height: 75}}
+                        onPress={() => console.log(userFood)}
+                        />
                     <Divider style={{ backgroundColor: 'grey'}} />
-                    <View style={styles.dailyMeals}>
-                        <Text style={styles.mealTitle}>Lunch</Text>
-                        <Text style={styles.foodName} >{foodName}</Text>
-                        <View style={{
-                        flexDirection: "row",
-                        }} >
-                            <View style={{marginRight: 150}}>
-                                <Text style={styles.macros}>Calories: {calories}</Text>
-                                <Text style={styles.macros}>Protein: {protein}</Text>
-                                <Text style={styles.macros}>Carbs: {carbs}</Text>
-                                <Text style={styles.macros}>Fat: {fat}</Text>
-                            </View>
-                            <View>
-                                <Image
-                                source={{ uri: imageURI }}
-                                style={{ width: 100, height: 100 }}
-                                PlaceholderContent={<ActivityIndicator />}
-                                />
-                            </View>
-                        </View>
-                        <View style={styles.inputContainer}>
-                            <Input 
-                                placeholder="Add Food" 
-                                type="text" 
-                                color="white"
-                                // value={name} 
-                                onChangeText={(text) => setName(text)}
-                                style={styles.Input}
-                            />
-                            <Button type="clear" style={styles.addButton} onPress={getFoodInfo} title="+" />
-                        </View>
-                    </View>
-                    <Divider style={{ backgroundColor: 'grey'}} />
+
                 </ScrollView>
             </SafeAreaView>
         </KeyboardAvoidingView>
