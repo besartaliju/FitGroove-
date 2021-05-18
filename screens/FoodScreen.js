@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, View, ActivityIndicator } from 'react-native'
 import { Button, Input, Image } from "react-native-elements";
+import { db, auth } from '../firebase';
 const fetch = require('node-fetch');
 
 const FoodScreen = () => {
@@ -13,6 +14,7 @@ const FoodScreen = () => {
     const [fat, setFat] = useState('');
     const [imageURI, setImageURI] = useState('');
     const [foodList, setFoodList] = useState([[]]);
+
 
     function getFoodInfo() {
         const uri = "https://edamam-food-and-grocery-database.p.rapidapi.com/parser?ingr=" + encodeURIComponent(name)
