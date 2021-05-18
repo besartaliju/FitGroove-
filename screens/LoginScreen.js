@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useLayoutEffect } from 'react'
 import { Button, Input, Image } from "react-native-elements";
 import { KeyboardAvoidingView as Kav, StyleSheet, Text, View, Platform } from 'react-native';
 import { auth } from "../firebase";
@@ -12,36 +12,40 @@ const LoginScreen = ({ navigation }) => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const [showRealApp, setShowRealApp] = useState(false)
+    const [showRealApp, setShowRealApp] = useState(true)
 
-    const storeData = async () => {
+    const checkFirstTime = async () => {
         try {
-            await AsyncStorage.getItem('first_time').then((value) => {
-                if(value !== null) {
-                    setShowRealApp(true);
-                }
-            });
+            const value = await AsyncStorage.getItem('firstTime')
+            if(value !== null) {
+                console.log(value);
+                return true;
+            } else return false;
+
         } catch (error){
             console.error(error)
         }
     }
 
-    useEffect(() => {
-        storeData();
+    useLayoutEffect(() => {
+        checkFirstTime();
+    }, [])
 
-        const unsubscribe = auth.onAuthStateChanged((authUser) => {
-            console.log(authUser);
-            if(authUser) {
-                if(showRealApp) {
+    useEffect(() => {
+        checkFirstTime().then(() => {
+            const unsubscribe = auth.onAuthStateChanged((authUser) => {
+                // console.log(authUser);
+                if(authUser) {
                     navigation.replace("App");
+    
                 } else {
                     navigation.navigate("Onboarding")
                 }
-                
-            }
+            })
+    
+            return unsubscribe;
         })
-
-        return unsubscribe;
+        
     }, []);
 
     const signIn = () => {

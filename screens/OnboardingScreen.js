@@ -38,7 +38,7 @@ const OnboardingScreen = ({navigation}) => {
 
     const changeVisited = async () => {
         try {
-            await AsyncStorage.setItem('first_time', 'true').then(() => {
+            await AsyncStorage.setItem('firstTime', 'true').then(() => {
                 console.log("User data saved!");
                 navigation.replace("App");
             })

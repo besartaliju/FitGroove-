@@ -3,6 +3,7 @@ import React, { useEffect, useState, useLayoutEffect} from 'react';
 import { StyleSheet, Text, TouchableOpacity, ScrollView, SafeAreaView, View, ActivityIndicator } from 'react-native';
 import { Card, Tile, Avatar, Button } from 'react-native-elements';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = ({navigation}) => {
     const [name, setName] = useState('');
@@ -57,6 +58,16 @@ const HomeScreen = ({navigation}) => {
     //     }
     // }
 
+    const changeVisited = async () => {
+        try {
+            await AsyncStorage.setItem('firstTime', 'true').then(() => {
+                console.log("First time changed!");
+            })
+        } catch (error){
+            console.error(error)
+        }
+    }
+
     useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (
@@ -74,6 +85,7 @@ const HomeScreen = ({navigation}) => {
             )
             
         })
+        changeVisited();
         fetchUserData();
         // fetchDailyData();
         let date = new Date().toISOString().split('T')[0];
