@@ -12,7 +12,7 @@ const LoginScreen = ({ navigation }) => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const [showRealApp, setShowRealApp] = useState(true)
+    const [showRealApp, setShowRealApp] = useState(false)
 
     const checkFirstTime = async () => {
         try {
