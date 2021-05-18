@@ -1,24 +1,49 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useLayoutEffect} from 'react'
 import { StatusBar } from 'expo-status-bar';
 import { Button, Input, Avatar, Header } from "react-native-elements";
 import { KeyboardAvoidingView, StyleSheet, Text, View, Image, TouchableWithoutFeedback } from 'react-native';
-import { auth } from "../firebase";
-import { SafeAreaView } from 'react-native';
+import { auth, db } from "../firebase";
+import { SafeAreaView, ActivityIndicator } from 'react-native';
 
 const ProfileScreen = ({ navigation }) => {
-    const [name, setName] = useState('');
+    const [userData, setUserData] = useState({});
+    const [isLoading, setIsLoading] = useState(true)
+    // const [currentWeight, setCurrentWeight] = useState('');
+    // const [goalWeight, setGoalWeight] = useState('');
     const user = auth.currentUser;
+    const stateHelperFunction = (data) => {
+        setUserData(data);
+        console.log(userData);
+    }
+    const fetchUserData = async () => {
+        try {
+            const response = await db
+                .collection("users")
+                .doc(user.uid)
+                .get();
+
+            let data = response.data();
+            console.log(data.details)
+            setUserData(data)
+            setIsLoading(false)
+        } catch(err) {
+            console.error(err);
+        }
+    }
 
     useEffect(() => {
         if (user) {
             console.log(auth.currentUser.displayName)
-            setName(auth.currentUser.displayName)
+            // setName(auth.currentUser.displayName)
         }
+
+        fetchUserData();
+        // console.log(userData)
         
+        return () => setUserData({})
     }, []);
 
     return (
-        
         <SafeAreaView style={styles.container}>
             <Avatar
             size="large"
@@ -29,41 +54,45 @@ const ProfileScreen = ({ navigation }) => {
                 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
             }}
             />
-        <Text>{name}</Text>
+        <Text>{userData.name}</Text>
+        {isLoading ? (
+            <ActivityIndicator />
+        ) : (
         <View
-        style={{
-            flexDirection: "row",
-            height: 75,
-            width: 350,
-            backgroundColor: '#F9F9F9',
-            borderRadius: 10
-        }}
-        >
+            style={{
+                flexDirection: "row",
+                height: 75,
+                width: 350,
+                backgroundColor: '#F9F9F9',
+                borderRadius: 10
+            }}
+            >
             <View style={{flex: 1, alignItems: 'center', marginTop: 7}}>
                 <Text style={{paddingBottom: 15}}>
-                    Posts
+                    Weight
                 </Text>
                 <Text style={{fontWeight: 'bold', fontSize: 18}}>
-                    N/A
+                    {userData.details.weight}
                 </Text>
             </View>
             <View style={{flex: 1, alignItems: 'center', marginTop: 7}}>
                 <Text style={{paddingBottom: 15}}>
-                    Followers
+                    Goal
                 </Text>
                 <Text style={{fontWeight: 'bold', fontSize: 18}}>
-                    N/A
+                    {userData.details.height}
                 </Text>
             </View>
             <View style={{flex: 1, alignItems: 'center', marginTop: 7}}>
                 <Text style={{paddingBottom: 15}}>
-                    Following
+                    Age
                 </Text>
                 <Text style={{fontWeight: 'bold', fontSize: 18}}>
-                    N/A
+                    {userData.details.age}
                 </Text>
             </View>
         </View>
+        )}
         <View style={styles.posts}>
             <Text>You have not uploaded any posts yet!</Text>
         </View>

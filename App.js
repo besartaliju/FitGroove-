@@ -13,10 +13,16 @@ import WorkoutScreen from './screens/WorkoutScreen';
 import HistoryScreen from './screens/HistoryScreen';
 import SocialScreen from './screens/SocialScreen';
 import ProfileScreen from './screens/ProfileScreen';
+<<<<<<< HEAD
 import  MyExercise  from './screens/MyExercise';
 import NewExercise from './screens/NewExercise';
 import FindExercise from './screens/FindExercise';
 import startWorkout from './screens/startWorkout';
+=======
+import SearchFoodScreen from './screens/SearchFoodScreen';
+import FoodInfoScreen from './screens/FoodInfoScreen';
+import OnboardingScreen from './screens/OnboardingScreen';
+>>>>>>> 908b04349ed6b16670accc944c024f1826ade57d
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -36,16 +42,17 @@ export default function App() {
 
   function AuthStack() {
     return (
-      <Stack.Navigator headerMode='none'>
+      <Stack.Navigator >
         <Stack.Screen name="Login" component={LoginScreen}/>
         <Stack.Screen name="SignUp" component={SignUpScreen}/>
+        <Stack.Screen name="Onboarding" component={OnboardingScreen}/>
       </Stack.Navigator>
     )
   }
 
   function HomeStack() {
     return (
-      <Stack.Navigator>
+      <Stack.Navigator >
         <Stack.Screen name="Home" component={HomeScreen}/>
         <Stack.Screen name="Profile" component={ProfileScreen}/>
       </Stack.Navigator>
@@ -72,13 +79,15 @@ export default function App() {
     return (
       <Stack.Navigator>
         <Stack.Screen name="Food" component={FoodScreen}/>
+        <Stack.Screen name="SearchFood" component={SearchFoodScreen}/>
+        <Stack.Screen name="FoodInfoScreen" component={FoodInfoScreen}/>
       </Stack.Navigator>
     )
   }
 
   function SocialStack() {
     return (
-      <Stack.Navigator>
+      <Stack.Navigator >
         <Stack.Screen name="Social" component={SocialScreen}/>
       </Stack.Navigator>
     )
