@@ -19,8 +19,8 @@ const LoginScreen = ({ navigation }) => {
             const value = await AsyncStorage.getItem('firstTime')
             if(value !== null) {
                 console.log(value);
-                return true;
-            } else return false;
+                setShowRealApp(true);
+            } 
 
         } catch (error){
             console.error(error)
@@ -35,7 +35,7 @@ const LoginScreen = ({ navigation }) => {
         checkFirstTime().then(() => {
             const unsubscribe = auth.onAuthStateChanged((authUser) => {
                 // console.log(authUser);
-                if(authUser) {
+                if(authUser && showRealApp) {
                     navigation.replace("App");
     
                 } else {
