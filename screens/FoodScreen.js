@@ -127,7 +127,6 @@ const FoodScreen = ({navigation, route}) => {
                         />
                     <View style={styles.dailyMeals}>
                         <Text style={styles.mealTitle}>Breakfast</Text>
-
                         <View style={styles.inputContainer}>
                         <FlatList
                             data={chosenFoods}

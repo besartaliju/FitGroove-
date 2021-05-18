@@ -56,20 +56,20 @@ const HomeScreen = ({navigation}) => {
                     height: 75,
                     fontWeight: 'bold',
                     width: 350,
-                    marginBottom: 25
+                    marginBottom: 35
                 }}>
                     {isLoading ? (
                         <ActivityIndicator />
                     ) : (
                     <View>
-                        <Text h1 style={styles.date}>04/01/2021</Text>
+                        <Text h1 style={styles.date}>05/19/2021</Text>
                         <Text h1 style={styles.title}>Hi, {user.displayName}!</Text>
                     </View>
                     )}
                     <Avatar
                     size="medium"
                     rounded
-                    containerStyle={{ marginLeft: 200, marginTop: 22}} //THIS IS TEMPORARY REMEMBER TO FIX
+                    containerStyle={{ marginLeft: 200, marginTop: 22}}
                     source={{
                         uri:
                         'https://templesinaidc.org/wp-content/uploads/sites/57/2019/12/gray-square.jpg',
@@ -86,15 +86,14 @@ const HomeScreen = ({navigation}) => {
                     flexDirection: "row",
                     height: 75,
                     width: 350,
-                    marginBottom: 150,
-                    alignItems: "center",
-                    alignContent: "center"
+                    marginBottom: 100,
+                    alignSelf: "center"
                 }}>
                     <View>
                         <AnimatedCircularProgress
                         size={140}
                         width={15}
-                        fill={100}
+                        fill={200}
                         tintColor="#00e0ff"
                         style={styles.circularprogress}
                         backgroundColor="#3d5875">
@@ -106,7 +105,7 @@ const HomeScreen = ({navigation}) => {
                         <AnimatedCircularProgress
                         size={140}
                         width={15}
-                        fill={100}
+                        fill={200}
                         tintColor="#00e0ff"
                         style={styles.circularprogress}
                         backgroundColor="#3d5875">
@@ -119,14 +118,14 @@ const HomeScreen = ({navigation}) => {
                     flexDirection: "row",
                     height: 75,
                     width: 350,
-                    marginBottom: 25,
-                    alignItems: "center"
+                    marginBottom: 90,
+                    alignSelf: "center"
                 }}>
                     <View>
                         <AnimatedCircularProgress
                         size={140}
                         width={15}
-                        fill={100}
+                        fill={200}
                         tintColor="#00e0ff"
                         style={styles.circularprogress}
                         backgroundColor="#3d5875">
@@ -138,7 +137,7 @@ const HomeScreen = ({navigation}) => {
                         <AnimatedCircularProgress
                         size={140}
                         width={15}
-                        fill={100}
+                        fill={200}
                         tintColor="#00e0ff"
                         style={styles.circularprogress}
                         backgroundColor="#3d5875">
@@ -152,74 +151,6 @@ const HomeScreen = ({navigation}) => {
                         Today's Workout
                     </Text>
                 </View>
-
-            {/* <View>
-                <Text style={styles.subtitle1}>Y O U R  D A I L Y  P R O G R E S S</Text>
-                <View style={{marginBottom: 30}}>
-                    
-                </View>
-            </View>
-            <View style={{backgroundColor: '#EBEBEB'}}>
-                <Text style={styles.subtitle2}>Y O U R  B E S T  W O R K O U T S</Text>
-                <View style={{marginBottom: 20, borderRadius: 13}}>
-                    <ScrollView horizontal={true}>
-                        <Card style={{flex: 1, width: 100}}>
-                            <Card.Title>Lunges</Card.Title>
-                            <Card.Image style={styles.workoutimages} source={require('../assets/manlunge.png')}>
-                                <Button type="clear"/>
-                            </Card.Image>
-                        </Card>
-                        <Card style={{flex: 1, width: 100}}>
-                            <Card.Title>Warm Up</Card.Title>
-                            <Card.Image style={styles.workoutimages} source={require('../assets/manwarmup.png')}>
-                                <Button type="clear"/>
-                            </Card.Image>
-                        </Card>
-                    </ScrollView>
-                </View>
-            </View>
-            <View>
-                <Text style={styles.subtitle2}>F O C U S</Text>
-                <View style={{marginBottom: 20, borderRadius: 13}}>
-                    <ScrollView horizontal={true}>
-                        <Card style={{flex: 1, width: 100}}>
-                            <Card.Title>Jump Rope</Card.Title>
-                            <Card.Image style={styles.workoutimages} source={require('../assets/womanjumprope.png')}>
-                                <Button type="clear"/>
-                            </Card.Image>
-                        </Card>
-                        <Card style={{flex: 1, width: 100}}>
-                            <Card.Title>Wide Squat</Card.Title>
-                            <Card.Image style={styles.workoutimages}  source={require('../assets/womanlift.png')}>
-                                <Button type="clear"/>
-                            </Card.Image>
-                        </Card>
-                    </ScrollView>
-                </View>
-            </View>
-            <View style={{backgroundColor: '#EBEBEB'}}>
-                <Text style={styles.subtitle2}>Y O U R  T O P  M E A L S</Text>
-                <View style={{marginBottom: 20, borderRadius: 13}}>
-                    <ScrollView horizontal={true}>
-                        <Card style={{flex: 1, width: 100}}>
-                            <Card.Title>food1</Card.Title>
-                            <Card.Image style={styles.workoutimages} source={require('../assets/fillerbox.png')}>
-                                <Button type="clear"/>
-                            </Card.Image>
-                        </Card>
-                        <Card style={{flex: 1, width: 100}}>
-                            <Card.Title>food2</Card.Title>
-                            <Card.Image style={styles.workoutimages} source={require('../assets/fillerbox.png')}>
-                                <Button type="clear"/>
-                            </Card.Image>
-                        </Card>
-                    </ScrollView>
-                </View>
-            </View>
-            <View>
-                <Text style={styles.subtitle2}>T H E  L A T E S T</Text>
-                <Text>social media start</Text>
-            </View> */}
             </ScrollView>
         </SafeAreaView>
         );
@@ -230,8 +161,10 @@ export default HomeScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#232224',
-        alignItems: 'center'
+        backgroundColor: '#000',
+        alignItems: 'center',
+        alignContent: "center",
+        alignItems: "center",
     },
 
     date: {
@@ -239,13 +172,16 @@ const styles = StyleSheet.create({
         color: "white",
         paddingTop: 23,
         paddingBottom: 5,
-        fontWeight: '100'
+        marginLeft: 14,
+        fontWeight: '300'
     },
 
     title: {
-        fontSize: 24,
-        color: "white",
-        paddingBottom: 50,
+        fontSize:32, 
+        fontWeight: "bold", 
+        color:"white",
+        marginLeft: 14,
+        paddingBottom: 45,
     },
     subtitle1: {
         fontSize: 14,
@@ -253,14 +189,15 @@ const styles = StyleSheet.create({
         textAlign: 'left',
     },
     weightgoal: {
-        backgroundColor:'#0037de',
-        paddingBottom: 10,
-        paddingLeft: 10,
-        paddingTop: 10,
-        paddingRight: 10,
-        borderRadius: 8,
-        
-        marginBottom: 20
+        paddingTop:10,
+        paddingBottom:10,
+        paddingLeft:10,
+        paddingRight:10,
+        backgroundColor: '#F52416',
+        width:380,
+        borderRadius:7,
+        alignSelf: "center",
+        marginBottom: 10
     },
     weightnow: {
         backgroundColor:'#1a4adb',
@@ -269,40 +206,46 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         paddingRight: 10,
         borderRadius: 8,
-        
-        marginBottom: 90
+        alignSelf: 'center',
+        marginBottom: 30,
+        width: 380
 
     },
     macros: {
         textAlign: 'center',
-        color: '#7591af',
+        color: 'white',
         fontSize: 40,
         fontWeight: '100',
       },
     progresstitle: {
         color: "white",
         marginTop: 7,
-        fontWeight: '200',
+        fontWeight: '300',
         marginLeft: 45,
     },
     circularprogress: {
         marginRight: 70
     },
     workoutpreview: {
-        backgroundColor:'#303030',
-        paddingBottom: 10,
-        paddingLeft: 10,
-        paddingTop: 10,
-        paddingRight: 10,
-        borderRadius: 8,
-        height: 500,
-        marginBottom: 20,
-        marginTop: 50,
+        height:300,
+        width:380,
+        marginLeft:10,
+        marginRight:10,
+        marginTop: 30,
+        borderTopRightRadius:15,
+        borderTopLeftRadius:15,
+        borderBottomRightRadius:15,
+        borderBottomLeftRadius:15,
+        backgroundColor:"#060507",
+        borderWidth:3,
+        borderColor:"#0F2027"
     },
     workoutpreviewtitle: {
         color: "white",
         fontSize: 24,
-        fontWeight: "100"
+        fontWeight: "100",
+        paddingTop: 5,
+        paddingLeft: 10,
     },
 
     subtitle2: {

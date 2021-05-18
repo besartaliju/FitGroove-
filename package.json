@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.3",
     "@react-native-async-storage/async-storage": "^1.14.1",
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/masked-view": "0.1.10",
@@ -27,6 +28,7 @@
     "react-native-dropdown-menu": "^2.0.0",
     "react-native-elements": "^3.2.0",
     "react-native-gesture-handler": "~1.8.0",
+    "react-native-ionicons": "^4.6.5",
     "react-native-onboarding-swiper": "^1.1.4",
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.9",

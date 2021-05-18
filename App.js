@@ -4,6 +4,9 @@ import { StyleSheet, View, Text } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { useColorScheme } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from "expo-status-bar";
 import LoginScreen from './screens/LoginScreen';
 import SignUpScreen from './screens/SignUpScreen';
@@ -24,15 +27,43 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+  const scheme = useColorScheme();
   function Root() {
     return (
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeStack} />
-        <Tab.Screen name="History" component={HistoryStack} />
-        <Tab.Screen name="Workout" component={WorkoutStack} />
-        <Tab.Screen name="Food" component={FoodStack} />
-        <Tab.Screen name="Social" component={SocialStack} />
-      </Tab.Navigator>
+        <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+            if (route.name === 'Home') {
+              iconName = focused ? 'home' : 'home-outline';
+            } else if (route.name === 'History') {
+              iconName = focused ? 'timer' : 'timer-outline';
+            }
+            else if (route.name === 'Workout') {
+              iconName = focused ? 'barbell' : 'barbell-outline';
+            }
+            else if (route.name === 'Food') {
+              iconName = focused ? 'fast-food' : 'fast-food-outline';
+            }
+            else if (route.name === 'Social') {
+              iconName = focused ? 'people' : 'people-outline';
+            }
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+        })}
+        tabBarOptions= {{
+          activeBackgroundColor: "#132026",
+          inactiveBackgroundColor: "#132026",
+          activeTintColor: 'tomato',
+          inactiveTintColor: 'white',
+        }}
+        >
+          <Tab.Screen name="Home" component={HomeStack} />
+          <Tab.Screen name="History" component={HistoryStack} />
+          <Tab.Screen name="Workout" component={WorkoutStack} />
+          <Tab.Screen name="Food" component={FoodStack} />
+          <Tab.Screen name="Social" component={SocialStack} />
+        </Tab.Navigator>
     );
   }
 
@@ -89,10 +120,9 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack.Navigator keyboardHandlingEnabled='true'>
-        <Stack.Screen options={{headerShown: false}} name="Auth" component={AuthStack} />
-        <Stack.Screen options={{headerShown: false}} name="App" component={Root} />
+        <Stack.Screen name="Fit Groove" component={Root} />
         <Stack.Screen options={{headerShown: false}} name="MyExercise" component={MyExercise}/>
         <Stack.Screen options={{headerShown: false}} name="NewExercise" component={NewExercise}/>
         <Stack.Screen options={{headerShown: false}} name="FindExercise" component={FindExercise}/>
