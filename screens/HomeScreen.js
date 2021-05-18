@@ -38,24 +38,24 @@ const HomeScreen = ({navigation}) => {
         }
     }
 
-    const fetchDailyData = async () => {
-        let date = new Date().toISOString().split('T')[0];
-        try {
-            const unsubscribe = await db
-                .collection("users")
-                .doc(user.uid)
-                .collection('food')
-                .doc(date)
-                .onSnapshot((doc) => {
-                    // console.log(doc.data())
-                    setDailyData(doc.data());
-                })
+    // const fetchDailyData = async () => {
+    //     let date = new Date().toISOString().split('T')[0];
+    //     try {
+    //         const unsubscribe = await db
+    //             .collection("users")
+    //             .doc(user.uid)
+    //             .collection('food')
+    //             .doc(date)
+    //             .onSnapshot((doc) => {
+    //                 console.log(doc.data())
+    //                 setDailyData(doc.data());
+    //             })
 
-            return unsubscribe
-        } catch(err) {
-            console.error(err);
-        }
-    }
+    //         return unsubscribe
+    //     } catch(err) {
+    //         console.error(err);
+    //     }
+    // }
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -75,20 +75,19 @@ const HomeScreen = ({navigation}) => {
             
         })
         fetchUserData();
-        fetchDailyData();
-        // const unsubscribe = auth.onAuthStateChanged(function(user) {
-        //     if (user) {
-        //         console.log(user.displayName)
-        //         setName(user.displayName)
-        //         setIsLoading(false)
-        //     }
-        //   });
-    //    console.log(name)
-        // if (user) {
-        //     // console.log(user.displayName)
-        //     setName(user.displayName)
-        // }
-        //   return () => unsubscribe();
+        // fetchDailyData();
+        let date = new Date().toISOString().split('T')[0];
+        const unsubscribe = db
+                .collection("users")
+                .doc(user.uid)
+                .collection('food')
+                .doc(date)
+                .onSnapshot((doc) => {
+                    console.log(doc.data())
+                    setDailyData(doc.data());
+                })
+
+        return unsubscribe
     }, [])
 
     return (
@@ -137,11 +136,11 @@ const HomeScreen = ({navigation}) => {
                         <AnimatedCircularProgress
                         size={140}
                         width={15}
-                        fill={(dailyData.calConsumed / userMacros.calories) * 100}
+                        fill={Math.floor((dailyData.calConsumed / userMacros.calories) * 100)}
                         tintColor="#00e0ff"
                         style={styles.circularprogress}
                         backgroundColor="#3d5875">
-                            {fill => <Text style={styles.macros}>{userMacros.calories}</Text>}
+                            {(fill) => <Text style={styles.macros}>{userMacros.calories}</Text>}
                         </AnimatedCircularProgress>
                         <Text style={styles.progresstitle}>Calories</Text>
                     </View>
@@ -149,11 +148,11 @@ const HomeScreen = ({navigation}) => {
                         <AnimatedCircularProgress
                         size={140}
                         width={15}
-                        fill={(dailyData.protein / userMacros.protein) * 100}
+                        fill={Math.floor((dailyData.protein / userMacros.protein) * 100)}
                         tintColor="#00e0ff"
                         style={styles.circularprogress}
                         backgroundColor="#3d5875">
-                            {fill => <Text style={styles.macros}>{userMacros.protein}</Text>}
+                            {(fill) => <Text style={styles.macros}>{userMacros.protein}</Text>}
                         </AnimatedCircularProgress>
                         <Text style={styles.progresstitle}>Protein</Text>
                     </View>
@@ -169,11 +168,11 @@ const HomeScreen = ({navigation}) => {
                         <AnimatedCircularProgress
                         size={140}
                         width={15}
-                        fill={(dailyData.fat / userMacros.fat) * 100}
+                        fill={Math.floor((dailyData.fat / userMacros.fat) * 100)}
                         tintColor="#00e0ff"
                         style={styles.circularprogress}
                         backgroundColor="#3d5875">
-                            {fill => <Text style={styles.macros}>{userMacros.fat}</Text>}
+                            {(fill) => <Text style={styles.macros}>{userMacros.fat}</Text>}
                         </AnimatedCircularProgress>
                         <Text style={styles.progresstitle}>Fat</Text>
                     </View>
@@ -181,7 +180,7 @@ const HomeScreen = ({navigation}) => {
                         <AnimatedCircularProgress
                         size={140}
                         width={15}
-                        fill={(dailyData.carbs / userMacros.carbs) * 100}
+                        fill={Math.floor((dailyData.carbs / userMacros.carbs) * 100)}
                         tintColor="#00e0ff"
                         style={styles.circularprogress}
                         backgroundColor="#3d5875">
@@ -195,74 +194,6 @@ const HomeScreen = ({navigation}) => {
                         Today's Workout
                     </Text>
                 </View>
-
-            {/* <View>
-                <Text style={styles.subtitle1}>Y O U R  D A I L Y  P R O G R E S S</Text>
-                <View style={{marginBottom: 30}}>
-                    
-                </View>
-            </View>
-            <View style={{backgroundColor: '#EBEBEB'}}>
-                <Text style={styles.subtitle2}>Y O U R  B E S T  W O R K O U T S</Text>
-                <View style={{marginBottom: 20, borderRadius: 13}}>
-                    <ScrollView horizontal={true}>
-                        <Card style={{flex: 1, width: 100}}>
-                            <Card.Title>Lunges</Card.Title>
-                            <Card.Image style={styles.workoutimages} source={require('../assets/manlunge.png')}>
-                                <Button type="clear"/>
-                            </Card.Image>
-                        </Card>
-                        <Card style={{flex: 1, width: 100}}>
-                            <Card.Title>Warm Up</Card.Title>
-                            <Card.Image style={styles.workoutimages} source={require('../assets/manwarmup.png')}>
-                                <Button type="clear"/>
-                            </Card.Image>
-                        </Card>
-                    </ScrollView>
-                </View>
-            </View>
-            <View>
-                <Text style={styles.subtitle2}>F O C U S</Text>
-                <View style={{marginBottom: 20, borderRadius: 13}}>
-                    <ScrollView horizontal={true}>
-                        <Card style={{flex: 1, width: 100}}>
-                            <Card.Title>Jump Rope</Card.Title>
-                            <Card.Image style={styles.workoutimages} source={require('../assets/womanjumprope.png')}>
-                                <Button type="clear"/>
-                            </Card.Image>
-                        </Card>
-                        <Card style={{flex: 1, width: 100}}>
-                            <Card.Title>Wide Squat</Card.Title>
-                            <Card.Image style={styles.workoutimages}  source={require('../assets/womanlift.png')}>
-                                <Button type="clear"/>
-                            </Card.Image>
-                        </Card>
-                    </ScrollView>
-                </View>
-            </View>
-            <View style={{backgroundColor: '#EBEBEB'}}>
-                <Text style={styles.subtitle2}>Y O U R  T O P  M E A L S</Text>
-                <View style={{marginBottom: 20, borderRadius: 13}}>
-                    <ScrollView horizontal={true}>
-                        <Card style={{flex: 1, width: 100}}>
-                            <Card.Title>food1</Card.Title>
-                            <Card.Image style={styles.workoutimages} source={require('../assets/fillerbox.png')}>
-                                <Button type="clear"/>
-                            </Card.Image>
-                        </Card>
-                        <Card style={{flex: 1, width: 100}}>
-                            <Card.Title>food2</Card.Title>
-                            <Card.Image style={styles.workoutimages} source={require('../assets/fillerbox.png')}>
-                                <Button type="clear"/>
-                            </Card.Image>
-                        </Card>
-                    </ScrollView>
-                </View>
-            </View>
-            <View>
-                <Text style={styles.subtitle2}>T H E  L A T E S T</Text>
-                <Text>social media start</Text>
-            </View> */}
             </ScrollView>
         </SafeAreaView>
         );
