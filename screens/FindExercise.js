@@ -148,12 +148,7 @@ const FindExercise = () => {
                 (<View style={styles.showResult}>
                     <TouchableOpacity>
                         <View style={{flexDirection:"row"}}>
-                            <View styles={{flex: 1}}>
-                                 <Image
-                                    style = {styles.cardIcon}
-                                    source={{uri: exDetails.images[0].image}}
-                                 />
-                            </View>
+
                             <View styles={{flex: 4}}>
 
                                  <Text style={styles.textResult}> {exDetails.name} </Text>
