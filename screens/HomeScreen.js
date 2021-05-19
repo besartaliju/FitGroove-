@@ -148,9 +148,9 @@ const HomeScreen = ({navigation}) => {
                         size={140}
                         width={15}
                         fill={Math.floor((dailyData.calConsumed / userMacros.calories) * 100)}
-                        tintColor="#00e0ff"
+                        tintColor="#A9A5D5"
                         style={styles.circularprogress}
-                        backgroundColor="#3d5875">
+                        backgroundColor="#A9A5D5">
                             {(fill) => <Text style={styles.macros}>{userMacros.calories}</Text>}
                         </AnimatedCircularProgress>
                         <Text style={styles.progresstitle}>Calories</Text>
@@ -160,9 +160,9 @@ const HomeScreen = ({navigation}) => {
                         size={140}
                         width={15}
                         fill={Math.floor((dailyData.protein / userMacros.protein) * 100)}
-                        tintColor="#00e0ff"
+                        tintColor="#A9A5D5"
                         style={styles.circularprogress}
-                        backgroundColor="#3d5875">
+                        backgroundColor="#A9A5D5">
                             {(fill) => <Text style={styles.macros}>{userMacros.protein}</Text>}
                         </AnimatedCircularProgress>
                         <Text style={styles.progresstitle}>Protein</Text>
@@ -180,9 +180,9 @@ const HomeScreen = ({navigation}) => {
                         size={140}
                         width={15}
                         fill={Math.floor((dailyData.fat / userMacros.fat) * 100)}
-                        tintColor="#00e0ff"
+                        tintColor="#A9A5D5"
                         style={styles.circularprogress}
-                        backgroundColor="#3d5875">
+                        backgroundColor="#A9A5D5">
                             {(fill) => <Text style={styles.macros}>{userMacros.fat}</Text>}
                         </AnimatedCircularProgress>
                         <Text style={styles.progresstitle}>Fat</Text>
@@ -192,9 +192,9 @@ const HomeScreen = ({navigation}) => {
                         size={140}
                         width={15}
                         fill={Math.floor((dailyData.carbs / userMacros.carbs) * 100)}
-                        tintColor="#00e0ff"
+                        tintColor="#A9A5D5"
                         style={styles.circularprogress}
-                        backgroundColor="#3d5875">
+                        backgroundColor="#A9A5D5">
                             {(fill) => <Text style={styles.macros}>{userMacros.carbs}</Text>}
                         </AnimatedCircularProgress>
                         <Text style={styles.progresstitle}>Carbs</Text>
@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
         width:380,
         marginLeft:10,
         marginRight:10,
-        marginTop: 50,
+        marginTop: 70,
         borderTopRightRadius:15,
         borderTopLeftRadius:15,
         borderBottomRightRadius:15,

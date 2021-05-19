@@ -48,13 +48,13 @@ const ProfileScreen = ({ navigation }) => {
             <Avatar
             size="large"
             rounded
-            containerStyle={{ marginTop: 35, marginBottom: 35}}
+            containerStyle={{ marginTop: 35, marginBottom: 20}}
             source={{
                 uri:
                 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
             }}
             />
-        <Text>{userData.name}</Text>
+        <Text style={{color: 'white', marginTop: 7, marginBottom: 35, fontSize: 24}}>{userData.name}</Text>
         {isLoading ? (
             <ActivityIndicator />
         ) : (
@@ -63,31 +63,32 @@ const ProfileScreen = ({ navigation }) => {
                 flexDirection: "row",
                 height: 75,
                 width: 350,
-                backgroundColor: '#F9F9F9',
-                borderRadius: 10
+                backgroundColor: 'gray',
+                borderRadius: 10,
+                color: 'white'
             }}
             >
-            <View style={{flex: 1, alignItems: 'center', marginTop: 7}}>
+            <View style={{flex: 1, color: 'white', alignItems: 'center', marginTop: 7}}>
                 <Text style={{paddingBottom: 15}}>
                     Weight
                 </Text>
-                <Text style={{fontWeight: 'bold', fontSize: 18}}>
+                <Text style={{color: 'white', fontWeight: 'bold', fontSize: 18}}>
                     {userData.details.weight}
                 </Text>
             </View>
-            <View style={{flex: 1, alignItems: 'center', marginTop: 7}}>
+            <View style={{flex: 1, color: 'white', alignItems: 'center', marginTop: 7}}>
                 <Text style={{paddingBottom: 15}}>
                     Goal
                 </Text>
-                <Text style={{fontWeight: 'bold', fontSize: 18}}>
+                <Text style={{color: 'white', fontWeight: 'bold', fontSize: 18}}>
                     {userData.details.height}
                 </Text>
             </View>
-            <View style={{flex: 1, alignItems: 'center', marginTop: 7}}>
+            <View style={{flex: 1, color: 'white', alignItems: 'center', marginTop: 7}}>
                 <Text style={{paddingBottom: 15}}>
                     Age
                 </Text>
-                <Text style={{fontWeight: 'bold', fontSize: 18}}>
+                <Text style={{color: 'white', fontWeight: 'bold', fontSize: 18}}>
                     {userData.details.age}
                 </Text>
             </View>
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: '#000',
     },
     inputContainer: {
         borderRadius: 15,
@@ -136,6 +137,7 @@ const styles = StyleSheet.create({
         height: 15,
         left: 118,
         top: 682,
+        color: "#F9F9F9"
     },
 
     button2: {
@@ -149,5 +151,8 @@ const styles = StyleSheet.create({
         padding: 10,
         marginLeft: 20,
       },
+    posts: {
+        color: "white"
+    }
 })
 

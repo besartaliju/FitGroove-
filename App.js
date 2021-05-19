@@ -80,8 +80,8 @@ export default function App() {
   function HomeStack() {
     return (
       <Stack.Navigator>
-        <Stack.Screen options={{headerTitle: 'Test', headerShown: false}} name="Home" component={HomeScreen}/>
-        <Stack.Screen options={{headerTitle: 'Test', headerShown: false}} name="Profile" component={ProfileScreen}/>
+        <Stack.Screen  name="Home" component={HomeScreen}/>
+        <Stack.Screen  name="Profile" component={ProfileScreen}/>
       </Stack.Navigator>
     )
   }
@@ -114,8 +114,8 @@ export default function App() {
 
   function SocialStack() {
     return (
-      <Stack.Navigator >
-        <Stack.Screen name="Social" component={SocialScreen}/>
+      <Stack.Navigator>
+        <Stack.Screen options={{headerTitle: 'Test', headerShown: false}} name="Social" component={SocialScreen}/>
       </Stack.Navigator>
     )
   }

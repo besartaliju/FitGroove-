@@ -63,8 +63,6 @@ const FoodInfoScreen = ({navigation, route}) => {
                         servings: currValue.increment(servings)
                 }
             })
-        
-        
     }
 
     function buttonAlert(){
@@ -76,42 +74,13 @@ const FoodInfoScreen = ({navigation, route}) => {
         );
       }
 
-    // function getFoodInfo() {
-    //     const uri = "https://edamam-food-and-grocery-database.p.rapidapi.com/parser?ingr=" + encodeURIComponent(name)
-    //     fetch(uri, {
-    //     "method": "GET",
-    //     "headers": {
-    //         "x-rapidapi-key": "85939bd673mshe3b6eabee1426dep1aacf5jsna6416fda0cb1",
-    //         "x-rapidapi-host": "edamam-food-and-grocery-database.p.rapidapi.com"
-    //     }
-    //     })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         // console.log(data)
-    //         const foodSearched = data.parsed[0].food.nutrients
-    //         setFoodList(data.hints)
-    //         // console.log(data.hints)
-    //         setFoodName(data.parsed[0].food.label)
-    //         setCalories(foodSearched.ENERC_KCAL)
-    //         setProtein(foodSearched.PROCNT)
-    //         setCarbs(foodSearched.CHOCDF)
-    //         setFat(foodSearched.FAT)
-    //         setImageURI(data.parsed[0].food.image)
-    //         // console.log(data.parsed[0].food.nutrients.PROCNT);
-    //         // setCalories(data.calories)
-    //     })
-    //     .catch(err => {
-    //         console.error(err);
-    //     });
-    // }
-    
     return (
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
             <SafeAreaView>
                 <ScrollView>
                     <Text style={styles.mealTitle} >{name}</Text>
                     {/* <Text style={{fontWidth: "100", marginLeft: 20, color: 'white', fontSize:18, marginBottom:20}}>4 oz.</Text> */}
-                    <Divider style={{ backgroundColor: 'skyblue', height: 4}} />
+                    <Divider style={{ backgroundColor: 'red', height: 4}} />
                     <View
                     style={{
                         flexDirection: "row",
@@ -122,34 +91,34 @@ const FoodInfoScreen = ({navigation, route}) => {
                     }}
                     >
                         <View style={styles.macroCircles}>
-                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "white"}}>
+                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '300', color: "white"}}>
                                 {calories}
                             </Text>
-                            <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af"}}>
+                            <Text style={{fontWeight: '600', fontSize: 18, color: "#A9A5D5"}}>
                                 Cal
                             </Text>
                         </View>
                         <View style={styles.macroCircles}>
-                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "white"}}>
+                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '300', color: "white"}}>
                                 {carbs} g
                             </Text>
-                            <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af"}}>
+                            <Text style={{fontWeight: '600', fontSize: 18, color: "#A9A5D5"}}>
                                 Carbs
                             </Text>
                         </View>
                         <View style={styles.macroCircles}>
-                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "white" }}>
+                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '300', color: "white" }}>
                                 {fat} g
                             </Text>
-                            <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af",}}>
+                            <Text style={{fontWeight: '600', fontSize: 18, color: "#A9A5D5",}}>
                                 Fats
                             </Text>
                         </View>
                         <View style={styles.macroCircles}>
-                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "white"}}>
+                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '300', color: "white"}}>
                                 {protein} g
                             </Text>
-                            <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af"}}>
+                            <Text style={{fontWeight: '600', fontSize: 18, color: "#A9A5D5"}}>
                                 Protein
                             </Text>
                         </View>
@@ -175,14 +144,7 @@ const FoodInfoScreen = ({navigation, route}) => {
                         marginLeft: 7,
                     }}
                     >
-                        <Text style={styles.customServingOption}>Number of servings:</Text>
-                        <TextInput style={styles.ServingInput} keyboardType="numeric" onChangeText={(serv) => {
-                            setServings(serv);
-                            if(serv > 0) {
-                                updateMacros(serv);
-                            }
-                        }}></TextInput>
-                        <Button
+                        <Button style={styles.addButton}
                         title="Add Meal"
                         onPress={() => {
                             addToDB();
@@ -197,6 +159,7 @@ const FoodInfoScreen = ({navigation, route}) => {
 }
 
 export default FoodInfoScreen
+// #BABAED,#967BDC,#DCBC7B,#86DC7B
 
 const styles = StyleSheet.create({
     container: {
@@ -215,10 +178,12 @@ const styles = StyleSheet.create({
     },
     mealTitle: {
         fontSize: 30,
-        color: "#0037de",
+        color: "white",
         letterSpacing: 3,
-        fontWeight: "300",
+        fontWeight: "600",
         marginTop: 20,
+        marginLeft: 20,
+        marginBottom: 12
 
     },
     macros: {
@@ -234,7 +199,7 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
         paddingTop: 15,
         paddingBottom: 15,
-        backgroundColor: "#0037de",
+        backgroundColor: "#424242",
         borderRadius: 50,
         shadowColor: "#000",
         shadowOffset: {
@@ -243,6 +208,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.29,
         shadowRadius: 4.65,
+
 
 elevation: 7,
     },
@@ -255,10 +221,12 @@ elevation: 7,
         marginTop: 10
     },
     addButton: {
-        width: 40,
+        width: 400,
         height: 40,
         borderRadius: 10,
-        fontSize: 100
+        fontSize: 100,
+        alignSelf: 'center',
+        
     },
     input: {
         height: 75,

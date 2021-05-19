@@ -100,34 +100,34 @@ const FoodScreen = ({navigation}) => {
                     }}
                     >
                         <View style={{flex: 1, alignItems: 'center', marginTop: 7}}>
-                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '300', color: "#f2b418"}}>
+                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '300', color: "skyblue"}}>
                                 Calories
                             </Text>
-                            <Text style={{fontWeight: '600', fontSize: 18, color: "#7591af"}}>
+                            <Text style={{fontWeight: '600', fontSize: 18, color: "white"}}>
                                 {userFood.calConsumed}
                             </Text>
                         </View>
                         <View style={{flex: 1, alignItems: 'center', marginTop: 7}}>
-                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '300', color: "#f2b418"}}>
+                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '300', color: "skyblue"}}>
                                 Fat
                             </Text>
-                            <Text style={{fontWeight: '600', fontSize: 18, color: "#7591af"}}>
+                            <Text style={{fontWeight: '600', fontSize: 18, color: "white"}}>
                                 {userFood.fat} g
                             </Text>
                         </View>
                         <View style={{flex: 1, alignItems: 'center', marginTop: 7}}>
-                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '300', color: "#f2b418" }}>
+                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '300', color: "skyblue" }}>
                                 Carbs
                             </Text>
-                            <Text style={{fontWeight: '600', fontSize: 18, color: "#7591af",}}>
+                            <Text style={{fontWeight: '600', fontSize: 18, color: "white",}}>
                                 {userFood.carbs} g
                             </Text>
                         </View>
                         <View style={{flex: 1, alignItems: 'center', marginTop: 7}}>
-                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '300', color: "#f2b418"}}>
+                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '300', color: "skyblue"}}>
                                 Protein
                             </Text>
-                            <Text style={{fontWeight: '600', fontSize: 18, color: "#7591af"}}>
+                            <Text style={{fontWeight: '600', fontSize: 18, color: "white"}}>
                                 {userFood.protein} g
                             </Text>
                         </View>

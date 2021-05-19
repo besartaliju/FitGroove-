@@ -113,7 +113,7 @@ export default SearchFoodScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#232224'
+        backgroundColor: '#000'
     },
     mealTitle: {
         fontSize: 30,
