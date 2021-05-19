@@ -123,7 +123,7 @@ const LoginScreen = ({ navigation }) => {
             </SignInContainer>
             
             <ForgetPassword>
-                <Text small center color="#FFFFFF" margin="15px">Forgot password?</Text>
+                <Text small center color="#000" margin="15px">Forgot password?</Text>
             </ForgetPassword>
            
             <SignUpContainer onPress={() => navigation.navigate("SignUp")}>
@@ -178,7 +178,7 @@ const Box = styled.View`
 `;
 
 const Heading = styled.Text`
-    width: 209px;
+    width: 300px;
     height: 53px;
     margin-top: 28px;
     font-size: 42px;

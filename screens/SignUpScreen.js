@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { Button, Input, Image } from "react-native-elements";
-import { KeyboardAvoidingView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { KeyboardAvoidingView as Kav, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { auth, db } from "../firebase";
 import styled from "styled-components";
 import {Feather as Icon} from "@expo/vector-icons";
@@ -77,140 +77,80 @@ const SignUpScreen = ({ navigation }) => {
 
 
     return (
-        <KeyboardAvoidingView behavior="padding" style={styles.container}>
-            <Text>SignUp</Text>
-            <View style={styles.inputContainer}>
-                <Input 
-                    placeholder="Name" 
-                    autofocus 
-                    type="text" 
-                    value={name} 
-                    onChangeText={(text) => setName(text)}
-                />
-                <Input 
-                    placeholder="Email" 
-                    type="email" 
-                    value={email} 
-                    onChangeText={(text) => setEmail(text)}
-                />
-                <Input 
-                    placeholder="Password"  
-                    type="password" 
-                    secureTextEntry
-                    value={password} 
-                    onChangeText={(text) => setPassword(text)}
-                />
-                <Input 
-                    placeholder="Avatar (URL)" 
-                    type="text" 
-                    value={avatar} 
-                    onChangeText={(text) => setAvatar(text)}
-                    onSubmitEditing={signUp}
-                />
-            </View>
-
-            <Button containerStyle={styles.button} raised onPress={signUp} title="SignUp" />
-        </KeyboardAvoidingView>
-
-        
-
-
-        /*
-       <Container>
-       <Main>
-           <Box></Box>
-           <Heading>Create Account,</Heading>
-           <Subheading>Sign Up to get started!</Subheading>
-       </Main>
-       <Auth>
-           <AuthContainer>
-               <Icon
-                   name={"user"}
-                   color={"#40DF9F"}
-                   size={32}
-               />
-               <AuthField
-                   placeholder="Name" //changed from 'Username' to "Name"
-                   placeholderTextColor="#96A7AF"
-                   autoCapitalize="none"
-                   autoCompleteType="name" // changed from 'username' to 'name'
-                   autoCorrect={false}
-                   autoFocus={true}
-                   keyboardType="email-address"
-                   clearButtonMode="while-editing"
-                   onChangeText={name => setName(name.trim())} //changed 'username' to 'name' and changed 'setUsername' to 'setName'
-                   value={name} //changed from username to name
-               />
-           </AuthContainer>
-           
-           <AuthContainer>
-               <Icon
-                   name={"mail"}
-                   color={"#FFC542"}
-                   size={32}
-               />
-               <AuthField
-                   placeholder="Email"
-                   placeholderTextColor="#96A7AF"
-                   autoCapitalize="none"
-                   autoCompleteType="email"
-                   autoCorrect={false}
-                   keyboardType="email-address"
-                   clearButtonMode="while-editing"
-                   onChangeText={email => setEmail(email.trim())}
-                   value={email}
-               />
-           </AuthContainer>
-
-           <AuthContainer>
-               <Icon
-                   name={"lock"}
-                   color={"#FF575F"}
-                   size={32}
-               />
-               <AuthField
-                   placeholder="Password"
-                   placeholderTextColor="#96A7AF"
-                   autoCapitalize="none"
-                   autoCompleteType="password"
-                   autoCorrect={false}
-                   secureTextEntry={true}
-                   clearButtonMode="while-editing"
-                   onChangeText={password => setPassword(password.trim())}
-                   value={password}
-               />
-           </AuthContainer>
-       </Auth>
-
-       <ButtonWrap>
-           <SignIn onPress={() => navigation.navigate("SignIn")}>
-               <Icon
-                   name={"arrow-left"}
-                   color={"#3DD598"}
-                   size={18}
-               />
-           </SignIn>
-
-           <SignUpContainer disabled={loading} onPress={() => navigation.navigate("AvatarSetup")}>
-               {loading ? (
-                   <Loading />
-               ) : (
-                   <SignUpWrapper>
-                       <Text medium bold center color="#ffffff" padding={"6px"}>Next</Text>
-                       <Icon
-                           name={"arrow-right"}
-                           color={"white"}
-                           size={18}
-                       />
-                   </SignUpWrapper>
-                   
-               )}
-           </SignUpContainer>
-
-       </ButtonWrap>
-   
-   </Container>
-   */
+        <Container>
+            <Main>
+                <Heading>Register Now!</Heading>
+                <Subheading>Let's gather some information first</Subheading>
+            </Main>
+            <Auth>
+                <AuthContainer>
+                    <Icon
+                        name={"mail"}
+                        color={"#F52416"}
+                        size={32}
+                    />
+                    <AuthField
+                        placeholder="Name"
+                        placeholderTextColor="#96A7AF"
+                        autoCapitalize="none"
+                        autofocus 
+                        type="text" 
+                        value={name} 
+                        onChangeText={(text) => setName(text)}
+                    />
+                </AuthContainer>
+                <AuthContainer>
+                    <Icon
+                        name={"mail"}
+                        color={"#F52416"}
+                        size={32}
+                    />
+                    <AuthField
+                        placeholder="Email"
+                        placeholderTextColor="#96A7AF"
+                        autoCapitalize="none"
+                        type="email" 
+                        value={email} 
+                        onChangeText={(text) => setEmail(text)}
+                    />
+                </AuthContainer> 
+                <AuthContainer>
+                    <Icon
+                        name={"mail"}
+                        color={"#F52416"}
+                        size={32}
+                    />
+                    <AuthField
+                        placeholder="Password"
+                        placeholderTextColor="#96A7AF"
+                        autoCapitalize="none"
+                        type="password" 
+                        secureTextEntry
+                        value={password} 
+                        onChangeText={(text) => setPassword(text)}
+                    />
+                </AuthContainer>
+                <AuthContainer>
+                    <Icon
+                        name={"mail"}
+                        color={"#F52416"}
+                        size={32}
+                    />
+                    <AuthField 
+                        placeholder="Avatar (URL)"
+                        placeholderTextColor="#96A7AF"
+                        autoCapitalize="none"
+                        type="text" 
+                        value={avatar} 
+                        onChangeText={(text) => setAvatar(text)}
+                        onSubmitEditing={signUp}
+                    />
+                </AuthContainer>
+            </Auth>
+            <SignInContainer raised onPress={signUp} title="SignUp">
+                <Text medium bold center color="#3DD598">Sign Up</Text>
+            </SignInContainer>
+        </Container>
     )
 }
 
@@ -218,31 +158,12 @@ const SignUpScreen = ({ navigation }) => {
 
 export default SignUpScreen
 
-
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    button: {
-        width: 200,
-        marginTop: 10
-    },
-    inputContainer: {
-        width: 300
-    }
-})
-
-
-
-
-/*
-const Container = styled.View`
+const Container = styled(Platform.OS === 'ios' ? Kav : View).attrs({
+    behavior: Platform.OS === 'ios' && 'position',
+  })`
     flex: 1;
-    background: #22343C;
-`;
+    background: #060507;
+  `;
 
 const Main = styled.View`
     margin: 139px 32px 48px;
@@ -251,15 +172,16 @@ const Main = styled.View`
 const Box = styled.View`
     width: 45px;
     height: 43px;
-    background: #3ED598;
+    background: #F52416;
     box-shadow: 0px 2px 4px rgba(15, 218, 137, 0.3);
     border-radius: 12px;
 `;
 
 const Heading = styled.Text`
+    width: 300px;
     height: 53px;
     margin-top: 28px;
-    font-size: 28px;
+    font-size: 42px;
     line-height: 49px;
     font-weight: bold;
 
@@ -268,6 +190,7 @@ const Heading = styled.Text`
 
 const Subheading = styled.Text`
     margin-top: 8px;
+    width: 350px;
     height: 29px;
     font-size: 22px;
     line-height: 28px;
@@ -286,6 +209,7 @@ const AuthContainer = styled.View`
     alignItems: center
 `;
 
+
 const AuthField = styled.TextInput`
     height: 48px;
     flex: 1;
@@ -295,42 +219,51 @@ const AuthField = styled.TextInput`
     padding: 10px
 `;
 
-const ButtonWrap = styled.View`
-    height: 49px;
-    margin: 0px 32px;
-    flexDirection: row;
-`;
+// const SignInButton = styled.Button`
+//     flex: 1;
+//     flexDirection: row;
+//     align-items: center;
+//     justify-content: center;
+// `;
 
-const SignUpContainer = styled.TouchableOpacity`
-    flex: 1;
+const SignInContainer = styled.TouchableOpacity`
+    margin: 0 32px;
     height: 48px;
     flexDirection: row;
     align-items: center;
     justify-content: center;
-    background-color: #40DF9F;
+    background-color: #A9A5D5; 
     box-shadow: 0px 2px 4px rgba(15, 218, 137, 0.3);
     border-radius: 12px;
-    margin-left: 10px;
 `;
 
-const SignUpWrapper = styled.View`
+const SignInWrapper = styled.View`
+    flex: 1;
     flexDirection: row;
     align-items: center;
     justify-content: center;
 `;
 
-const SignIn = styled.TouchableOpacity`
-    width: 48px;
-    height: 49px;
-    align-items: center;
-    justify-content: center;
-    background-color: #286053;
-    border-radius: 12px;
-`;
 
 const Loading = styled.ActivityIndicator.attrs((props) => ({
     color: "white",
     size: "small",
-
 }))``;
-*/
+
+const SignUpContainer = styled.TouchableOpacity`
+    margin: 30px 32px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    background-color: #A9A5D5;
+    border-radius: 12px;
+`;
+
+const ForgetPassword = styled.View`
+    margin-top: 10px
+    align-items: center;
+    justify-content: center;
+    background-color: #96A7AF;
+    margin: 15px 120px 5px 120px;
+    border-radius: 5px;
+`;

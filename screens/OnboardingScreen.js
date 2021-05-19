@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { KeyboardAvoidingView as Kav, TouchableOpacity} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { db, auth } from '../firebase';
-//import DatePicker from 'react-native-date-picker'
-
 import {View, Text, Image, StyleSheet, TextInput, Input} from 'react-native';
 import {Button} from 'react-native-elements';
 import styled from "styled-components/native";
+import {Feather as Icon} from "@expo/vector-icons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNPickerSelect from 'react-native-picker-select';
 
@@ -142,80 +141,65 @@ const OnboardingScreen = ({navigation}) => {
         <Container> 
             <Main>
                 <Heading>Personal Details</Heading>
-                <Subheading> Let us know about you to speed up the result, get fit fast with great results! </Subheading>
+                <Subheading>Some more info for amazing results</Subheading>
             </Main>
-
-            <Text> Age </Text>
-            {/* <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date}
-                    //mode={mode}
-                    is24Hour={true}
-                    display="default"
-                    onChangeText={(text) => setDate(text)}
-            /> */}
-            <TextInput 
-                style={styles.input}
-                value={age}
-                onChangeText={(text) => setAge(text)}
-            >  
-            
-            </TextInput>
-            <Text> Height </Text>
-            <TextInput 
-                style={styles.input}
-                value={height}
-                onChangeText={(text) => setHeight(text)}
-            >  
-            
-            </TextInput>
-            
-            {/* <Picker
-                    selectedValue={height}
-                    onValueChange={(itemValue, itemIndex) =>
-                    setHeight(itemValue)
-                }>
-            
-                <Picker.Item label="5 ft" value="5ft" />
-                <Picker.Item label="6 ft" value="6ft" />
-            </Picker> */}
-
-            <Text> Weight </Text>
-            <TextInput 
-                style={styles.input}
-                value={weight}
-                onChangeText={(text) => setWeight(text)}
-                placeholder="lbs"
-                keyboardType="numeric"
-            >        
-            </TextInput>
-
-
-            <Text> Goal Weight</Text>
-            <TextInput 
-                style={styles.input}
-                onChangeText={setGoalWeight}
-                value={goalWeight}
-                placeholder="lbs"
-                
-            >  
-            </TextInput>
-            <Text> Activity Level</Text>
-            <RNPickerSelect
-                onValueChange={(value) => setActivityLevel(value)}
-                items={[
-                    { label: 'Sedentary', value: '0' },
-                    { label: 'Light Exercise', value: '1' },
-                    { label: 'Moderate Exercise', value: '8' },
-                    { label: 'Heavy Exercise', value: '3' },
-                    { label: 'Athlete', value: '4' }
-                ]}
-            />
-            {/* <BirthdayText>
-                Birthday     
-            </BirthdayText> */}
-            <Button onPress={helper}>Finish</Button>
-                
+            <Auth>
+                <AuthContainer>
+                    <Textt>Age</Textt>
+                    <AuthField 
+                        value={age}
+                        onChangeText={(text) => setAge(text)}
+                        placeholderTextColor="#96A7AF"
+                        autoCapitalize="none"
+                    />  
+                </AuthContainer>
+                <AuthContainer>
+                    <Textt>Height</Textt>
+                    <AuthField 
+                        value={height}
+                        onChangeText={(text) => setHeight(text)}
+                        placeholderTextColor="#96A7AF"
+                        autoCapitalize="none"
+                    />  
+                </AuthContainer>
+                <AuthContainer>
+                    <Textt>Weight</Textt>
+                    <AuthField 
+                        value={weight}
+                        onChangeText={(text) => setWeight(text)}
+                        placeholder="lbs"
+                        keyboardType="numeric"
+                        placeholderTextColor="#96A7AF"
+                        autoCapitalize="none"
+                    />
+                </AuthContainer>
+                <AuthContainer>
+                    <Textt> Goal Weight</Textt>
+                    <AuthField 
+                        onChangeText={setGoalWeight}
+                        value={goalWeight}
+                        placeholder="lbs"
+                        placeholderTextColor="#96A7AF"
+                        autoCapitalize="none"
+                    />
+                </AuthContainer>
+                <AuthContainer>
+                    <Textt> Activity Level</Textt>
+                    <RNPickerSelect
+                        onValueChange={(value) => setActivityLevel(value)}
+                        items={[
+                            { label: 'Sedentary', value: '0' },
+                            { label: 'Light Exercise', value: '1' },
+                            { label: 'Moderate Exercise', value: '8' },
+                            { label: 'Heavy Exercise', value: '3' },
+                            { label: 'Athlete', value: '4' }
+                        ]}
+                    />
+                </AuthContainer>
+            </Auth>
+            <SignInContainer onPress={helper} title="Finish">
+                <Text medium bold center color="#3DD598">Sign Up</Text>
+            </SignInContainer>
         </Container>
 
     );
@@ -225,55 +209,120 @@ export default OnboardingScreen;
 
 //const styles = StyleSheet.create({})
 
-const styles = StyleSheet.create({
-    input: {
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-    },
-  });
-
-const Container = styled.View`
+const Container = styled(Platform.OS === 'ios' ? Kav : View).attrs({
+    behavior: Platform.OS === 'ios' && 'position',
+  })`
     flex: 1;
-    background: #FFFFFF;    
+    background: #000;
+  `;
+
+const Main = styled.View`
+    margin: 139px 32px 48px;
 `;
 
- const Main = styled.View`
-     margin: 5px 25px 50px 25px;
-     background: #808080;
- `;
+const Box = styled.View`
+    width: 45px;
+    height: 43px;
+    background: #F52416;
+    box-shadow: 0px 2px 4px rgba(15, 218, 137, 0.3);
+    border-radius: 12px;
+`;
 
 const Heading = styled.Text`
-    width: 209px;
+    width: 320px;
     height: 53px;
-    margin: 10px 50px 5px 50px;
-    font-size: 24px;
+    margin-top: 28px;
+    font-size: 42px;
     line-height: 49px;
     font-weight: bold;
-    textAlign: center;
-    color: #949397;
+
+    color: #FFFFFF;
 `;
 
 const Subheading = styled.Text`
-    margin: 10px 50px 5px 50px;
-    width: 220px;
-    height: 1px;
-    font-size: 18px;
+    margin-top: 8px;
+    height: 29px;
+    font-size: 22px;
     line-height: 28px;
-    textAlign: center;
-    color: #949397;
+    color: #96A7AF;
 `;
 
-/*
-const DividerLine = styled.View`
-    width: 319px;
-    height: 10px;
-    color: #808080;
+const Textt = styled.Text`
+    height: 29px;
+    margin-right: 16px;
+    font-size: 16px;
+    line-height: 28px;
+    color: #fff;
 `;
-*/
 
-const BirthdayText = styled.Text`
-    height: 30px; 
-    color: #949397;
-    margin: 5px 50px 10px 50px;
+const Auth = styled.View`
+    margin: 0px 32px 32px;
+`;
+
+
+const AuthContainer = styled.View`
+    border-bottom-color: black;
+    border-bottom-width: 0px;
+    margin-bottom: 16px;
+    flexDirection: row;
+    alignItems: center
+`;
+
+
+const AuthField = styled.TextInput`
+    height: 48px;
+    flex: 1;
+    color: white
+    font-size: 16px
+    font-weight: 500
+    padding: 10px
+`;
+
+// const SignInButton = styled.Button`
+//     flex: 1;
+//     flexDirection: row;
+//     align-items: center;
+//     justify-content: center;
+// `;
+
+const SignInContainer = styled.TouchableOpacity`
+    margin: 0 32px;
+    height: 48px;
+    flexDirection: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #A9A5D5; 
+    box-shadow: 0px 2px 4px rgba(15, 218, 137, 0.3);
+    border-radius: 12px;
+`;
+
+const SignInWrapper = styled.View`
+    flex: 1;
+    flexDirection: row;
+    align-items: center;
+    justify-content: center;
+`;
+
+
+const Loading = styled.ActivityIndicator.attrs((props) => ({
+    color: "white",
+    size: "small",
+}))``;
+
+const SignUpContainer = styled.TouchableOpacity`
+    margin: 30px 32px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    background-color: #A9A5D5;
+    border-radius: 12px;
+`;
+
+const ForgetPassword = styled.View`
+    margin-top: 10px
+    align-items: center;
+    justify-content: center;
+    background-color: #96A7AF;
+    margin: 15px 120px 5px 120px;
+    border-radius: 5px;
 `;

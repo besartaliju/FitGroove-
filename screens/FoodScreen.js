@@ -79,7 +79,16 @@ const FoodScreen = ({navigation}) => {
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
             <SafeAreaView>
                 <ScrollView>
-                    <Text style={{color: 'white', paddingLeft: 15, fontSize: 20, paddingTop: 25, fontSize: 28, fontWeight:'100'}}>Your Daily Meal</Text>
+                    <Text style=
+                    {{color: 'white', 
+                    paddingLeft: 20, 
+                    fontSize: 20, 
+                    paddingTop: 40, 
+                    fontSize: 34, 
+                    fontWeight:'600'
+                    }}>
+                        Your Daily Meal
+                    </Text>
                     <View
                     style={{
                         flexDirection: "row",
@@ -91,34 +100,34 @@ const FoodScreen = ({navigation}) => {
                     }}
                     >
                         <View style={{flex: 1, alignItems: 'center', marginTop: 7}}>
-                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "#f2b418"}}>
+                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '300', color: "#f2b418"}}>
                                 Calories
                             </Text>
-                            <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af"}}>
+                            <Text style={{fontWeight: '600', fontSize: 18, color: "#7591af"}}>
                                 {userFood.calConsumed}
                             </Text>
                         </View>
                         <View style={{flex: 1, alignItems: 'center', marginTop: 7}}>
-                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "#f2b418"}}>
+                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '300', color: "#f2b418"}}>
                                 Fat
                             </Text>
-                            <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af"}}>
+                            <Text style={{fontWeight: '600', fontSize: 18, color: "#7591af"}}>
                                 {userFood.fat} g
                             </Text>
                         </View>
                         <View style={{flex: 1, alignItems: 'center', marginTop: 7}}>
-                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "#f2b418" }}>
+                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '300', color: "#f2b418" }}>
                                 Carbs
                             </Text>
-                            <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af",}}>
+                            <Text style={{fontWeight: '600', fontSize: 18, color: "#7591af",}}>
                                 {userFood.carbs} g
                             </Text>
                         </View>
                         <View style={{flex: 1, alignItems: 'center', marginTop: 7}}>
-                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '500', color: "#f2b418"}}>
+                            <Text style={{paddingBottom: 15, fontSize: 18,  fontWeight: '300', color: "#f2b418"}}>
                                 Protein
                             </Text>
-                            <Text style={{fontWeight: '900', fontSize: 18, color: "#7591af"}}>
+                            <Text style={{fontWeight: '600', fontSize: 18, color: "#7591af"}}>
                                 {userFood.protein} g
                             </Text>
                         </View>
@@ -151,7 +160,7 @@ export default FoodScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#232224'
+        backgroundColor: '#000'
     },
     inputContainer: {
         flexDirection: "row",

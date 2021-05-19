@@ -110,13 +110,13 @@ const HomeScreen = ({navigation}) => {
                     height: 75,
                     fontWeight: 'bold',
                     width: 350,
-                    marginBottom: 25
+                    marginBottom: 35
                 }}>
                     {isLoading ? (
                         <ActivityIndicator />
                     ) : (
                     <View>
-                        <Text h1 style={styles.date}>04/01/2021</Text>
+                        <Text h1 style={styles.date}>05/19/2021</Text>
                         <Text h1 style={styles.title}>Hi, {user.displayName}!</Text>
                     </View>
                     )}
@@ -141,8 +141,7 @@ const HomeScreen = ({navigation}) => {
                     height: 75,
                     width: 350,
                     marginBottom: 150,
-                    alignItems: "center",
-                    alignContent: "center"
+                    alignSelf: "center"
                 }}>
                     <View>
                         <AnimatedCircularProgress
@@ -173,8 +172,8 @@ const HomeScreen = ({navigation}) => {
                     flexDirection: "row",
                     height: 75,
                     width: 350,
-                    marginBottom: 25,
-                    alignItems: "center"
+                    marginBottom: 65,
+                    alignSelf: "center"
                 }}>
                     <View>
                         <AnimatedCircularProgress
@@ -216,8 +215,10 @@ export default HomeScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#232224',
-        alignItems: 'center'
+        backgroundColor: '#000',
+        alignItems: 'center',
+        alignContent: "center",
+        alignItems: "center",
     },
 
     date: {
@@ -225,13 +226,16 @@ const styles = StyleSheet.create({
         color: "white",
         paddingTop: 23,
         paddingBottom: 5,
-        fontWeight: '100'
+        marginLeft: 14,
+        fontWeight: '300'
     },
 
     title: {
-        fontSize: 24,
-        color: "white",
-        paddingBottom: 50,
+        fontSize:32, 
+        fontWeight: "bold", 
+        color:"white",
+        marginLeft: 14,
+        paddingBottom: 45,
     },
     subtitle1: {
         fontSize: 14,
@@ -239,14 +243,15 @@ const styles = StyleSheet.create({
         textAlign: 'left',
     },
     weightgoal: {
-        backgroundColor:'#0037de',
-        paddingBottom: 10,
-        paddingLeft: 10,
-        paddingTop: 10,
-        paddingRight: 10,
-        borderRadius: 8,
-        
-        marginBottom: 20
+        paddingTop:10,
+        paddingBottom:10,
+        paddingLeft:10,
+        paddingRight:10,
+        backgroundColor: '#F52416',
+        width:380,
+        borderRadius:7,
+        alignSelf: "center",
+        marginBottom: 10
     },
     weightnow: {
         backgroundColor:'#1a4adb',
@@ -255,40 +260,46 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         paddingRight: 10,
         borderRadius: 8,
-        
-        marginBottom: 90
+        alignSelf: 'center',
+        marginBottom: 30,
+        width: 380
 
     },
     macros: {
         textAlign: 'center',
-        color: '#7591af',
+        color: 'white',
         fontSize: 40,
         fontWeight: '100',
       },
     progresstitle: {
         color: "white",
         marginTop: 7,
-        fontWeight: '200',
+        fontWeight: '300',
         marginLeft: 45,
     },
     circularprogress: {
         marginRight: 70
     },
     workoutpreview: {
-        backgroundColor:'#303030',
-        paddingBottom: 10,
-        paddingLeft: 10,
-        paddingTop: 10,
-        paddingRight: 10,
-        borderRadius: 8,
-        height: 500,
-        marginBottom: 20,
+        height:300,
+        width:380,
+        marginLeft:10,
+        marginRight:10,
         marginTop: 50,
+        borderTopRightRadius:15,
+        borderTopLeftRadius:15,
+        borderBottomRightRadius:15,
+        borderBottomLeftRadius:15,
+        backgroundColor:"#060507",
+        borderWidth:3,
+        borderColor:"#0F2027"
     },
     workoutpreviewtitle: {
         color: "white",
         fontSize: 24,
-        fontWeight: "100"
+        fontWeight: "400",
+        paddingTop: 5,
+        paddingLeft: 10,
     },
 
     subtitle2: {
